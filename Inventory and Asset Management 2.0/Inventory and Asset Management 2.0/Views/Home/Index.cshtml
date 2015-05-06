@@ -1,0 +1,47 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@{
+    <form action="~/Home/login" method="post" onsubmit="return onlogIn();">
+        <label>Username: </label> @Html.TextBox("username", null, new { id = "username" }) <br />
+        <label>Passwoed: </label> @Html.Password("password", null, new { id = "password" }) <br />
+        <button>login</button>
+
+        <script>
+            localStorage.clear();
+            function onlogIn() {
+                var username = document.getElementById("username").value;
+                var password = document.getElementById("password").value;
+
+                if (username == "" || password == "") {
+                    alert("Please fill username and password");
+                    return false;
+                }
+                else if (username.length < 4 || username.length > 16) {
+                    alert("Please fill username 4-16 characters ");
+                    return false;
+                }
+                else if (password.length < 4 || password.length > 16) {
+                    alert("Please fill password 4-16 characters ");
+                    return false;
+                }
+
+            }
+        </script>
+
+    </form>
+
+    if (TempData["msg"] != null)
+    {
+        var message = TempData["msg"].ToString();
+        
+        <script>
+            var msg = '@message';
+                alert(msg);
+        </script>
+        TempData["msg"] = null;
+    }
+}

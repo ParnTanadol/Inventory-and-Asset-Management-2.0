@@ -1,0 +1,121 @@
+﻿@{
+    ViewBag.Title = "UserRegistration";
+}
+@{
+    if (Session["userType"] != null && Session["userType"].ToString().Equals("1"))
+    {
+        <h2>UserRegistration</h2>
+        @Html.ActionLink("user management", "UserManagement")
+
+        <form action="~/Home/registerCAMTUser" method="post" onsubmit="return onRegistration();">
+            <label>Username: </label> @Html.TextBox("username", null, new { id = "username" }) <br />
+            <label>Passwoed: </label> @Html.Password("password", null, new { id = "password" }) <br />
+            <label>Name: </label> @Html.TextBox("name", null, new { id = "name" }) <br />
+            <label>Department: </label> @Html.TextBox("department", null, new { id = "department" }) <br />
+            <label>Room: </label> @Html.TextBox("room", null, new { id = "room" }) <br />
+            <label>Address: </label> @Html.TextBox("address", null, new { id = "address" }) <br />
+            <label>Telephone number: </label> @Html.TextBox("tel", null, new { id = "tel" }) <br />
+            <label>Email: </label> @Html.TextBox("email", null, new { id = "email" }) <br />
+            <label>User type: </label>
+
+            <label>Staff </label> @Html.RadioButton("userType", 2, true, new { id = "userType" })
+            <label>reporter </label> @Html.RadioButton("userType", 3, false, new { id = "userType" })
+
+            <br />
+            @Html.Hidden("userActive", 1)
+
+            <button>Register</button>
+
+            <script>
+                function onRegistration() {
+                    var result = confirm("Do you sure for registration ?");
+                    if (result == true) {
+
+                        var username = document.getElementById("username").value;
+                        var password = document.getElementById("password").value;
+                        var name = document.getElementById("name").value;
+                        var department = document.getElementById("department").value;
+                        var room = document.getElementById("room").value;
+                        var address = document.getElementById("address").value;
+                        var tel = document.getElementById("tel").value;
+                        var email = document.getElementById("email").value;
+
+                        var userType = document.getElementsByName("userType");
+                        var userTypeCheck = "";
+                        for (var i = 0; i < userType.length; i++) {
+                            if (userType[i].checked) {
+                                userTypeCheck = userType[i].value;
+                            }
+                        }
+
+                        if (username == "" || userType == "" || userActive == "") {
+                            alert("Please fill your username");
+                            return false;
+                        }
+                        else if (password == "") {
+                            alert("Please fill your password");
+                            return false;
+                        }
+                        else if (name == "") {
+                            alert("Please fill your name");
+                            return false;
+                        }
+                        else if (department == "") {
+                            alert("Please fill your department");
+                            return false;
+                        }
+                        else if (room == "") {
+                            alert("Please fill your room");
+                            return false;
+                        }
+                        else if (address == "") {
+                            alert("Please fill your address");
+                            return false;
+                        }
+                        else if (tel == "") {
+                            alert("Please fill your telephone number");
+                            return false;
+                        }
+                        else if (email == "") {
+                            alert("Please fill your telephone email");
+                            return false;
+                        }
+                        else if (userTypeCheck == "") {
+                            alert("Please select type of user");
+                            return false;
+                        }
+                        else if (username.length < 4 || username.length > 16) {
+                            alert("Please fill username 4-16 characters ");
+                            return false;
+                        }
+                        else if (password.length < 4 || password.length > 16) {
+                            alert("Please fill password 4-16 characters ");
+                            return false;
+                        }
+                    }
+                    else {
+                        return false
+                    }
+                }
+            </script>
+        </form>
+
+        if (TempData["msg"] != null)
+        {
+            var message = TempData["msg"].ToString();
+
+            <script>
+                var msg = '@message';
+                alert(msg);
+            </script>
+            TempData["msg"] = null;
+        }
+    }
+    else
+    {
+        <script>
+            alert("Please login by Administrator");
+        </script>
+        @Html.Action("Index");
+    }
+}

@@ -1,0 +1,21 @@
+﻿@{
+    ViewBag.Title = "UserManagement";
+}
+
+@{
+    if (Session["userType"] != null && Session["userType"].ToString().Equals("1"))
+    {
+       <h2>UserManagement</h2>
+        @Html.ActionLink("User registration", "UserRegistration")<br />
+        @Html.ActionLink("Technicial management", "TechnicianManagement")<br />
+        @Html.ActionLink("Reporter management", "ReporterManagement")<br />
+        @Html.ActionLink("back to Administrator main page", "AdministratorMainpage")
+    }
+    else
+    {
+        <script>
+            alert("Please login by Administrator");
+        </script>
+        @Html.Action("Index");
+    }
+}

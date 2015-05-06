@@ -1,0 +1,18 @@
+﻿@{
+    ViewBag.Title = "AdministratorMainpage";
+}
+@{
+    if (Session["userType"] != null && Session["userType"].ToString().Equals("1"))
+    {
+        <h2>AdministratorMainpage</h2>
+        @Html.ActionLink("User management", "UserManagement")<br />
+        @Html.ActionLink("Items management", "ItemManagement")
+    }
+    else
+    {
+        <script>
+            alert("Please login by Administrator");
+        </script>
+        @Html.Action("Index");
+    }
+}

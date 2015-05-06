@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="INVENTORY_MANAGEMENT_2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="CAMTUser">
+    <Key>
+      <PropertyRef Name="user_id" />
+    </Key>
+    <Property Name="user_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="user_username" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="user_password" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="user_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="user_department" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="user_room" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+    <Property Name="user_address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="user_tel" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="user_email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="user_type" Type="Int32" Nullable="false" />
+    <Property Name="user_active" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="ItemOwners" Relationship="Self.FK__ItemOwner__user___15502E78" FromRole="CAMTUser" ToRole="ItemOwner" />
+    <NavigationProperty Name="Reports" Relationship="Self.FK__Report__reporter__1920BF5C" FromRole="CAMTUser" ToRole="Report" />
+    <NavigationProperty Name="Reports1" Relationship="Self.FK__Report__technici__182C9B23" FromRole="CAMTUser" ToRole="Report" />
+  </EntityType>
+  <EntityType Name="Item">
+    <Key>
+      <PropertyRef Name="item_id" />
+    </Key>
+    <Property Name="item_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="item_brand" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="item_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="item_description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="item_startDate" Type="DateTime" Nullable="false" Precision="7" />
+    <Property Name="item_endDate" Type="DateTime" Precision="7" />
+    <Property Name="item_status" Type="Int32" Nullable="false" />
+    <Property Name="item_picture" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="item_cmuNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="item_camtNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="item_serialNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="item_component" Type="Int32" />
+    <NavigationProperty Name="ItemOwners" Relationship="Self.FK__ItemOwner__item___145C0A3F" FromRole="Item" ToRole="ItemOwner" />
+    <NavigationProperty Name="Reports" Relationship="Self.FK__Report__item_id__1A14E395" FromRole="Item" ToRole="Report" />
+  </EntityType>
+  <EntityType Name="ItemOwner">
+    <Key>
+      <PropertyRef Name="itemOwner_id" />
+    </Key>
+    <Property Name="itemOwner_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="item_id" Type="Int32" Nullable="false" />
+    <Property Name="user_id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="CAMTUser" Relationship="Self.FK__ItemOwner__user___15502E78" FromRole="ItemOwner" ToRole="CAMTUser" />
+    <NavigationProperty Name="Item" Relationship="Self.FK__ItemOwner__item___145C0A3F" FromRole="ItemOwner" ToRole="Item" />
+  </EntityType>
+  <EntityType Name="Report">
+    <Key>
+      <PropertyRef Name="report_id" />
+    </Key>
+    <Property Name="report_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="technician_id" Type="Int32" Nullable="false" />
+    <Property Name="reporter_id" Type="Int32" Nullable="false" />
+    <Property Name="item_id" Type="Int32" Nullable="false" />
+    <Property Name="report_typeBroken" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="report_case" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="report_contact" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="report_repairDetail" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="report_startDate" Type="DateTime" Nullable="false" Precision="7" />
+    <Property Name="report_endDate" Type="DateTime" Precision="7" />
+    <Property Name="report_statusComplete" Type="Int32" Nullable="false" />
+    <Property Name="report_recieveMsg" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="CAMTUser" Relationship="Self.FK__Report__reporter__1920BF5C" FromRole="Report" ToRole="CAMTUser" />
+    <NavigationProperty Name="CAMTUser1" Relationship="Self.FK__Report__technici__182C9B23" FromRole="Report" ToRole="CAMTUser" />
+    <NavigationProperty Name="Item" Relationship="Self.FK__Report__item_id__1A14E395" FromRole="Report" ToRole="Item" />
+  </EntityType>
+  <Association Name="FK__ItemOwner__user___15502E78">
+    <End Role="CAMTUser" Type="Self.CAMTUser" Multiplicity="1" />
+    <End Role="ItemOwner" Type="Self.ItemOwner" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CAMTUser">
+        <PropertyRef Name="user_id" />
+      </Principal>
+      <Dependent Role="ItemOwner">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Report__reporter__1920BF5C">
+    <End Role="CAMTUser" Type="Self.CAMTUser" Multiplicity="1" />
+    <End Role="Report" Type="Self.Report" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CAMTUser">
+        <PropertyRef Name="user_id" />
+      </Principal>
+      <Dependent Role="Report">
+        <PropertyRef Name="reporter_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Report__technici__182C9B23">
+    <End Role="CAMTUser" Type="Self.CAMTUser" Multiplicity="1" />
+    <End Role="Report" Type="Self.Report" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CAMTUser">
+        <PropertyRef Name="user_id" />
+      </Principal>
+      <Dependent Role="Report">
+        <PropertyRef Name="technician_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ItemOwner__item___145C0A3F">
+    <End Role="Item" Type="Self.Item" Multiplicity="1" />
+    <End Role="ItemOwner" Type="Self.ItemOwner" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Item">
+        <PropertyRef Name="item_id" />
+      </Principal>
+      <Dependent Role="ItemOwner">
+        <PropertyRef Name="item_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Report__item_id__1A14E395">
+    <End Role="Item" Type="Self.Item" Multiplicity="1" />
+    <End Role="Report" Type="Self.Report" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Item">
+        <PropertyRef Name="item_id" />
+      </Principal>
+      <Dependent Role="Report">
+        <PropertyRef Name="item_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="INVENTORY_MANAGEMENT_2Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="CAMTUsers" EntityType="Self.CAMTUser" />
+    <EntitySet Name="Items" EntityType="Self.Item" />
+    <EntitySet Name="ItemOwners" EntityType="Self.ItemOwner" />
+    <EntitySet Name="Reports" EntityType="Self.Report" />
+    <AssociationSet Name="FK__ItemOwner__user___15502E78" Association="Self.FK__ItemOwner__user___15502E78">
+      <End Role="CAMTUser" EntitySet="CAMTUsers" />
+      <End Role="ItemOwner" EntitySet="ItemOwners" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Report__reporter__1920BF5C" Association="Self.FK__Report__reporter__1920BF5C">
+      <End Role="CAMTUser" EntitySet="CAMTUsers" />
+      <End Role="Report" EntitySet="Reports" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Report__technici__182C9B23" Association="Self.FK__Report__technici__182C9B23">
+      <End Role="CAMTUser" EntitySet="CAMTUsers" />
+      <End Role="Report" EntitySet="Reports" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ItemOwner__item___145C0A3F" Association="Self.FK__ItemOwner__item___145C0A3F">
+      <End Role="Item" EntitySet="Items" />
+      <End Role="ItemOwner" EntitySet="ItemOwners" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Report__item_id__1A14E395" Association="Self.FK__Report__item_id__1A14E395">
+      <End Role="Item" EntitySet="Items" />
+      <End Role="Report" EntitySet="Reports" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

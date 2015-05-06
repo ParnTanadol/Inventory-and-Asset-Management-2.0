@@ -108,30 +108,6 @@ namespace Inventory_and_Asset_Management_2._0.Models
                 return false;
             }
         }
-        public bool updateUserActive(int userId, bool userActive)
-        {
-            try
-            {
-                ICAMTUserRepo camtUserRepo = new CAMTUserRepo(new INVENTORY_MANAGEMENT_2Entities());
-                CAMTUser camtUser = new CAMTUser();
-                camtUser = camtUserRepo.viewUserByuserId(userId);
-                camtUser.user_active = userActive;
-
-                bool status = camtUserRepo.updateCAMTUser(camtUser);
-                if (status == true)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            catch
-            {
-                return false;
-            }
-        }
 
         public CAMTUserModel loginUser(string username, string password)
         {
@@ -158,6 +134,62 @@ namespace Inventory_and_Asset_Management_2._0.Models
             catch
             {
                 return this;
+            }
+        }
+
+        public bool removeCAMTUser(int userId)
+        {
+            try
+            {
+                ICAMTUserRepo camtUserRepo = new CAMTUserRepo(new INVENTORY_MANAGEMENT_2Entities());
+                bool status = camtUserRepo.removeCAMTUser(userId);
+                if (status == true)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public List<CAMTUserModel> viewAllUserByUserType(int userType)
+        {
+            try
+            {
+                ICAMTUserRepo camtUserRepo = new CAMTUserRepo(new INVENTORY_MANAGEMENT_2Entities());
+                List<CAMTUser> camtUserList = new List<CAMTUser>();
+                camtUserList = camtUserRepo.viewAllUserByUserType(userType);
+
+                List<CAMTUserModel> camtUserModelList = new List<CAMTUserModel>();
+
+                for (int i = 0; i < camtUserList.Count; i++)
+                {
+                    CAMTUserModel camtUserModel = new CAMTUserModel();
+                    camtUserModel.user_id = camtUserList[i].user_id;
+                    camtUserModel.user_username = camtUserList[i].user_username;
+                    camtUserModel.user_password = camtUserList[i].user_password;
+                    camtUserModel.user_name = camtUserList[i].user_name;
+                    camtUserModel.user_department = camtUserList[i].user_department;
+                    camtUserModel.user_room = camtUserList[i].user_room;
+                    camtUserModel.user_address = camtUserList[i].user_address;
+                    camtUserModel.user_tel = camtUserList[i].user_tel;
+                    camtUserModel.user_email = camtUserList[i].user_email;
+                    camtUserModel.user_type = camtUserList[i].user_type;
+                    camtUserModel.user_active = camtUserList[i].user_active;
+                    camtUserModelList.Add(camtUserModel);
+                }
+                return camtUserModelList;
+            }
+            catch
+            {
+                List<CAMTUserModel> camtUserModelList = new List<CAMTUserModel>();
+                return camtUserModelList;
             }
         }
     }

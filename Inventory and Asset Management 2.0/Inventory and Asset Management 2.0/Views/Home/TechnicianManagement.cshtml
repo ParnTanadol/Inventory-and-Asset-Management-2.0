@@ -1,0 +1,66 @@
+﻿@model IEnumerable<Inventory_and_Asset_Management_2._0.Models.CAMTUserModel>
+@using Inventory_and_Asset_Management_2._0.Models;
+
+@{
+    ViewBag.Title = "TechnicianManagement";
+}
+
+@{
+    if (Session["userType"] != null && Session["userType"].ToString().Equals("1"))
+    {
+        <h2>TechnicianManagement</h2>
+        @Html.ActionLink("user management", "UserManagement")<br />
+
+
+        <table>
+            <tr>
+                <th>No.</th>
+                <th>Username</th>
+                <th>Password</th>
+                <th>Name</th>
+                <th>Department</th>
+                <th>Room</th>
+                <th>Address</th>
+                <th>Tel</th>
+                <th>Email</th>
+                <th>Active status</th>
+            </tr>
+            @{
+        int i = 1;
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>@i</td>
+                <td>@item.user_username</td>
+                <td>@item.user_password</td>
+                <td>@item.user_name</td>
+                <td>@item.user_department</td>
+                <td>@item.user_room</td>
+                <td>@item.user_address</td>
+                <td>@item.user_tel</td>
+                <td>@item.user_email</td>
+                @{
+            if (item.user_active == true)
+            {
+                <td>@Html.ActionLink("Disapprove", "disapproveUser", @item, new { onclick = "return confirm('Are you sure for disapproving this account !');" })</td>
+            }
+            else
+            {
+                <td>@Html.ActionLink("Approve", "approveUser", @item, new { onclick = "return confirm('Are you sure for approving this account !');" })</td>
+            }
+                }
+                <td>@Html.ActionLink("Delete", "deleteCAMTUser", @item, new { onclick = "return confirm('Are you sure for deleting this account !');" })</td>
+            </tr>
+            i++;
+        }
+            }
+        </table>
+    }
+    else
+    {
+        <script>
+            alert("Please login by Administrator");
+        </script>
+        @Html.Action("Index");
+    }
+}
