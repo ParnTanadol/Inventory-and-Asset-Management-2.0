@@ -1,0 +1,23 @@
+﻿@{
+    ViewBag.Title = "AddItem";
+}
+
+
+
+@{
+    if (Session["userType"] != null && Session["userType"].ToString().Equals("1"))
+    {
+        <h2>AddItem</h2>
+
+        @Html.ActionLink("back to Item management", "ItemManagement")
+    
+    
+    }
+    else
+    {
+        <script>
+            alert("Please login by Administrator");
+        </script>
+        @Html.Action("Index");
+    }
+}

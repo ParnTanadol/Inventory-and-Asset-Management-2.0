@@ -125,7 +125,7 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
         public ActionResult approveUser(CAMTUserModel camtUserModel1)
         {
             CAMTUserModel camtUserModel2 = new CAMTUserModel();
-            camtUserModel2.updateCAMTUser(camtUserModel1.user_id, camtUserModel1.user_username, camtUserModel1.user_password, camtUserModel1.user_name,camtUserModel1.user_department, camtUserModel1.user_room,camtUserModel1.user_address,camtUserModel1.user_tel,camtUserModel1.user_email,camtUserModel1.user_type,true);
+            camtUserModel2.updateCAMTUser(camtUserModel1.user_id, camtUserModel1.user_username, camtUserModel1.user_password, camtUserModel1.user_name, camtUserModel1.user_department, camtUserModel1.user_room, camtUserModel1.user_address, camtUserModel1.user_tel, camtUserModel1.user_email, camtUserModel1.user_type, true);
             if (camtUserModel1.user_type == 2)
             {
                 return RedirectToAction("TechnicianManagement");
@@ -183,6 +183,16 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
                     return RedirectToAction("ReporterManagement");
                 }
             }
+        }
+
+        public ActionResult ItemManagement()
+        {
+            return View();
+        }
+
+        public ActionResult AddItem()
+        {
+            return View();
         }
 
     }
