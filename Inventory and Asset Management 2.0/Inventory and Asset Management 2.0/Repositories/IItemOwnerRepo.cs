@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace Inventory_and_Asset_Management_2._0.Repositories
 {
-    interface IItemOwnerRepo
+    public interface IItemOwnerRepo
     {
+        bool insertItemOwner(ItemOwner itemOwner);
+        bool updateItemOwner(ItemOwner itemOwner);
+        ItemOwner viewItemOwnerByitemIdUserId(int itemId, int userId);
+        ItemOwner viewItemOwnerByItemOwnerId(int itemOwnerId);
+        List<ItemOwner> viewAllItemOwner();
     }
 }

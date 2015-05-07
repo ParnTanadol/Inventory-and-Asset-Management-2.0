@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Drawing;
+using System.IO;
+using System.Data;
+using System.Net.Mail;
 using Inventory_and_Asset_Management_2._0.Models;
 
 namespace Inventory_and_Asset_Management_2._0.Controllers
@@ -193,6 +197,141 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
         public ActionResult AddItem()
         {
             return View();
+        }
+
+        public ActionResult AddItemOwner()
+        {
+            CAMTUserModel camtUserModel = new CAMTUserModel();
+            List<CAMTUserModel> camtUserModelList = new List<CAMTUserModel>();
+            camtUserModelList = camtUserModel.viewAllCAMTUser();
+            return View(camtUserModelList);
+        }
+
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult addItem()
+        {
+            int count = int.Parse(Request["count"].ToString());
+            int itemComponentAdd = 0;
+            for (int x = 1; x <= count; x++)
+            {
+                string index = x.ToString();
+                string itemPictureIndex = "item-picture" + index;
+                string itemBandIndex = "item-band" + index;
+                string itemNameIndex = "item-name" + index;
+                string itemDescriptionIndex = "item-description" + index;
+                string itemEndDateIndex = "time-end" + index;
+                string itemStatusIndex = "item-status" + index;
+
+                //serialNumber
+                string camtNumberIndex = "camt-number" + index;
+                string cmuNumberIndex = "cmu-number" + index;
+                string serialNumberIndex = "serial-number" + index;
+
+                // getdata
+                HttpPostedFileBase itemPicture = Request.Files[itemPictureIndex];
+                string itemBand = Request[itemBandIndex].ToString();
+                string itemName = Request[itemNameIndex].ToString();
+                string itemDescription = Request[itemDescriptionIndex].ToString();
+                DateTime itemStartDate = DateTime.Now;
+                string endDate = Request[itemEndDateIndex].ToString();
+
+                Nullable<DateTime> itemEndDate = null;
+
+                if (endDate != "")
+                {
+                    itemEndDate = DateTime.Parse(endDate);
+                }
+
+                int itemStatus = int.Parse(Request[itemStatusIndex].ToString());
+                // component id
+                Nullable<int> itemComponent = null;
+                if (count == 1)
+                {
+                    itemComponent = null;
+                }
+                else
+                {
+                    if (x == 1)
+                    {
+                        itemComponent = null;
+                    }
+                    else
+                    {
+                        itemComponent = itemComponentAdd;
+                    }
+                }
+
+
+                // Owner
+                int userItemOwner = int.Parse(Request["userOwnerId"].ToString());
+                //serialNumber
+                string camtNumber = Request[camtNumberIndex].ToString();
+                string cmuNumber = Request[cmuNumberIndex].ToString();
+                string serialNumber = Request[serialNumberIndex].ToString();
+
+                ItemModel itemModel = new ItemModel();
+                bool status1 = itemModel.insertItem(itemBand, itemName, itemDescription, itemStartDate, itemEndDate, itemStatus, cmuNumber, camtNumber, serialNumber, itemComponent);
+
+                if (status1 == true)
+                {
+
+                    itemModel.viewPreviousItem();
+
+                    // create picture name
+                    string fileType = "";
+
+                    if (itemPicture.ContentType.Contains("jpeg"))
+                    {
+                        fileType = ".jpg";
+                    }
+                    else if (itemPicture.ContentType.Contains("png"))
+                    {
+                        fileType = ".png";
+                    }
+
+                    var fileName = "picItem-" + itemModel.item_id + fileType;
+                    itemModel.item_picture = fileName;
+
+                    // add picturer in path
+                    if (itemPicture.ContentLength > 0)
+                    {
+                        System.Drawing.Image bm = System.Drawing.Image.FromStream(itemPicture.InputStream);
+                        bm = ResizeBitmap((Bitmap)bm, 200, 200); /// new width, height
+                        bm.Save(Path.Combine(Server.MapPath("~/Content/ItemPics"), fileName));
+                    }
+
+                    // update product info
+                    Nullable<int> componentItemId = null;
+                    if (itemModel.item_component.item_id != 0)
+                    {
+                        componentItemId = itemModel.item_component.item_id;
+                    }
+                    itemModel.updateItem(itemModel.item_id, itemModel.item_brand, itemModel.item_name, itemModel.item_description, itemModel.item_startDate, itemModel.item_endDate, itemModel.item_status, itemModel.item_picture, itemModel.item_cmuNumber, itemModel.item_camtNumber, itemModel.item_serialNumber, componentItemId);
+                    // set itemComponentAdd
+                    if (x == 1)
+                    {
+                        itemComponentAdd = itemModel.item_id;
+                    }
+                    // add item Owner
+
+                    ItemOwnerModel itemOwnerModel = new ItemOwnerModel();
+                    bool status2 = itemOwnerModel.insertItemOwner(itemModel.item_id, userItemOwner);
+                }
+            }
+
+            TempData["msg"] = "Add items is success";
+
+            return RedirectToAction("AddItem");
+        }
+
+        private Bitmap ResizeBitmap(Bitmap b, int nWidth, int nHeight)
+        {
+            Bitmap result = new Bitmap(nWidth, nHeight);
+            using (Graphics g = Graphics.FromImage((System.Drawing.Image)result))
+                g.DrawImage(b, 0, 0, nWidth, nHeight);
+            return result;
         }
 
     }

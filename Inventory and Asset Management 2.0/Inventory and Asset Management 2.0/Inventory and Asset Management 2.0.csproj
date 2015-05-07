@@ -167,6 +167,84 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Content Include="Content\bootstrap\css\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap\css\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap\css\bootstrap.css" />
+    <Content Include="Content\bootstrap\css\bootstrap.min.css" />
+    <Content Include="Content\bootstrap\js\bootstrap.js" />
+    <Content Include="Content\bootstrap\js\bootstrap.min.js" />
+    <Content Include="Content\bootstrap\js\npm.js" />
+    <Content Include="Content\css\jquery.datetimepicker.css" />
+    <Content Include="Content\css\mycss.css" />
+    <Content Include="Content\css\slide.css" />
+    <Content Include="Content\css\themes.gif" />
+    <Content Include="Content\images\bg.jpg" />
+    <Content Include="Content\images\block-news-tail.gif" />
+    <Content Include="Content\images\body.jpg" />
+    <Content Include="Content\images\box.png" />
+    <Content Include="Content\images\button-tail.gif" />
+    <Content Include="Content\images\button1.png" />
+    <Content Include="Content\images\button2.png" />
+    <Content Include="Content\images\button3.png" />
+    <Content Include="Content\images\facebook.png" />
+    <Content Include="Content\images\Fish-HD-Picture-3.jpg" />
+    <Content Include="Content\images\flowers-flower-bouquet-picture.jpg" />
+    <Content Include="Content\images\linkedin.png" />
+    <Content Include="Content\images\logo.png" />
+    <Content Include="Content\images\marker.gif" />
+    <Content Include="Content\images\no-profile-pic.jpg" />
+    <Content Include="Content\images\numb-1.gif" />
+    <Content Include="Content\images\numb-2.gif" />
+    <Content Include="Content\images\numb-3.gif" />
+    <Content Include="Content\images\page1-img1.png" />
+    <Content Include="Content\images\page3-img1.png" />
+    <Content Include="Content\images\page3-img2.png" />
+    <Content Include="Content\images\page3-img3.png" />
+    <Content Include="Content\images\page3-img4.png" />
+    <Content Include="Content\images\page3-img5.png" />
+    <Content Include="Content\images\page3-img6.png" />
+    <Content Include="Content\images\page4-img1.png" />
+    <Content Include="Content\images\pic-1.gif" />
+    <Content Include="Content\images\search-button.png" />
+    <Content Include="Content\images\sli1.jpg" />
+    <Content Include="Content\images\sli2.jpg" />
+    <Content Include="Content\images\sli3.jpg" />
+    <Content Include="Content\images\slider-1.jpg" />
+    <Content Include="Content\images\slider-2.jpg" />
+    <Content Include="Content\images\slider-3.jpg" />
+    <Content Include="Content\images\slider-control.png" />
+    <Content Include="Content\images\slider-img1.jpg" />
+    <Content Include="Content\images\slider-img2.jpg" />
+    <Content Include="Content\images\slider-img3.jpg" />
+    <Content Include="Content\images\twitter.png" />
+    <Content Include="Content\jquery-ui\external\jquery\jquery.js" />
+    <Content Include="Content\jquery-ui\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\jquery-ui\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\jquery-ui\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\jquery-ui\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\jquery-ui\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\jquery-ui\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\jquery-ui\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\jquery-ui\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\jquery-ui\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\jquery-ui\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\jquery-ui\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\jquery-ui\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\jquery-ui\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\jquery-ui\index.html" />
+    <Content Include="Content\jquery-ui\jquery-ui.css" />
+    <Content Include="Content\jquery-ui\jquery-ui.js" />
+    <Content Include="Content\jquery-ui\jquery-ui.min.css" />
+    <Content Include="Content\jquery-ui\jquery-ui.min.js" />
+    <Content Include="Content\jquery-ui\jquery-ui.structure.css" />
+    <Content Include="Content\jquery-ui\jquery-ui.structure.min.css" />
+    <Content Include="Content\jquery-ui\jquery-ui.theme.css" />
+    <Content Include="Content\jquery-ui\jquery-ui.theme.min.css" />
+    <Content Include="Content\js\charts\highcharts.js" />
+    <Content Include="Content\js\charts\modules\exporting.js" />
+    <Content Include="Content\js\jquery-2.1.1.min.js" />
+    <Content Include="Content\js\jquery.datetimepicker.js" />
+    <Content Include="Content\js\responsiveslides.min.js" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -237,6 +315,17 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\AddItem.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\bootstrap\css\bootstrap-theme.css.map" />
+    <Content Include="Content\bootstrap\css\bootstrap.css.map" />
+    <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.woff" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\AddItemOwner.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -1,0 +1,103 @@
+﻿@{
+    ViewBag.Title = "AddItemOwner";
+}
+
+
+
+@{
+    if (Session["userType"] != null && Session["userType"].ToString().Equals("1"))
+    {
+        <h2>AddItemOwner</h2>
+    
+        @Html.ActionLink("Back to Add item", "AddItem")
+
+        <form>
+            <table>
+                <tr>
+                    <th>No.</th>
+                    <th>Username</th>
+                    <th>Name</th>
+                    <th>Department</th>
+                    <th>Room</th>
+                    <th>Address</th>
+                    <th>Tel</th>
+                    <th>Email</th>
+                    <th>Active status</th>
+                </tr>
+                @{
+        int i = 1;
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>@i</td>
+                <td>@item.user_username</td>
+                <td>@item.user_name</td>
+                <td>@item.user_department</td>
+                <td>@item.user_room</td>
+                <td>@item.user_address</td>
+                <td>@item.user_tel</td>
+                <td>@item.user_email</td>
+                @{
+            if (item.user_active == true)
+            {
+                <td>Active</td>
+            }
+            else
+            {
+                <td>Not Active</td>
+            }
+                }
+                <td><input type="radio" name="userOwnerId" value="@item.user_id" /></td>
+            </tr>
+            i++;
+        }
+                }
+            </table>
+
+            <input type="button" placeholder="Item Owner" name="itemOwner" value="Add Owner" onclick="onAddItemOwner()">
+        </form>
+
+        <script>
+
+            if (localStorage.getItem("userOwnerId") != null) {
+                var ownerId = localStorage.getItem("userOwnerId");
+
+                var userOwnerId = document.forms[0].userOwnerId;
+                for (var i = 0; i < userOwnerId.length; i++) {
+                    if (userOwnerId[i].value == ownerId) {
+                        userOwnerId[i].checked = true;
+                    }
+                }
+            }
+
+            function onAddItemOwner() {
+
+
+                var userOwnerId = document.forms[0].userOwnerId;
+                var userOwnerIdCheck = "";
+                for (var i = 0; i < userOwnerId.length; i++) {
+                    if (userOwnerId[i].checked) {
+                        userOwnerIdCheck = userOwnerId[i].value;
+                    }
+                }
+
+                if (userOwnerIdCheck != "") {
+                    localStorage.setItem("userOwnerId", userOwnerIdCheck);
+                    location.href = '@Url.Action("AddItem", "Home")'
+                }
+                else {
+                    alert("Please select item owner")
+                }
+
+            }
+        </script>
+
+    }
+    else
+    {
+        <script>
+            alert("Please login by Administrator");
+        </script>
+        @Html.Action("Index");
+    }
+}
