@@ -227,5 +227,32 @@ namespace Inventory_and_Asset_Management_2._0.Models
                 return camtUserModelList;
             }
         }
+
+        public CAMTUserModel viewUserByuserId(int userId)
+        {
+            try
+            {
+                CAMTUser camtUser = new CAMTUser();
+                ICAMTUserRepo camtUserRepo = new CAMTUserRepo(new INVENTORY_MANAGEMENT_2Entities());
+                camtUser = camtUserRepo.viewUserByuserId(userId);
+
+                this.user_id = camtUser.user_id;
+                this.user_username = camtUser.user_username;
+                this.user_password = camtUser.user_password;
+                this.user_name = camtUser.user_name;
+                this.user_department = camtUser.user_department;
+                this.user_room = camtUser.user_room;
+                this.user_address = camtUser.user_address;
+                this.user_tel = camtUser.user_tel;
+                this.user_email = camtUser.user_email;
+                this.user_type = camtUser.user_type;
+                this.user_active = camtUser.user_active;
+                return this;
+            }
+            catch
+            {
+                return this;
+            }
+        }
     }
 }

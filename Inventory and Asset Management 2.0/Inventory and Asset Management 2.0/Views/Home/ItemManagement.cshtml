@@ -1,4 +1,7 @@
-﻿@{
+﻿@model IEnumerable<Inventory_and_Asset_Management_2._0.Models.ItemOwnerModel>
+@using Inventory_and_Asset_Management_2._0.Models;
+
+@{
     ViewBag.Title = "ItemManagement";
 }
 
@@ -8,7 +11,116 @@
     {
         <h2>ItemManagement</h2>
         @Html.ActionLink("Add Item", "AddItem")<br />
-        @Html.ActionLink("back to Administrator main page", "AdministratorMainpage")
+        @Html.ActionLink("back to Administrator main page", "AdministratorMainpage")<br />
+
+        //-------------------------------- select item brand----------------
+        <div>
+            <form action="~/Home/ItemManagement" method="get">
+                <input type="text" name="searchType" value="itemBrand" style=" display:none;" />
+                <select name="keyword" id="itemBrand">
+
+                    @{
+                        foreach (var item in ViewData["itemBrand"] as List<string>)
+                        {
+                            <option value="@item">@item</option>
+                        }
+                    }
+                </select>
+                <button>Search</button>
+            </form>
+
+        </div>
+    
+        <div>
+            <form action="~/Home/ItemManagement" method="get">
+                <input type="text" name="searchType" value="itemStatus" style=" display:none;" />
+                <select name="keyword" id="itemBrand">
+                        <option value="0">All status</option>
+                        <option value="1">Good</option>
+                        <option value="2">Normal</option>
+                        <option value="3">Boken</option>
+                </select>
+                <button>Search</button>
+            </form>
+
+        </div>
+        <div>
+            <form action="~/Home/ItemManagement" method="get">
+                <label>Find Item component</label>
+                <input type="text" name="searchType" value="itemComponent" style=" display:none;" />
+                <input type="text" name="keyword" id="keyword" />
+                <button>Search</button>
+            </form>
+
+        </div>
+        <div>
+            <form action="~/Home/ItemManagement" method="get">
+                <label>Find Item </label>
+                <input type="text" name="searchType" value="searchKeyword" style=" display:none;" />
+                <input type="text" name="keyword" id="keyword" />
+                <button>Search</button>
+            </form>
+
+        </div>
+       
+
+
+        //--------------------------------Table-----------------------------
+
+
+        <table class="table table-hover" border="1">
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Item ID</th>
+                    <th>Item band</th>
+                    <th>Item name</th>
+                    <th>Item Description</th>
+                    <th>CMU Number</th>
+                    <th>CAMT Number</th>
+                    <th>Serial Number</th>
+                    <th>Item status</th>
+                    <th>Item Picture</th>
+                    <th>Item Owner</th>
+                </tr>
+            </thead>
+            <!-- LOOP HERE -->
+            @{
+        int i = 1;
+        int j = 0;
+        var serialItemTypeList = ViewData["serialItemTypeList"] as List<string>;
+
+        foreach (var item in Model)
+        {
+            <tbody>
+                <tr>
+                    <td>@i</td>
+                    <td>@item.item_id.item_id</td>
+                    <td>@item.item_id.item_brand</td>
+                    <td>@item.item_id.item_name</td>
+                    <td>@item.item_id.item_description</td>
+                    <td>@item.item_id.item_cmuNumber</td>
+                    <td>@item.item_id.item_camtNumber</td>
+                    <td>@item.item_id.item_serialNumber</td>
+                    <td>@item.item_id.item_status</td>
+                    <td><img src="@Url.Content("~/Content/ItemPics/" + item.item_id.item_picture)" /></td>
+                    <td>@item.user_id.user_name</td>
+                    <td>
+                        @using (Html.BeginForm("EditItem", "Home", FormMethod.Get))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.Hidden("itemId", item.item_id.item_id);
+                            <button>Edit</button>
+                        }
+                    </td>
+                </tr>
+            </tbody>
+                        i++;
+        }
+
+            }
+            <!-- LOOP HERE -->
+        </table>
     }
     else
     {

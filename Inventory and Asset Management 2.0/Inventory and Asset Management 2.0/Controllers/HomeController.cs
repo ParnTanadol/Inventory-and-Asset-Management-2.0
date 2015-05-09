@@ -191,9 +191,97 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
 
         public ActionResult ItemManagement()
         {
-            return View();
-        }
+            try
+            {
+                string searchType = Request["searchType"].ToString();
+                string keyword = Request["keyword"].ToString();
+                ItemOwnerModel itemOwnerModel = new ItemOwnerModel();
+                List<ItemOwnerModel> itemOwnerModelList = new List<ItemOwnerModel>();
+                itemOwnerModelList = itemOwnerModel.viewAllItemOwner();
+                List<ItemOwnerModel> newItemOwnerModelList = new List<ItemOwnerModel>();
+                if (!String.IsNullOrEmpty(keyword))
+                {
 
+                    switch (searchType)
+                    {
+                        case "itemBrand":
+                            newItemOwnerModelList = itemOwnerModelList.Where(i => i.item_id.item_brand.Contains(keyword)).ToList();
+                            newItemOwnerModelList = newItemOwnerModelList.OrderBy(i => i.item_id.item_brand).ToList();
+                            break;
+                        case "itemComponent":
+                            try
+                            {
+                            newItemOwnerModelList = itemOwnerModelList.Where(i => i.item_id.item_component.item_id == int.Parse(keyword)).ToList();
+                            newItemOwnerModelList = newItemOwnerModelList.OrderByDescending(i => i.item_id.item_id).ToList();
+                            }
+                            catch
+                            {
+                                List<ItemOwnerModel> itemOwnerModelListNotNull = new List<ItemOwnerModel>();
+                                itemOwnerModelListNotNull = itemOwnerModelList.Where(i => !String.IsNullOrEmpty(i.item_id.item_component.item_cmuNumber)
+                                                                                        && !String.IsNullOrEmpty(i.item_id.item_component.item_camtNumber)
+                                                                                        && !String.IsNullOrEmpty(i.item_id.item_component.item_cmuNumber)).ToList();
+
+                                newItemOwnerModelList = itemOwnerModelListNotNull.Where(i => i.item_id.item_component.item_cmuNumber.Contains(keyword)
+                                                                                        || i.item_id.item_component.item_camtNumber.Contains(keyword)
+                                                                                        || i.item_id.item_component.item_serialNumber.Contains(keyword)).ToList();
+
+                                newItemOwnerModelList = newItemOwnerModelList.OrderBy(i => i.item_id.item_id).ToList();    
+                            }
+                            break;
+
+                        case "itemStatus":
+                            if (keyword == "0")
+                            {
+                                newItemOwnerModelList = itemOwnerModelList;
+                            }
+                            else
+                            {
+                                newItemOwnerModelList = itemOwnerModelList.Where(i => i.item_id.item_status == int.Parse(keyword)).ToList();
+                                newItemOwnerModelList = newItemOwnerModelList.OrderBy(i => i.item_id.item_brand).ToList();
+                            }
+                            break;
+                        case "searchKeyword":
+                            try
+                            {
+                                newItemOwnerModelList = itemOwnerModelList.Where(i => i.item_id.item_id == int.Parse(keyword)).ToList();
+                                newItemOwnerModelList = newItemOwnerModelList.OrderByDescending(i => i.item_id.item_id).ToList();
+                            }
+                            catch
+                            {
+                                newItemOwnerModelList = itemOwnerModelList.Where(i => i.item_id.item_brand.Contains(keyword)
+                                                                                    || i.item_id.item_name.Contains(keyword)
+                                                                                    || i.item_id.item_cmuNumber.Contains(keyword)
+                                                                                    || i.item_id.item_camtNumber.Contains(keyword)
+                                                                                    || i.item_id.item_serialNumber.Contains(keyword)
+                                                                                    || i.user_id.user_name.Contains(keyword)).ToList();
+                                newItemOwnerModelList = newItemOwnerModelList.OrderBy(i => i.item_id.item_brand).ToList();
+                            }
+                            break;
+                    }
+                }
+                //-----------item Brand group-----------
+                ItemModel itemModel = new ItemModel();
+                List<string> itemBrand = new List<string>();
+                itemBrand = itemModel.viewGroupByItemBrand();
+                ViewData["itemBrand"] = itemBrand;
+
+                return View(newItemOwnerModelList);
+            }
+            catch
+            {
+                ItemModel itemModel = new ItemModel();
+                List<string> itemBrand = new List<string>();
+                itemBrand = itemModel.viewGroupByItemBrand();
+
+                ItemOwnerModel itemOwnerModel = new ItemOwnerModel();
+                List<ItemOwnerModel> itemOwnerModelList = new List<ItemOwnerModel>();
+                itemOwnerModelList = itemOwnerModel.viewAllItemOwner();
+
+                ViewData["itemBrand"] = itemBrand;
+                return View(itemOwnerModelList);
+            }
+
+        }
         public ActionResult AddItem()
         {
             return View();
@@ -326,6 +414,84 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
             return RedirectToAction("AddItem");
         }
 
+        public ActionResult EditItem()
+        {
+            int itemId = int.Parse(Request["itemId"].ToString());
+            ItemModel itemModel = new ItemModel();
+            itemModel.viewItemModelByItemId(itemId);
+            return View(itemModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult editItem()
+        {
+            int itemId = int.Parse(Request["itemId"].ToString());
+            string itemBrand = Request["itemBrand"].ToString();
+            string itemName = Request["itemName"].ToString();
+            string itemDescription = Request["itemDescription"].ToString();
+            DateTime itemStartDate = DateTime.Parse(Request["itemStartDate"].ToString());
+            Nullable<DateTime> itemEndDate = DateTime.Parse(Request["itemEndDate"].ToString());
+            int itemStatus = int.Parse(Request["itemStatus"].ToString());
+            string itemPicturerName = Request["itemPicturerName"].ToString();
+            HttpPostedFileBase itemPicture = Request.Files["picturer"];
+            string cmuNumber = Request["cmuNumber"].ToString();
+            string camtNumber = Request["camtNumber"].ToString();
+            string serialNumber = Request["serialNumber"].ToString();
+
+            Nullable<int> itemComponent;
+            if (!(Request["itemComponent"].ToString().Equals("0")))
+            {
+                 itemComponent = int.Parse(Request["itemComponent"].ToString());
+            }
+            else
+            {
+                itemComponent = null;
+            }
+
+            if (itemPicture.ContentLength > 0)
+            {
+                string fileType = "";
+
+                if (itemPicture.ContentType.Contains("jpeg"))
+                {
+                    fileType = ".jpg";
+                }
+                else if (itemPicture.ContentType.Contains("png"))
+                {
+                    fileType = ".png";
+                }
+
+                // Delete old picturer
+                var fullPath = Server.MapPath("~/Content/ItemPics" + itemPicturerName);
+                FileInfo fileInfo = new FileInfo(fullPath);
+                if (fileInfo.Exists)
+                {
+                    fileInfo.Delete();
+                }
+
+                // add new picturer
+                var fileName = "picItem-" + itemId + fileType;
+                if (itemPicture.ContentLength > 0)
+                {
+                    System.Drawing.Image bm = System.Drawing.Image.FromStream(itemPicture.InputStream);
+                    bm = ResizeBitmap((Bitmap)bm, 200, 200); /// new width, height
+                    bm.Save(Path.Combine(Server.MapPath("~/Content/ItemPics"), fileName));
+                }
+                // update item
+                ItemModel itemModel = new ItemModel();
+                itemModel.updateItem(itemId, itemBrand, itemName, itemDescription, itemStartDate, itemEndDate, itemStatus, fileName, cmuNumber, camtNumber, serialNumber, itemComponent);
+            }
+            else
+            {
+                ItemModel itemModel = new ItemModel();
+                itemModel.updateItem(itemId, itemBrand, itemName, itemDescription, itemStartDate, itemEndDate, itemStatus, itemPicturerName, cmuNumber, camtNumber, serialNumber, itemComponent);
+            }
+            TempData["msg"] = "Edit this item is success";
+            string url = "~/Home/EditItem?itemId="+itemId;
+            return Redirect(url);
+        }
+
         private Bitmap ResizeBitmap(Bitmap b, int nWidth, int nHeight)
         {
             Bitmap result = new Bitmap(nWidth, nHeight);
@@ -333,6 +499,5 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
                 g.DrawImage(b, 0, 0, nWidth, nHeight);
             return result;
         }
-
     }
 }

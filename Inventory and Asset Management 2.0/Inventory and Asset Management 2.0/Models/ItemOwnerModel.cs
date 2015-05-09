@@ -39,5 +39,38 @@ namespace Inventory_and_Asset_Management_2._0.Models
                 return false;
             }
         }
+
+        public List<ItemOwnerModel> viewAllItemOwner()
+        {
+            try
+            {
+                IItemOwnerRepo itemOwnerRepo = new ItemOwnerRepo(new INVENTORY_MANAGEMENT_2Entities());
+                List<ItemOwner> itemOwnerListDb = new List<ItemOwner>();
+                itemOwnerListDb = itemOwnerRepo.viewAllItemOwner();
+
+                List<ItemOwnerModel> itemOwnerModelList = new List<ItemOwnerModel>();
+                for (int i = 0; i < itemOwnerListDb.Count; i++)
+                {
+                    ItemOwnerModel itemOwnerModel = new ItemOwnerModel();
+                    itemOwnerModel.itemOwner_id = itemOwnerListDb[i].itemOwner_id;
+
+                    ItemModel itemModel = new ItemModel();
+                    itemModel.viewItemModelByItemId(itemOwnerListDb[i].item_id);
+                    itemOwnerModel.item_id = itemModel;
+
+                    CAMTUserModel camtUserModel = new CAMTUserModel();
+                    camtUserModel.viewUserByuserId(itemOwnerListDb[i].user_id);
+                    itemOwnerModel.user_id = camtUserModel;
+                    itemOwnerModelList.Add(itemOwnerModel);
+                }
+
+                return itemOwnerModelList;
+            }
+            catch
+            {
+                List<ItemOwnerModel> itemOwnerModelList = new List<ItemOwnerModel>();
+                return itemOwnerModelList;
+            }
+        }
     }
 }

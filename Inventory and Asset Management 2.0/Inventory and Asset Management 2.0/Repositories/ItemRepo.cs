@@ -134,5 +134,25 @@ namespace Inventory_and_Asset_Management_2._0.Repositories
                 return itemList;
             }
         }
+
+
+        public List<string> viewGroupByItemBrand()
+        {
+            try
+            {
+                var query = from i in context.Items group i.item_brand by i.item_brand;
+                IQueryable<IGrouping<string, string>> groups = query;
+                IQueryable<string> queryValue = groups.SelectMany(group => group);
+
+                List<string> itemBrands = queryValue.ToList().Distinct().ToList();
+                context.SaveChanges();
+                return itemBrands;
+            }
+            catch
+            {
+                List<string> itemBrands = new List<string>();
+                return itemBrands;
+            }
+        }
     }
 }

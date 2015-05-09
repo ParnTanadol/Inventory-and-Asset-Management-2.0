@@ -186,6 +186,21 @@ namespace Inventory_and_Asset_Management_2._0.Models
                 return this;
             }
         }
+        public List<string> viewGroupByItemBrand()
+        {
+            try
+            {
+                IItemRepo itemRepo = new ItemRepo(new INVENTORY_MANAGEMENT_2Entities());
+                List<string> itemBrands = itemRepo.viewGroupByItemBrand();
+                return itemBrands;
+
+            }
+            catch
+            {
+                List<string> itemBrands = new List<string>();
+                return itemBrands;
+            }
+        }
 
     }
 }

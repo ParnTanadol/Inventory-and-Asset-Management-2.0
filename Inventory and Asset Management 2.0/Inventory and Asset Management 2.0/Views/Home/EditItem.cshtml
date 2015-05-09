@@ -1,0 +1,135 @@
+﻿@model Inventory_and_Asset_Management_2._0.Models.ItemModel
+@using Inventory_and_Asset_Management_2._0.Models;
+
+
+@{
+    ViewBag.Title = "EditItem";
+}
+
+
+
+@{
+    if (Session["userType"] != null && Session["userType"].ToString().Equals("1"))
+    {
+        <h2>EditItem</h2>
+        @Html.ActionLink("Item Management", "ItemManagement")<br />
+
+    <form action="~/Home/editItem" method="post" enctype="multipart/form-data" onsubmit="return onEditItem();">
+        @Html.AntiForgeryToken()
+        @Html.Hidden("itemId", @Model.item_id)
+        @Html.Hidden("itemStartDate", @Model.item_startDate)
+        @Html.Hidden("itemPicturerName", @Model.item_picture)
+        @Html.Hidden("itemComponent", @Model.item_component.item_id)
+        <label>Item Brand : </label> @Html.TextBox("itemBrand", @Model.item_brand, new { id = "itemBrand" }) <br />
+        <label>Item Name : </label> @Html.TextBox("itemName", @Model.item_name, new { id = "itemName" }) <br />
+        <label>Item Description : </label> @Html.TextBox("itemDescription", @Model.item_description, new { id = "itemDescription" }) <br />
+        <label>Item Start Date : </label> @Html.Label("", @Model.item_startDate.ToString()) <br />
+        <label>Item End Date : </label> @Html.TextBox("itemEndDate", @Model.item_endDate, new { id = "itemEndDate" }) <br />
+        <label>Item Status : </label>
+
+        <div class="form-group">
+            <label class="control-label col-sm-3">Item Status:</label>
+            <div class="col-sm-9">
+                <div class="radio-inline">
+                    <label><input type="radio" id="item-status1-1" name="itemStatus" value="1">Good</label>
+                </div>
+                <div class="radio-inline">
+                    <label><input type="radio" id="item-status1-2" name="itemStatus" value="2">Normal</label>
+                </div>
+                <div class="radio-inline">
+                    <label><input type="radio" id="item-status1-3" name="itemStatus" value="3">Broken</label>
+                </div>
+            </div>
+        </div>
+        <br />
+
+        <label>CMU number : </label> @Html.TextBox("cmuNumber", @Model.item_cmuNumber, new { id = "cmuNumber" })<br /> <br />
+        <label>CAMT number : </label>@Html.TextBox("camtNumber", @Model.item_camtNumber, new { id = "camtNumber" })<br />
+        <label>Serial number : </label> <label>@Html.TextBox("serialNumber", @Model.item_serialNumber, new { id = "serialNumber" })<br /></label> <br />
+        <label>Item Picture : </label><img src="@Url.Content("~/Content/ItemPics/" + @Model.item_picture)" /><br /><br />
+        <input type="file" name="picturer" />
+        
+        @{
+            if (@Model.item_status == 1)
+        {
+        <script>
+            document.getElementById("item-status1-1").checked = true;
+        </script>
+        }
+        else if (@Model.item_status == 2)
+        {
+        <script>
+            document.getElementById("item-status1-2").checked = true;
+        </script>
+        }
+        else
+        {
+        <script>
+            document.getElementById("item-status1-3").checked = true;
+        </script>
+        }
+        }
+        
+        <button>Edit</button>
+    </form>
+
+        //-------------------------check edit item----------------------------------------------------------
+        <script>
+            function onEditItem() {
+
+                var itemBand = document.getElementById("itemBrand").value;
+                var itemName = document.getElementById("itemName").value;
+                var itemDescription = document.getElementById("itemDescription").value;
+                var itemEndDate = document.getElementById("itemEndDate").value;
+                var cmuNumber = document.getElementById("cmuNumber").value;
+                var camtNumber = document.getElementById("camtNumber").value;
+                var serialNumber = document.getElementById("serialNumber").value;
+
+                    // get item status
+                var itemStatus = document.getElementsByName("itemStatus");
+                var itemStatusCheck = "";
+                for (var a = 0; a < itemStatus.length; a++) {
+                    if (itemStatus[a].checked) {
+                        itemStatusCheck = itemStatus[a].value;
+                    }
+                }
+
+                    if (itemBand == "" ) {
+                        alert("Please fill Item band");
+                        return false;
+                    }
+                    else if (itemName == "") {
+                         alert("Please fill Item name");
+                    }
+                    else if (itemDescription == "") {
+                        alert("Please fill Item description");
+                    }
+                    else if (itemStatusCheck == "") {
+                        alert("Please fill Item status");
+                    }
+                    else if (camtNumber == "" && cmuNumber == "" && serialNumber == "") {
+                        alert("Please fill CAMT number, CMU number, or Serial number");
+                        return false;
+                    }
+                }
+        </script>
+        //--------------------------------------------------------------------------------------------------
+         if (TempData["msg"] != null)
+        {
+            var message = TempData["msg"].ToString();
+
+            <script>
+                var msg = '@message';
+                alert(msg);
+            </script>
+            TempData["msg"] = null;
+        }
+    }
+    else
+    {
+        <script>
+            alert("Please login by Administrator");
+        </script>
+        @Html.Action("Index");
+    }
+}
