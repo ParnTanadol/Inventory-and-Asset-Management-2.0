@@ -1,0 +1,74 @@
+﻿@model IEnumerable<Inventory_and_Asset_Management_2._0.Models.ReportModel>
+@using Inventory_and_Asset_Management_2._0.Models;
+@{
+    ViewBag.Title = "ReportHistory";
+}
+
+
+
+@{
+    if (Session["userType"] != null && Session["userType"].ToString().Equals("3"))
+    {
+        <h2>ReportHistory</h2>
+        @Html.ActionLink("Reporter Main Page", "ReporterMainpage")
+
+
+        <table>
+            <tr>
+                <th>No.</th>
+                <th>Item</th>
+                <th>Broken type</th>
+                <th>Repairing Detail</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Repairing status</th>
+            </tr>
+            @{
+        int i = 1;
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>@i</td>
+                <td>
+                    @using (Html.BeginForm("ItemInformation", "Reporter", FormMethod.Get))
+                    {
+                        @Html.Hidden("itemId", item.item_id.item_id);
+                        <button>@item.item_id.item_name</button>
+                    }
+
+                </td>
+                <td>@item.report_typeBroken</td>
+                <td>@item.report_repairDetail</td>
+                <td>@item.report_startDate</td>
+                <td>@item.report_endDate</td>
+                @{
+                    if (item.report_statusComplete == 1)
+                    {
+                        <td>Wait to accept from technician</td>
+                    }
+                    else if (item.report_statusComplete == 2)
+                    {
+                        <td>Repairing process</td>
+                    }
+                    else
+                    {
+                        <td>Repairing complete</td>
+                    }
+                }
+            </tr>
+            i++;
+        }
+            }
+        </table>
+    
+    
+    
+    }
+    else
+    {
+        <script>
+            alert("Please login by Reporter");
+        </script>
+        @Html.Action("Index");
+    }
+}

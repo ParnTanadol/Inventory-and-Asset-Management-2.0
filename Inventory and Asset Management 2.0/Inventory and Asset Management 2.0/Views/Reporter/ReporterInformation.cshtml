@@ -1,0 +1,175 @@
+﻿@model Inventory_and_Asset_Management_2._0.Models.CAMTUserModel
+@using Inventory_and_Asset_Management_2._0.Models;
+
+@{
+    ViewBag.Title = "ReporterInformation";
+}
+
+
+@{
+    if (Session["userType"] != null && Session["userType"].ToString().Equals("3"))
+    {
+        <h2>ItemInformation</h2>
+        @Html.ActionLink("Reporter Main Page", "ReporterMainpage")<br />
+        
+    <div>
+
+        <form action="~/Reporter/editReporterInfo" method="post" onsubmit="return onEditInfor();">
+
+            @Html.Hidden("userId", @Model.user_id)
+            @Html.Hidden("userType", @Model.user_type)
+            @Html.Hidden("password", @Model.user_password)
+            <label>Username: </label> @Html.TextBox("username", @Model.user_username, new { id = "username" }) <br />
+            <label>Name: </label> @Html.TextBox("name", @Model.user_name, new { id = "name" }) <br />
+            <label>Department: </label> @Html.TextBox("department", @Model.user_department, new { id = "department" }) <br />
+            <label>Room: </label> @Html.TextBox("room", @Model.user_room, new { id = "room" }) <br />
+            <label>Address: </label> @Html.TextBox("address", @Model.user_address, new { id = "address" }) <br />
+            <label>Telephone number: </label> @Html.TextBox("tel", @Model.user_tel, new { id = "tel" }) <br />
+            <label>Email: </label> @Html.TextBox("email", @Model.user_email, new { id = "email" }) <br />
+
+            <br />
+            @Html.Hidden("userActive", 1)
+
+            <button>Edit information</button>
+
+            <script>
+                function onEditInfor() {
+                    var result = confirm("Do you sure for edit information ?");
+                    if (result == true) {
+
+                        var username = document.getElementById("username").value;
+                        var password = document.getElementById("password").value;
+                        var name = document.getElementById("name").value;
+                        var department = document.getElementById("department").value;
+                        var room = document.getElementById("room").value;
+                        var address = document.getElementById("address").value;
+                        var tel = document.getElementById("tel").value;
+                        var email = document.getElementById("email").value;
+
+
+                        if (username == "" ) {
+                            alert("Please fill your username");
+                            return false;
+                        }
+                        if (name == "") {
+                            alert("Please fill your name");
+                            return false;
+                        }
+                        if (department == "") {
+                            alert("Please fill your department");
+                            return false;
+                        }
+                        if (room == "") {
+                            alert("Please fill your room");
+                            return false;
+                        }
+                        if (address == "") {
+                            alert("Please fill your address");
+                            return false;
+                        }
+                        if (tel == "") {
+                            alert("Please fill your telephone number");
+                            return false;
+                        }
+                        if (email == "") {
+                            alert("Please fill your telephone email");
+                            return false;
+                        }
+                        if (username.length < 4 || username.length > 16) {
+                            alert("Please fill username 4-16 characters ");
+                            return false;
+                        }
+                    }
+                    else {
+                        return false
+                    }
+                }
+            </script>
+        </form>
+    </div>
+    
+    <div>
+        <form action="~/Reporter/editReporterPass" method="post" onsubmit="return onEditPassword();">
+            @Html.Hidden("userId", @Model.user_id)
+            @Html.Hidden("userType", @Model.user_type)
+            @Html.Hidden("username", @Model.user_username)
+            @Html.Hidden("password", @Model.user_password)
+            @Html.Hidden("name", @Model.user_name)
+            @Html.Hidden("department", @Model.user_department)
+            @Html.Hidden("room", @Model.user_room)
+            @Html.Hidden("address", @Model.user_address)
+            @Html.Hidden("tel", @Model.user_tel)
+            @Html.Hidden("email", @Model.user_email)
+            @Html.Hidden("userActive", 1)
+            <label>Old Password: </label> @Html.Password("oldPassword", null, new { id = "oldPassword" })
+            <label>New Password: </label> @Html.Password("newPassword", null, new { id = "newPassword" })
+            <label>Comfirm Password: </label> @Html.Password("comfirmPassword", null, new { id = "comfirmPassword" })
+
+            <button>Edit Password</button>
+
+            <script>
+                function onEditPassword() {
+                    var result = confirm("Do you sure for edit password ?");
+                    if (result == true) {
+
+                        var oldPassword = document.getElementById("oldPassword").value;
+                        var newPassword = document.getElementById("newPassword").value;
+                        var comfirmPassword = document.getElementById("comfirmPassword").value;
+
+                        if (oldPassword == "") {
+                            alert("Please fill Old password");
+                            return false;
+                        }
+                        if (newPassword == "") {
+                            alert("Please fill New password ");
+                            return false;
+                        }
+                        if (comfirmPassword == "") {
+                            alert("Please fill Confirm password");
+                            return false;
+                        }
+                        if (newPassword.length < 4 || newPassword.length > 16) {
+                            alert("Please fill new password 4-16 characters ");
+                            return false;
+                        }
+                        if (comfirmPassword.length < 4 || comfirmPassword.length > 16) {
+                            alert("Please fill Confirm password 4-16 characters ");
+                            return false;
+                        }
+                        if (newPassword != comfirmPassword) {
+                            alert("New Password and confirm password are not match");
+                            return false;
+                        }
+                    }
+                    else {
+                        return false
+                    }
+                }
+            </script>
+
+
+        </form>
+
+    </div>
+
+            //---------------------------------------------------------------------------------------
+
+         if (TempData["msg"] != null)
+        {
+            var message = TempData["msg"].ToString();
+
+            <script>
+                var msg = '@message';
+                alert(msg);
+            </script>
+            TempData["msg"] = null;
+        }
+    }
+    else
+    {
+        <script>
+            alert("Please login by Reporter");
+        </script>
+        @Html.Action("Index");
+    }
+}

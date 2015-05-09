@@ -109,6 +109,33 @@ namespace Inventory_and_Asset_Management_2._0.Models
             }
         }
 
+        public bool updateCAMTUserPass(int userId, string password)
+        {
+            try
+            {
+                ICAMTUserRepo camtUserRepo = new CAMTUserRepo(new INVENTORY_MANAGEMENT_2Entities());
+                CAMTUser camtUser = new CAMTUser();
+                camtUser = camtUserRepo.viewUserByuserId(userId);
+
+                camtUser.user_id = userId;
+                camtUser.user_password = password;
+
+                bool status = camtUserRepo.updateCAMTUser(camtUser);
+                if (status == true)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         public CAMTUserModel loginUser(string username, string password)
         {
             try

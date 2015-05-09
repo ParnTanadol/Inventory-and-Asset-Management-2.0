@@ -154,5 +154,48 @@ namespace Inventory_and_Asset_Management_2._0.Repositories
                 return itemBrands;
             }
         }
+
+
+        public Item viewItemModelbySerialNum(string serialNumber)
+        {
+            try
+            {
+                try
+                {
+                    Item item = context.Items.First(i => i.item_cmuNumber == serialNumber);
+                    context.SaveChanges();
+                    return item;
+                }
+                catch
+                {
+                    try
+                    {
+                        Item item = context.Items.First(i => i.item_camtNumber == serialNumber);
+                        context.SaveChanges();
+                        return item;
+                    }
+                    catch
+                    {
+                        try
+                        {
+                            Item item = context.Items.First(i => i.item_serialNumber == serialNumber);
+                            context.SaveChanges();
+                            return item;
+                        }
+                        catch
+                        {
+                            Item item = new Item();
+                            return item;
+                        }
+                    }
+                }
+                 
+            }
+            catch
+            {
+                Item item = new Item();
+                return item;
+            }
+        }
     }
 }

@@ -2,4 +2,90 @@
     ViewBag.Title = "ReporterMainpage";
 }
 
-<h2>ReporterMainpage</h2>
+
+
+@{
+    if (Session["userType"] != null && Session["userType"].ToString().Equals("3"))
+    {
+        <h2>ReporterMainpage</h2>
+
+        @Html.ActionLink("Reports History", "ReportHistory")
+        @Html.ActionLink("Reporter Information", "ReporterInformation")
+
+        <form action="~/Reporter/addReport" method="post" onsubmit="return onReport();">
+            <label>Serial Number: </label> @Html.TextBox("serialNumber", null, new { id = "serialNumber" }) <br />
+            <label>Broken type: </label>
+            <select id="typeBroken" name="typeBroken">
+                <option value="Cant't Open">Cant't Open</option>
+                <option value="Program Error">Program Error</option>
+            </select> <br />
+            <label>Description: </label> @Html.TextBox("description", null, new { id = "description" }) <br />
+            <label>Contact information</label> @Html.TextBox("contact", null, new { id = "contact" }) <br />
+            <label>Notification mode</label>
+            <input type="radio" name="reportRecieveMsg" value="1">Allow
+            <input type="radio" name="reportRecieveMsg" value="0">Disallow<br />
+
+            <button>Report</button>
+        </form>
+    
+    <script>
+        function onReport() {
+
+            var serialNumber = document.getElementById("serialNumber").value;
+            var typeBroken = document.getElementById("typeBroken").value;
+            var description = document.getElementById("description").value;
+            var contact = document.getElementById("contact").value;
+
+            var reportRecieveMsg = document.forms[0].reportRecieveMsg;
+            var reportRecieveMsgCheck = "";
+            for (var i = 0; i < reportRecieveMsg.length; i++) {
+                if (reportRecieveMsg[i].checked) {
+                    reportRecieveMsgCheck = reportRecieveMsg[i].value;
+                }
+            }
+
+            if (serialNumber == "") {
+                alert("Please fill Serial number");
+                return false;
+            }
+            if(typeBroken == "" ){
+                alert("Please fill type of broken");
+                return false;
+            }
+            if(description == ""){
+                alert("Please fill description");
+                return false;
+            }
+            if (contact == "") {
+                alert("Please fill contact");
+                return false;
+            }
+            if (reportRecieveMsgCheck == "") {
+                alert("Please fill Notification mode");
+                return false;
+            }
+
+        }
+    </script>
+    
+    //--------------------------------------------------------------------------------------------------
+         if (TempData["msg"] != null)
+        {
+            var message = TempData["msg"].ToString();
+
+            <script>
+                var msg = '@message';
+                alert(msg);
+            </script>
+            TempData["msg"] = null;
+        }
+    
+    }
+    else
+    {
+        <script>
+            alert("Please login by Reporter");
+        </script>
+        @Html.Action("Index");
+    }
+}

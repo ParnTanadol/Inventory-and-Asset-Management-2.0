@@ -1,0 +1,32 @@
+﻿@model Inventory_and_Asset_Management_2._0.Models.ItemModel
+@using Inventory_and_Asset_Management_2._0.Models;
+
+@{
+    ViewBag.Title = "ItemInformation";
+}
+
+
+
+@{
+    if (Session["userType"] != null && Session["userType"].ToString().Equals("3"))
+    {
+        <h2>ItemInformation</h2>
+        @Html.ActionLink("Reports History", "ReportHistory")<br />
+
+
+        <label>Item Brand : </label> @Html.Label("itemBrand", @Model.item_brand, new { id = "itemBrand" }) <br />
+        <label>Item Name : </label> @Html.Label("itemName", @Model.item_name, new { id = "itemName" }) <br />
+        <label>Item Description : </label> @Html.Label("itemDescription", @Model.item_description, new { id = "itemDescription" }) <br />
+        <label>CMU number : </label> @Html.Label("cmuNumber", @Model.item_cmuNumber, new { id = "cmuNumber" })<br />
+        <label>CAMT number : </label>@Html.Label("camtNumber", @Model.item_camtNumber, new { id = "camtNumber" })<br />
+        <label>Serial number : </label> <label>@Html.Label("serialNumber", @Model.item_serialNumber, new { id = "serialNumber" })<br /></label> <br />
+        <label>Item Picture : </label><img src="@Url.Content("~/Content/ItemPics/" + @Model.item_picture)" /><br /><br />
+    }
+    else
+    {
+        <script>
+            alert("Please login by Reporter");
+        </script>
+        @Html.Action("Index");
+    }
+}

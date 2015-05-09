@@ -15,6 +15,8 @@ namespace Inventory_and_Asset_Management_2._0.Repositories
         List<Item> viewAllItem();
         Item viewPreviousItem();
         List<Item> viewItemComponentbyItemId(int itemId);
+
+        Item viewItemModelbySerialNum(string serialNumber);
         List<string> viewGroupByItemBrand();
     }
 }

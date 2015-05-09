@@ -186,6 +186,48 @@ namespace Inventory_and_Asset_Management_2._0.Models
                 return this;
             }
         }
+        
+        public ItemModel viewItemModelbySerialNum(string serialNumber)
+        {
+            try
+            {
+                IItemRepo itemRepo = new ItemRepo(new INVENTORY_MANAGEMENT_2Entities());
+                Item itemDb = new Item();
+                itemDb = itemRepo.viewItemModelbySerialNum(serialNumber);
+
+                this.item_id = itemDb.item_id;
+                this.item_brand = itemDb.item_brand;
+                this.item_name = itemDb.item_name;
+                this.item_description = itemDb.item_description;
+                this.item_startDate = itemDb.item_startDate;
+                this.item_endDate = itemDb.item_endDate;
+                this.item_picture = itemDb.item_picture;
+                this.item_cmuNumber = itemDb.item_cmuNumber;
+                this.item_camtNumber = itemDb.item_camtNumber;
+                this.item_serialNumber = itemDb.item_serialNumber;
+                this.item_status = itemDb.item_status;
+                if (itemDb.item_component != null)
+                {
+                    int itemComponent = int.Parse(itemDb.item_component.ToString());
+                    ItemModel itemModel = new ItemModel();
+                    itemModel.viewItemModelByItemId(itemComponent);
+                    this.item_component = itemModel;
+
+                }
+                else
+                {
+                    ItemModel itemModel = new ItemModel();
+                    this.item_component = itemModel;
+                }
+
+                return this;
+            }
+            catch
+            {
+                return this;
+            }
+        }
+         
         public List<string> viewGroupByItemBrand()
         {
             try
