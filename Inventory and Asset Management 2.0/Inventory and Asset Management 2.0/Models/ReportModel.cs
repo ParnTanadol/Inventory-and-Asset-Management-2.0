@@ -198,6 +198,32 @@ namespace Inventory_and_Asset_Management_2._0.Models
         }
 
 
+        public bool updateReport(int reportId,string reportRepairDetail, int statusComplete)
+        {
+            try
+            {
+                Report report = new Report();
+                report.report_id = reportId;
+                report.report_repairDetail = reportRepairDetail;
+                report.report_statusComplete = statusComplete;
+
+                IReportRepo reportRepo = new ReportRepo(new INVENTORY_MANAGEMENT_2Entities());
+                bool status = reportRepo.updateReport(report);
+
+                if (status == true)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
         public ReportModel viewPreviousReport(int reporterId)
         {
             try
@@ -278,6 +304,116 @@ namespace Inventory_and_Asset_Management_2._0.Models
             {
                 List<ReportModel> reportModelList = new List<ReportModel>();
                 return reportModelList;
+            }
+        }
+
+        public List<ReportModel> viewReportByStatusAndUserId(int technicianId, int statusComplete)
+        {
+            try
+            {
+                IReportRepo reportRepo = new ReportRepo(new INVENTORY_MANAGEMENT_2Entities());
+                List<Report> reportDbList = new List<Report>();
+                reportDbList = reportRepo.viewReportByStatusAndUserId(technicianId, statusComplete);
+
+                List<ReportModel> reportModelList = new List<ReportModel>();
+                for (int i = 0; i < reportDbList.Count; i++)
+                {
+                    ReportModel reportModel = new ReportModel();
+                    reportModel.report_id = reportDbList[i].report_id;
+
+                    CAMTUserModel technicianModel = new CAMTUserModel();
+                    technicianModel.viewUserByuserId(reportDbList[i].technician_id);
+                    reportModel.technician_id = technicianModel;
+
+                    CAMTUserModel reporterModel = new CAMTUserModel();
+                    reporterModel.viewUserByuserId(reportDbList[i].reporter_id);
+                    reportModel.reporter_id = reporterModel;
+
+                    ItemModel itemModel = new ItemModel();
+                    itemModel.viewItemModelByItemId(reportDbList[i].item_id);
+                    reportModel.item_id = itemModel;
+
+                    reportModel.report_typeBroken = reportDbList[i].report_typeBroken;
+                    reportModel.report_case = reportDbList[i].report_case;
+                    reportModel.report_contact = reportDbList[i].report_contact;
+                    reportModel.report_repairDetail = reportDbList[i].report_repairDetail;
+                    reportModel.report_startDate = reportDbList[i].report_startDate;
+                    reportModel.report_endDate = reportDbList[i].report_endDate;
+                    reportModel.report_statusComplete = reportDbList[i].report_statusComplete;
+                    reportModel.report_recieveMsg = reportDbList[i].report_recieveMsg;
+                    reportModelList.Add(reportModel);
+                }
+                return reportModelList;
+
+            }
+            catch
+            {
+                List<ReportModel> reportModelList = new List<ReportModel>();
+                return reportModelList;
+            }
+        }
+
+
+        public bool updateRepairingStatus(int reportId, int statusComplete)
+        {
+            try
+            {
+                Report report = new Report();
+                report.report_id = reportId;
+                report.report_statusComplete = statusComplete;
+                IReportRepo reportRepo = new ReportRepo(new INVENTORY_MANAGEMENT_2Entities());
+                bool status = reportRepo.updateStatus(report);
+
+                if (status == true)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public ReportModel viewReportByReportId(int reportId)
+        {
+            try
+            {
+                IReportRepo itemOwnerRepo = new ReportRepo(new INVENTORY_MANAGEMENT_2Entities());
+                Report reportDb = new Report();
+                reportDb = itemOwnerRepo.viewReportByReportId(reportId);
+
+                this.report_id = reportDb.report_id;
+
+                CAMTUserModel technicianModel = new CAMTUserModel();
+                technicianModel.viewUserByuserId(reportDb.technician_id);
+                this.technician_id = technicianModel;
+
+                CAMTUserModel reporterModel = new CAMTUserModel();
+                reporterModel.viewUserByuserId(reportDb.reporter_id);
+                this.reporter_id = reporterModel;
+
+                ItemModel itemModel = new ItemModel();
+                itemModel.viewItemModelByItemId(reportDb.item_id);
+                this.item_id = itemModel;
+
+                this.report_typeBroken = reportDb.report_typeBroken;
+                this.report_case = reportDb.report_case;
+                this.report_contact = reportDb.report_contact;
+                this.report_repairDetail = reportDb.report_repairDetail;
+                this.report_startDate = reportDb.report_startDate;
+                this.report_endDate = reportDb.report_endDate;
+                this.report_statusComplete = reportDb.report_statusComplete;
+                this.report_recieveMsg = reportDb.report_recieveMsg;
+                return this;
+            }
+            catch
+            {
+                return this;
             }
         }
         

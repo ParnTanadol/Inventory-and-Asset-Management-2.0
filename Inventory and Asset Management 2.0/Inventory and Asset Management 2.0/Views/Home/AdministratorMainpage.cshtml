@@ -7,6 +7,7 @@
         <h2>AdministratorMainpage</h2>
         @Html.ActionLink("User management", "UserManagement")<br />
         @Html.ActionLink("Items management", "ItemManagement")
+        <p>@Session.Timeout.ToString()</p>
     }
     else
     {

@@ -1,0 +1,29 @@
+﻿@model Inventory_and_Asset_Management_2._0.Models.CAMTUserModel
+@using Inventory_and_Asset_Management_2._0.Models;
+@{
+    ViewBag.Title = "ReporterInformation";
+}
+
+
+@{
+    if (Session["userType"] != null && Session["userType"].ToString().Equals("2"))
+    {
+        <h2>ReporterInformation</h2>
+        @Html.ActionLink("Technician Main page", "TechnicianMainpage")<br />
+            <label>Username: </label> @Html.Label("username", @Model.user_username, new { id = "username" }) <br />
+            <label>Name: </label> @Html.Label("name", @Model.user_name, new { id = "name" }) <br />
+            <label>Department: </label> @Html.Label("department", @Model.user_department, new { id = "department" }) <br />
+            <label>Room: </label> @Html.Label("room", @Model.user_room, new { id = "room" }) <br />
+            <label>Address: </label> @Html.Label("address", @Model.user_address, new { id = "address" }) <br />
+            <label>Telephone number: </label> @Html.Label("tel", @Model.user_tel, new { id = "tel" }) <br />
+            <label>Email: </label> @Html.Label("email", @Model.user_email, new { id = "email" }) <br />
+
+    }
+    else
+    {
+        <script>
+            alert("Please login by Technician");
+        </script>
+        @Html.Action("Index");
+    }
+}

@@ -1,40 +1,37 @@
 ﻿@model IEnumerable<Inventory_and_Asset_Management_2._0.Models.ReportModel>
 @using Inventory_and_Asset_Management_2._0.Models;
-
 @{
-    ViewBag.Title = "TechnicianMainpage";
+    ViewBag.Title = "RepairingHistory";
 }
+
 
 
 @{
     if (Session["userType"] != null && Session["userType"].ToString().Equals("2"))
     {
-        <h2>TechnicianMainpage</h2>
-        @Html.ActionLink("Repairing", "Repairing")<br />
-        @Html.ActionLink("Repairing History", "RepairingHistory")
-        @Html.ActionLink("Technician Information", "TechnicianInformation")
-    
-    
-<table>
-    <tr>
-        <th>No.</th>
-        <th>Item Name</th>
-        <th>Broken type</th>
-        <th>Start Date</th>
-        <th>Contract</th>
-        <th>reporter Name</th>
-    </tr>
-    @{
+        <h2>RepairingHistory</h2>
+        @Html.ActionLink("Technician Main page", "TechnicianMainpage")<br />
+        @Html.ActionLink("Repairing", "Repairing")
+
+        <table>
+            <tr>
+                <th>No.</th>
+                <th>Item Name</th>
+                <th>Broken type</th>
+                <th>Start Date</th>
+                <th>Contract</th>
+                <th>reporter Name</th>
+            </tr>
+            @{
         int i = 1;
         foreach (var item in Model)
         {
             <tr>
                 <td>@i</td>
                 <td>
-                    @using (Html.BeginForm("ItemInformation", "Technician", FormMethod.Get))
+                    @using (Html.BeginForm("RepairingHistoryInformation", "Technician", FormMethod.Get))
                     {
-
-                        @Html.Hidden("itemId", item.item_id.item_id);
+                        @Html.Hidden("reportId", item.report_id);
                         <button>@item.item_id.item_name</button>
                     }
 
@@ -51,19 +48,11 @@
                     }
 
                 </td>
-                <td>
-                    @using (Html.BeginForm("updateRepairingStatus", "Technician", FormMethod.Get))
-                    {
-
-                        @Html.Hidden("reportId", item.report_id);
-                        <button>Repair</button>
-                    }
-                </td>
             </tr>
-            i++;
+                    i++;
         }
-    }
-</table>
+            }
+        </table>
 
 
     }

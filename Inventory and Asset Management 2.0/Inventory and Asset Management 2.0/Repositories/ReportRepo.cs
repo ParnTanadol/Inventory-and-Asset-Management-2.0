@@ -35,17 +35,9 @@ namespace Inventory_and_Asset_Management_2._0.Repositories
                 Report reportDb = context.Reports.First(i => i.report_id == report.report_id);
 
                 reportDb.report_id = report.report_id;
-                reportDb.technician_id = report.technician_id;
-                reportDb.reporter_id = report.reporter_id;
-                reportDb.item_id = report.item_id;
-                reportDb.report_typeBroken = report.report_typeBroken;
-                reportDb.report_case = report.report_case;
-                reportDb.report_contact = report.report_contact;
                 reportDb.report_repairDetail = report.report_repairDetail;
-                reportDb.report_startDate = report.report_startDate;
-                reportDb.report_endDate = report.report_endDate;
                 reportDb.report_statusComplete = report.report_statusComplete;
-                reportDb.report_recieveMsg = report.report_recieveMsg;
+
 
                 context.SaveChanges();
 

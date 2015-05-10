@@ -340,6 +340,27 @@
   <ItemGroup>
     <Content Include="Views\Reporter\ItemInformation.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Technician\ItemInformation.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Technician\ReporterInformation.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Technician\Repairing.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Technician\RepairingHistory.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Technician\RepairingInformation.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Technician\RepairingHistoryInformation.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Technician\TechnicianInformation.cshtml" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

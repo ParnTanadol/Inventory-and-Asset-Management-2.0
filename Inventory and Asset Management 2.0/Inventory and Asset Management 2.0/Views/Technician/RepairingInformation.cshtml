@@ -1,0 +1,127 @@
+﻿@model Inventory_and_Asset_Management_2._0.Models.ReportModel
+@using Inventory_and_Asset_Management_2._0.Models;
+@{
+    ViewBag.Title = "RepairingInformation";
+}
+
+
+
+@{
+    if (Session["userType"] != null && Session["userType"].ToString().Equals("2"))
+    {
+        <h2>RepairingInformation</h2>
+        @Html.ActionLink("Repairing", "Repairing")<br />
+
+        <div>
+            <label>Item Brand : </label> @Html.Label("itemBrand", @Model.item_id.item_brand, new { id = "itemBrand" }) <br />
+            <label>Item Name : </label> @Html.Label("itemName", @Model.item_id.item_name, new { id = "itemName" }) <br />
+            <label>Item Description : </label> @Html.Label("itemDescription", @Model.item_id.item_description, new { id = "itemDescription" }) <br />
+            <label>Item Start Date : </label> @Html.Label("itemStartDate", @Model.item_id.item_startDate.ToString(), new { id = "itemStartDate" }) <br />
+            <label>Item End Date : </label> @Html.Label("itemEndDate", @Model.item_id.item_endDate.ToString(), new { id = "itemEndDate" }) <br />
+            <label>Item Status : </label>
+
+            @{
+        if (@Model.item_id.item_status == 1)
+        {
+            <label>Good</label><br />
+        }
+        else if (@Model.item_id.item_status == 2)
+        {
+            <label>Broken</label><br />
+        }
+        else
+        {
+            <label>Expire</label><br />
+        }
+            }
+            <label>CMU number : </label> @Html.Label("itemCmuNumber", @Model.item_id.item_cmuNumber, new { id = "itemCmuNumber" })<br />
+            <label>CAMT number : </label> @Html.Label("itemCamtNumber", @Model.item_id.item_camtNumber, new { id = "itemCamtNumber" }) <br />
+            <label>Serial number : </label> @Html.Label("itemSerialNumber", @Model.item_id.item_serialNumber, new { id = "itemSerialNumber" }) <br />
+            <label>Item Picture : </label><img src="@Url.Content("~/Content/ItemPics/" + @Model.item_id.item_picture)" /><br /><br />
+        </div>
+
+
+
+
+        <div>
+            <h2>Repairing Process</h2><br />
+            <form action="~/Technician/updateRepairing" method="post" onsubmit="return onUpdate();" id="form1">
+                @Html.Hidden("reportId", @Model.report_id)
+                @Html.Hidden("technicianName", @Model.technician_id.user_name)
+                @Html.Hidden("reporterName", @Model.reporter_id.user_name)
+                @Html.Hidden("reporterEmail", @Model.reporter_id.user_email)
+                @Html.Hidden("itemBrand", @Model.item_id.item_brand)
+                @Html.Hidden("itemName", @Model.item_id.item_name)
+                @Html.Hidden("technicianContract", @Model.technician_id.user_email)
+                @Html.Hidden("recieveMsg",@Model.report_recieveMsg)
+                <label>Broken Type</label> @Html.Label("brokenType", @Model.report_typeBroken, new { id = "brokenType" })<br />
+                <label>Broken Description</label>  @Html.Label("brokenDescription", @Model.report_case, new { id = "brokenDescription" })<br />
+                <label>Reporter contract</label>  @Html.Label("reportContract", @Model.report_contact, new { id = "reportContract" })<br />
+                <label>Repairing Description</label> @Html.TextBox("reparingDescription", @Model.report_repairDetail, new { id = "reparingDescription" })
+                <button onclick="onUpdateRepairing()">Update Repairing</button><br />
+                <button onclick="onRelesase()">Release Repairing</button><br /><br />
+            </form>
+        </div>
+
+        <script>
+            function onUpdate() {
+
+                var result = confirm("Do you sure for updating reparing status ?");
+                if (result == true) {
+                    var description = document.getElementById("reparingDescription").value;
+                    if (description == "") {
+                        alert("Please fill all repairing information");
+                        return false;
+                    }
+                }
+                else {
+                    return false;
+                }
+
+            }
+
+            function onUpdateRepairing() {
+                    var input = document.createElement("input");
+                    input.setAttribute("type", "hidden");
+
+                    input.setAttribute("name", "report_statusComplete");
+
+                    input.setAttribute("value", "2");
+                    document.getElementById("form1").appendChild(input);
+            }
+
+            function onRelesase() {
+
+                    var input = document.createElement("input");
+
+                    input.setAttribute("type", "hidden");
+
+                    input.setAttribute("name", "report_statusComplete");
+
+                    input.setAttribute("value", "3");
+                    document.getElementById("form1").appendChild(input);
+
+            }
+        </script>
+
+            //---------------------------------------------------------------------------------------
+
+         if (TempData["msg"] != null)
+        {
+            var message = TempData["msg"].ToString();
+
+            <script>
+                var msg = '@message';
+                alert(msg);
+            </script>
+            TempData["msg"] = null;
+        }
+    }
+    else
+    {
+        <script>
+            alert("Please login by Technician");
+        </script>
+        @Html.Action("Index");
+    }
+}

@@ -20,7 +20,6 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
         {
             return View();
         }
-
         public ActionResult login()
         {
             string username = Request["username"].ToString();

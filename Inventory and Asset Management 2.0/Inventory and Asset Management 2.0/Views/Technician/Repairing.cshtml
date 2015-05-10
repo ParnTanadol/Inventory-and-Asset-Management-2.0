@@ -1,21 +1,18 @@
 ﻿@model IEnumerable<Inventory_and_Asset_Management_2._0.Models.ReportModel>
 @using Inventory_and_Asset_Management_2._0.Models;
-
 @{
-    ViewBag.Title = "TechnicianMainpage";
+    ViewBag.Title = "Repairing";
 }
 
 
 @{
     if (Session["userType"] != null && Session["userType"].ToString().Equals("2"))
     {
-        <h2>TechnicianMainpage</h2>
-        @Html.ActionLink("Repairing", "Repairing")<br />
+        <h2>Repairing</h2>
+        @Html.ActionLink("Technician Main page", "TechnicianMainpage")<br />
         @Html.ActionLink("Repairing History", "RepairingHistory")
-        @Html.ActionLink("Technician Information", "TechnicianInformation")
-    
-    
-<table>
+
+    <table>
     <tr>
         <th>No.</th>
         <th>Item Name</th>
@@ -31,10 +28,9 @@
             <tr>
                 <td>@i</td>
                 <td>
-                    @using (Html.BeginForm("ItemInformation", "Technician", FormMethod.Get))
-                    {
-
-                        @Html.Hidden("itemId", item.item_id.item_id);
+                    @using (Html.BeginForm("RepairingInformation", "Technician", FormMethod.Get))
+{
+                        @Html.Hidden("reportId", item.report_id);
                         <button>@item.item_id.item_name</button>
                     }
 
@@ -51,16 +47,8 @@
                     }
 
                 </td>
-                <td>
-                    @using (Html.BeginForm("updateRepairingStatus", "Technician", FormMethod.Get))
-                    {
-
-                        @Html.Hidden("reportId", item.report_id);
-                        <button>Repair</button>
-                    }
-                </td>
             </tr>
-            i++;
+                    i++;
         }
     }
 </table>
