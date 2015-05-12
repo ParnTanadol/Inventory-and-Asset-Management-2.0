@@ -65,6 +65,17 @@ body{
 	margin-right: 0px;
 	border-bottom: 20px #EEE solid;
 }
+.header__logo{
+	margin: 0px 10px;
+	display: inline-block;
+}
+.login__index{
+	background-color: #EEE;
+	padding: 20px;
+	width: 400px;
+	margin: auto;
+	margin-top: 0%
+}
 #menu{
 	text-align: center;
 	padding: 8px;
@@ -74,6 +85,28 @@ body{
 }
 #menu:hover{
 	background-color: #EEE;
+}
+#menu--hover{
+	text-align: center;
+	padding: 8px;
+	color: #9d6d07;
+	font-weight: bold;
+	background-color: #EEE;
+}
+.menu--hover{
+	background-color: #EEE;
+}
+.menu__admin{
+	background-color: #EEE;
+	text-align: center;
+	margin: 5px;
+	padding: 10px;
+}
+.dataTables_filter{
+	text-align: right;
+}
+.menu__admin:hover{
+	background-color: #eedfbb;
 }
 .col-menu{
     padding: 0px !important;
@@ -91,6 +124,16 @@ body{
 	padding: 20px;
 	background-color: #f5f5f5;
 	text-align: center;
+}
+
+.logoutBT{
+	margin: 0px 10px;
+	display: inline-block;
+	border: 1px #EEE solid;
+	padding: 5px;
+}
+.logoutBT:hover{
+	background-color: #EEE;
 }
 
 /*-----------Responsive >=768 ------------*/

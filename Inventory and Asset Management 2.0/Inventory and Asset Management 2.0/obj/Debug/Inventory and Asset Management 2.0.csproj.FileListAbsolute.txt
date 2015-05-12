@@ -29,3 +29,4 @@ C:\Users\ParnTanadol\Documents\GitHub\Inventory-and-Asset-Management-2.0\Invento
 C:\Users\ParnTanadol\Documents\GitHub\Inventory-and-Asset-Management-2.0\Inventory and Asset Management 2.0\Inventory and Asset Management 2.0\bin\System.Web.WebPages.Razor.xml
 C:\Users\ParnTanadol\Documents\GitHub\Inventory-and-Asset-Management-2.0\Inventory and Asset Management 2.0\Inventory and Asset Management 2.0\obj\Debug\Inventory and Asset Management 2.0.dll
 C:\Users\ParnTanadol\Documents\GitHub\Inventory-and-Asset-Management-2.0\Inventory and Asset Management 2.0\Inventory and Asset Management 2.0\obj\Debug\Inventory and Asset Management 2.0.pdb
+C:\Users\ParnTanadol\Documents\GitHub\Inventory-and-Asset-Management-2.0\Inventory and Asset Management 2.0\Inventory and Asset Management 2.0\obj\Debug\Inventory and Asset Management 2.0.csprojResolveAssemblyReference.cache

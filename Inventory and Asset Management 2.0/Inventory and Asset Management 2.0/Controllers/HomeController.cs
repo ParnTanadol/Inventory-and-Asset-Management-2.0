@@ -20,6 +20,12 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
         {
             return View();
         }
+
+        public ActionResult logout()
+        {
+            Session.Clear();
+            return RedirectToAction("Index");
+        }
         public ActionResult login()
         {
             string username = Request["username"].ToString();
@@ -76,6 +82,14 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
         public ActionResult UserRegistration()
         {
             return View();
+        }
+
+        public ActionResult AdministratorInfor()
+        {
+            int adminId = int.Parse(Session["userId"].ToString());
+            CAMTUserModel camtUserModel = new CAMTUserModel();
+            camtUserModel.viewUserByuserId(adminId);
+            return View(camtUserModel);
         }
 
         public ActionResult TechnicianManagement()
@@ -239,23 +253,7 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
                                 newItemOwnerModelList = newItemOwnerModelList.OrderBy(i => i.item_id.item_brand).ToList();
                             }
                             break;
-                        case "searchKeyword":
-                            try
-                            {
-                                newItemOwnerModelList = itemOwnerModelList.Where(i => i.item_id.item_id == int.Parse(keyword)).ToList();
-                                newItemOwnerModelList = newItemOwnerModelList.OrderByDescending(i => i.item_id.item_id).ToList();
-                            }
-                            catch
-                            {
-                                newItemOwnerModelList = itemOwnerModelList.Where(i => i.item_id.item_brand.Contains(keyword)
-                                                                                    || i.item_id.item_name.Contains(keyword)
-                                                                                    || i.item_id.item_cmuNumber.Contains(keyword)
-                                                                                    || i.item_id.item_camtNumber.Contains(keyword)
-                                                                                    || i.item_id.item_serialNumber.Contains(keyword)
-                                                                                    || i.user_id.user_name.Contains(keyword)).ToList();
-                                newItemOwnerModelList = newItemOwnerModelList.OrderBy(i => i.item_id.item_brand).ToList();
-                            }
-                            break;
+
                     }
                 }
                 //-----------item Brand group-----------
@@ -489,6 +487,76 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
             TempData["msg"] = "Edit this item is success";
             string url = "~/Home/EditItem?itemId="+itemId;
             return Redirect(url);
+        }
+
+        [HttpPost]
+        public ActionResult editAdminInfo()
+        {
+            int userId = int.Parse(Request["userId"].ToString());
+            string username = Request["username"].ToString();
+            string password = Request["password"].ToString();
+            string name = Request["name"].ToString();
+            string department = Request["department"].ToString();
+            string room = Request["room"].ToString();
+            string address = Request["address"].ToString();
+            string tel = Request["tel"].ToString();
+            string email = Request["email"].ToString();
+            int userType = int.Parse(Request["userType"].ToString());
+            bool userActive = true;
+            if (Request["userActive"].ToString().Equals("1"))
+            {
+                userActive = true;
+            }
+            else
+            {
+                userActive = false;
+            }
+
+            CAMTUserModel camtUserModel = new CAMTUserModel();
+            bool status = camtUserModel.updateCAMTUser(userId, username, password, name, department, room, address, tel, email, userType, userActive);
+
+            if (status == false)
+            {
+                TempData["msg"] = "Your information is incorrect, please fill information again";
+                return RedirectToAction("AdministratorInfor");
+            }
+            else
+            {
+                TempData["msg"] = "Update user infomation successful";
+                return RedirectToAction("AdministratorInfor");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult editAdminPass()
+        {
+            int userId = int.Parse(Request["userId"].ToString());
+            string password = Request["password"].ToString();
+            string oldPassword = Request["oldPassword"].ToString();
+            string newPassword = Request["newPassword"].ToString();
+            string comfirmPassword = Request["comfirmPassword"].ToString();
+
+            if (password == oldPassword)
+            {
+                CAMTUserModel camtUserModel = new CAMTUserModel();
+                bool status = camtUserModel.updateCAMTUserPass(userId, newPassword);
+                if (status == false)
+                {
+                    TempData["msg"] = "Your information is incorrect, please fill information again";
+                    return RedirectToAction("AdministratorInfor");
+                }
+                else
+                {
+                    TempData["msg"] = "Update your password successful";
+                    return RedirectToAction("AdministratorInfor");
+                }
+            }
+            else
+            {
+                TempData["msg"] = "Old password incorrect";
+                return RedirectToAction("AdministratorInfor");
+            }
+
         }
 
         private Bitmap ResizeBitmap(Bitmap b, int nWidth, int nHeight)

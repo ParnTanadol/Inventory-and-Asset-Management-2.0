@@ -187,6 +187,7 @@
     <Content Include="Content\images\button1.png" />
     <Content Include="Content\images\button2.png" />
     <Content Include="Content\images\button3.png" />
+    <Content Include="Content\images\CAMT.png" />
     <Content Include="Content\images\facebook.png" />
     <Content Include="Content\images\Fish-HD-Picture-3.jpg" />
     <Content Include="Content\images\flowers-flower-bouquet-picture.jpg" />
@@ -243,10 +244,15 @@
     <Content Include="Content\jquery-ui\jquery-ui.theme.min.css" />
     <Content Include="Content\js\charts\highcharts.js" />
     <Content Include="Content\js\charts\modules\exporting.js" />
+    <Content Include="Content\js\dataTables.bootstrap.js" />
     <Content Include="Content\js\jquery-2.1.1.min.js" />
+    <Content Include="Content\js\jquery.dataTables.min.js" />
     <Content Include="Content\js\jquery.datetimepicker.js" />
     <Content Include="Content\js\responsiveslides.min.js" />
     <Content Include="Global.asax" />
+    <Content Include="Views\Home\_adminMenu.html" />
+    <Content Include="Views\Home\_footer.html" />
+    <Content Include="Views\Home\_header.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -318,14 +324,6 @@
     <Content Include="Views\Home\AddItem.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap\css\bootstrap-theme.css.map" />
-    <Content Include="Content\bootstrap\css\bootstrap.css.map" />
-    <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.woff" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Home\AddItemOwner.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -360,6 +358,27 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Technician\TechnicianInformation.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_AdminUserLayout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\AdministratorInfor.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_AdminItemLayout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\bootstrap\css\bootstrap-theme.css.map" />
+    <Content Include="Content\bootstrap\css\bootstrap.css.map" />
+    <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.woff2" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_AdminInfoLayout.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

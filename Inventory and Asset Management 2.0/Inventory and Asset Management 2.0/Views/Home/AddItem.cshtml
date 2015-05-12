@@ -7,9 +7,8 @@
 @{
     if (Session["userType"] != null && Session["userType"].ToString().Equals("1"))
     {
-        <h2>AddItem</h2>
 
-        @Html.ActionLink("back to Item management", "ItemManagement")
+        Layout = "~/Views/Shared/_AdminItemLayout.cshtml";
         //---------------------------------------------------------------------------------------
         <html>
         <head>
@@ -29,20 +28,11 @@
             <link rel="stylesheet" href="css/ie.css" type="text/css" media="screen">
             <![endif]-->
 
-            <script>
-                $(function () {
-                    $("#includedHeader").load("_header.html");
-                    $("#includedMenu").load("_adminMenu.html");
-                    $("#includedFooter").load("_footer.html");
-                });
-            </script>
 
         </head>
         <body>
 
             <div class="wrapper">
-                <div id="includedHeader"></div> <!-- HEADER -->
-                <div id="includedMenu"></div> <!-- MENU -->
                 <div class="content">
                     <!-- ///////////////////////////////////////////////////////////////////////////////////////// -->
 
@@ -50,7 +40,7 @@
 
                     <div class="container">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
 
                                 <div class="panel panel-success">
                                     <div class="panel-heading">
@@ -116,18 +106,18 @@
                                                 </div>
                                             </div>
                                             <div class="form-group">
+                                                <label class="control-label col-sm-3">Item Owner:</label>
+                                                <div class="col-sm-9">
+                                                    <input type="button" class="btn btn-default" placeholder="Item Owner" value="Owner" onclick="onAddOwner()">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
                                                 <label class="control-label col-sm-3">Item Component:</label>
                                                 <div class="col-sm-9">
                                                     <div class="btn btn-default" onclick="addComponent()">
                                                         <i class="glyphicon glyphicon-magnet"></i>
                                                         Add Component
                                                     </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label col-sm-3">Item Owner:</label>
-                                                <div class="col-sm-9">
-                                                    <input type="button" class="btn btn-default" placeholder="Item Owner" value="Owner" onclick="onAddOwner()">
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -140,7 +130,7 @@
                                                 <div class="col-sm-offset-3 col-sm-9">
                                                     <!-- <button type="submit" class="btn btn-default">Submit</button> -->
                                                     <!-- <a href="#" onclick="$(this).closest('form').submit()">test</a> -->
-                                                    <button>Add item</button>
+                                                    <button class="btn btn-info">Add item</button>
                                                     
                                                 </div>
                                             </div>
@@ -153,7 +143,7 @@
                                     </div>
                                 </div>
 
-                            </div> <!-- col-md-6 -->
+                            </div> <!-- col-md-12 -->
                             <!-- old form -->
 
                         </div> <!-- row -->
@@ -162,7 +152,6 @@
                 </div><!-- content -->
                 <div class="push"></div>
             </div> <!-- WRAPPER -->
-            <div id="includedFooter"></div> <!-- FOOTER -->
         </body>
     </html>
 
