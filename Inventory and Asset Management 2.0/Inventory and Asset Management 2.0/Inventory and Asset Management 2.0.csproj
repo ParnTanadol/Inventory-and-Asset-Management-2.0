@@ -250,9 +250,6 @@
     <Content Include="Content\js\jquery.datetimepicker.js" />
     <Content Include="Content\js\responsiveslides.min.js" />
     <Content Include="Global.asax" />
-    <Content Include="Views\Home\_adminMenu.html" />
-    <Content Include="Views\Home\_footer.html" />
-    <Content Include="Views\Home\_header.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -379,6 +376,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\_AdminInfoLayout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_ReporterMainLayout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_ReporterHistoryLayout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_ReporterInfoLayout.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

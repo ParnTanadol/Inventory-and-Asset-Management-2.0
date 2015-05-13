@@ -7,85 +7,167 @@
 @{
     if (Session["userType"] != null && Session["userType"].ToString().Equals("3"))
     {
-        <h2>ReporterMainpage</h2>
+        Layout = "~/Views/Shared/_ReporterMainLayout.cshtml";
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <title>TEST PROJECT</title>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        @Html.ActionLink("Reports History", "ReportHistory")
-        @Html.ActionLink("Reporter Information", "ReporterInformation")
+            <link rel="stylesheet" href="~/Content/bootstrap/css/bootstrap.min.css">
+            <link rel="stylesheet" href="~/Content/bootstrap/css/bootstrap-theme.css">
+            <link rel="stylesheet" href="~/Content/jquery-ui/jquery-ui.css">
+            <link rel="stylesheet" href="~/Content/css/mycss.css">
 
-        <form action="~/Reporter/addReport" method="post" onsubmit="return onReport();">
-            <label>Serial Number: </label> @Html.TextBox("serialNumber", null, new { id = "serialNumber" }) <br />
-            <label>Broken type: </label>
-            <select id="typeBroken" name="typeBroken">
-                <option value="Cant't Open">Cant't Open</option>
-                <option value="Program Error">Program Error</option>
-            </select> <br />
-            <label>Description: </label> @Html.TextBox("description", null, new { id = "description" }) <br />
-            <label>Contact information</label> @Html.TextBox("contact", null, new { id = "contact" }) <br />
-            <label>Notification mode</label>
-            <input type="radio" name="reportRecieveMsg" value="1">Allow
-            <input type="radio" name="reportRecieveMsg" value="0">Disallow<br />
+            <script type="text/javascript" src="~/Content/js/jquery-2.1.1.min.js"></script>
+            <script type="text/javascript" src="~/Content/js/responsiveslides.min.js"></script>
+            <!--[if lt IE 9]>
+            <script type="text/javascript" src="js/html5.js"></script>
+            <link rel="stylesheet" href="css/ie.css" type="text/css" media="screen">
+            <![endif]-->
 
-            <button>Report</button>
-        </form>
-    
-    <script>
-        function onReport() {
+        </head>
+        <body>
 
-            var serialNumber = document.getElementById("serialNumber").value;
-            var typeBroken = document.getElementById("typeBroken").value;
-            var description = document.getElementById("description").value;
-            var contact = document.getElementById("contact").value;
+            <div class="wrapper">
+                <div class="content">
+                    <!-- ///////////////////////////////////////////////////////////////////////////////////////// -->
 
-            var reportRecieveMsg = document.forms[0].reportRecieveMsg;
-            var reportRecieveMsgCheck = "";
-            for (var i = 0; i < reportRecieveMsg.length; i++) {
-                if (reportRecieveMsg[i].checked) {
-                    reportRecieveMsgCheck = reportRecieveMsg[i].value;
-                }
-            }
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12">
 
-            if (serialNumber == "") {
-                alert("Please fill Serial number");
-                return false;
-            }
-            if(typeBroken == "" ){
-                alert("Please fill type of broken");
-                return false;
-            }
-            if(description == ""){
-                alert("Please fill description");
-                return false;
-            }
-            if (contact == "") {
-                alert("Please fill contact");
-                return false;
-            }
-            if (reportRecieveMsgCheck == "") {
-                alert("Please fill Notification mode");
-                return false;
-            }
+                                <div class="panel panel-info">
+                                    <div class="panel-heading">
+                                        <h4>Report</h4>
+                                    </div>
+                                    <div class="panel-body">
 
-        }
-    </script>
-    
-    //--------------------------------------------------------------------------------------------------
-         if (TempData["msg"] != null)
-        {
-            var message = TempData["msg"].ToString();
+                                        <form class="form-horizontal" role="form" action="~/Reporter/addReport" method="post" onsubmit="return onReport();">
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-3">Serial Number:</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control" id="serialNumber" name="serialNumber" placeholder="Serial Number">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-3">Type Broken:</label>
+                                                <div class="col-sm-9">
+                                                    <select class="form-control" id="typeBroken" name="typeBroken">
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-3">Desciption:</label>
+                                                <div class="col-sm-9">
+                                                    <textarea class="form-control" id="description" name="description" placeholder="Desciption"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-3">Contact Information:</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control" id="contact" name="contact" placeholder="Contact">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-3">Notification:</label>
+                                                <div class="col-sm-9">
+                                                    <div class="radio-inline">
+                                                        <label><input type="radio" id="reportRecieveMsg" name="reportRecieveMsg" value="1" checked="checked">Allow</label>
+                                                    </div>
+                                                    <div class="radio-inline">
+                                                        <label><input type="radio" id="reportRecieveMsg" name="reportRecieveMsg" value="0">Disallow</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-sm-offset-3 col-sm-9">
+                                                    <button type="submit" class="btn btn-default">Submit</button>
+                                                </div>
+                                            </div>
 
-            <script>
-                var msg = '@message';
-                alert(msg);
-            </script>
-            TempData["msg"] = null;
-        }
-    
+                                            <script>
+                                                function onReport() {
+
+                                                    var serialNumber = document.getElementById("serialNumber").value;
+                                                    var typeBroken = document.getElementById("typeBroken").value;
+                                                    var description = document.getElementById("description").value;
+                                                    var contact = document.getElementById("contact").value;
+
+                                                    var reportRecieveMsg = document.forms[0].reportRecieveMsg;
+                                                    var reportRecieveMsgCheck = "";
+                                                    for (var i = 0; i < reportRecieveMsg.length; i++) {
+                                                        if (reportRecieveMsg[i].checked) {
+                                                            reportRecieveMsgCheck = reportRecieveMsg[i].value;
+                                                        }
+                                                    }
+
+                                                    if (serialNumber == "") {
+                                                        alert("Please fill Serial number");
+                                                        return false;
+                                                    }
+                                                    if (typeBroken == "") {
+                                                        alert("Please fill type of broken");
+                                                        return false;
+                                                    }
+                                                    if (description == "") {
+                                                        alert("Please fill description");
+                                                        return false;
+                                                    }
+                                                    if (contact == "") {
+                                                        alert("Please fill contact");
+                                                        return false;
+                                                    }
+                                                    if (reportRecieveMsgCheck == "") {
+                                                        alert("Please fill Notification mode");
+                                                        return false;
+                                                    }
+
+                                                }
+                                            </script>
+                                            @{
+                                                //--------------------------------------------------------------------------------------------------
+                                                if (TempData["msg"] != null)
+                                                {
+                                                    var message = TempData["msg"].ToString();
+
+                                                    <script>
+                                                        var msg = '@message';
+                                                        alert(msg);
+                                                    </script>
+                                                    TempData["msg"] = null;
+                                                }
+                                            }
+
+                                        </form>
+
+                                    </div>
+                                </div>
+
+                            </div><!-- COL-MD-12 -->
+                        </div><!-- ROW -->
+                    </div><!-- CONTAINER -->
+                    <!-- ///////////////////////////////////////////////////////////////////////////////////////// -->
+                </div><!-- CONTENT -->
+                <div class="push"></div>
+            </div> <!-- WRAPPER -->
+
+        </body>
+    </html>
+
+    <script type="text/javascript" src="~/Content/jquery-ui/jquery-ui.js"></script>
+    <script type="text/javascript" src="~/Content/bootstrap/js/bootstrap.min.js"></script>
+
     }
     else
     {
         <script>
             alert("Please login by Reporter");
         </script>
-        @Html.Action("Index");
+        @Html.Action("Index","Home");
     }
 }

@@ -9,66 +9,130 @@
 @{
     if (Session["userType"] != null && Session["userType"].ToString().Equals("3"))
     {
-        <h2>ReportHistory</h2>
-        @Html.ActionLink("Reporter Main Page", "ReporterMainpage")
+        Layout = "~/Views/Shared/_ReporterHistoryLayout.cshtml";
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <title>TEST PROJECT</title>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+            <link rel="stylesheet" href="~/Content/bootstrap/css/bootstrap.min.css">
+            <link rel="stylesheet" href="~/Content/bootstrap/css/bootstrap-theme.css">
+            <link rel="stylesheet" href="~/Content/jquery-ui/jquery-ui.css">
+            <link rel="stylesheet" href="~/Content/css/mycss.css">
+
+            <script type="text/javascript" src="~/Content/js/jquery-2.1.1.min.js"></script>
+            <script type="text/javascript" src="~/Content/js/responsiveslides.min.js"></script>
+            <script type="text/javascript" src="~/Content/js/jquery.dataTables.min.js"></script>
+            <script type="text/javascript" src="~/Content/js/dataTables.bootstrap.js"></script>
+            <!--[if lt IE 9]>
+            <script type="text/javascript" src="js/html5.js"></script>
+            <link rel="stylesheet" href="css/ie.css" type="text/css" media="screen">
+            <![endif]-->
+
+            <script>
+                $(document).ready(function () {
+                    $('#itemTable').dataTable();
+                });
+            </script>
+
+        </head>
+        <body>
+
+            <div class="wrapper">
+                <div class="content">
+                    <!-- ///////////////////////////////////////////////////////////////////////////////////////// -->
+
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12">
+
+                                <div class="panel panel-info">
+                                    <div class="panel-heading">
+                                        <h4>History</h4>
+                                    </div>
+                                    <div class="panel-body">
+                                        <br />
+                                        <table id="itemTable" class="table table-hover table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>No</th>
+                                                    <th>Item Name</th>
+                                                    <th>Type Broken</th>
+                                                    <th>Description</th>
+                                                    <th>Repair Detail</th>
+                                                    <th>Start Date</th>
+                                                    <th>End Date</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @{
+                                                    int i = 1;
+                                                    foreach (var item in Model)
+                                                    {
+                                                        <tr>
+                                                            <td>@i</td>
+                                                            <td>
+                                                                @using (Html.BeginForm("ItemInformation", "Reporter", FormMethod.Get))
+                                                                {
+                                                                    @Html.Hidden("itemId", item.item_id.item_id);
+                                                                    <button class="btn btn-default">@item.item_id.item_name</button>
+                                                                }
+
+                                                            </td>
+                                                            <td>@item.report_typeBroken</td>
+                                                            <td>@item.report_repairDetail</td>
+                                                            <td>@item.report_repairDetail</td>
+                                                            <td>@item.report_startDate</td>
+                                                            <td>@item.report_endDate</td>
+                                                            @{
+                                                        if (item.report_statusComplete == 1)
+                                                        {
+                                                            <td>Wait to accept from technician</td>
+                                                        }
+                                                        else if (item.report_statusComplete == 2)
+                                                        {
+                                                            <td>Repairing process</td>
+                                                        }
+                                                        else
+                                                        {
+                                                            <td>Repairing complete</td>
+                                                        }
+                                                            }
+                                                        </tr>
+                                                        i++;
+                                                    }
+                                                }
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+
+                                </div>
+
+                            </div><!-- COL-MD-12 -->
+                        </div><!-- ROW -->
+                    </div><!-- CONTAINER -->
+                    <!-- ///////////////////////////////////////////////////////////////////////////////////////// -->
+                </div><!-- CONTENT -->
+                <div class="push"></div>
+            </div> <!-- WRAPPER -->
+
+        </body>
+    </html>
+
+    <script type="text/javascript" src="~/Content/jquery-ui/jquery-ui.js"></script>
+    <script type="text/javascript" src="~/Content/bootstrap/js/bootstrap.min.js"></script>
 
 
-        <table>
-            <tr>
-                <th>No.</th>
-                <th>Item</th>
-                <th>Broken type</th>
-                <th>Repairing Detail</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Repairing status</th>
-            </tr>
-            @{
-        int i = 1;
-        foreach (var item in Model)
-        {
-            <tr>
-                <td>@i</td>
-                <td>
-                    @using (Html.BeginForm("ItemInformation", "Reporter", FormMethod.Get))
-                    {
-                        @Html.Hidden("itemId", item.item_id.item_id);
-                        <button>@item.item_id.item_name</button>
-                    }
-
-                </td>
-                <td>@item.report_typeBroken</td>
-                <td>@item.report_repairDetail</td>
-                <td>@item.report_startDate</td>
-                <td>@item.report_endDate</td>
-                @{
-                    if (item.report_statusComplete == 1)
-                    {
-                        <td>Wait to accept from technician</td>
-                    }
-                    else if (item.report_statusComplete == 2)
-                    {
-                        <td>Repairing process</td>
-                    }
-                    else
-                    {
-                        <td>Repairing complete</td>
-                    }
-                }
-            </tr>
-            i++;
-        }
-            }
-        </table>
-    
-    
-    
     }
     else
     {
         <script>
             alert("Please login by Reporter");
         </script>
-        @Html.Action("Index");
+        @Html.Action("Index","Home");
     }
 }
