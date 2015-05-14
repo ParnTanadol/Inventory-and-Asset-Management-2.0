@@ -53,7 +53,7 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
             reportModelList = reportModel.viewReportByStatusAndUserId(technicianId, 3);
             return View(reportModelList);
         }
-        [HttpPost]
+
         public ActionResult updateRepairingStatus()
         {
             int reportId = int.Parse(Request["reportId"].ToString());
