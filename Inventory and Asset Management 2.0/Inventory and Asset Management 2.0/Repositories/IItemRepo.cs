@@ -18,5 +18,6 @@ namespace Inventory_and_Asset_Management_2._0.Repositories
 
         Item viewItemModelbySerialNum(string serialNumber);
         List<string> viewGroupByItemBrand();
+        List<Item> viewExpireItem(DateTime timeStart, DateTime timeEnd);
     }
 }

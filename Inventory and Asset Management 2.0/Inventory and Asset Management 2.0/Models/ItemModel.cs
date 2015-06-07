@@ -227,6 +227,57 @@ namespace Inventory_and_Asset_Management_2._0.Models
                 return this;
             }
         }
+
+        public List<ItemModel> viewExpireItem(DateTime timeStart, DateTime timeEnd)
+        {
+            try
+            {
+                List<Item> itemList = new List<Item>();
+                IItemRepo itemRepo = new ItemRepo(new INVENTORY_MANAGEMENT_2Entities());
+                itemList = itemRepo.viewExpireItem(timeStart, timeEnd);
+
+                List<ItemModel> itemModelList = new List<ItemModel>();
+
+                for (int i = 0; i < itemList.Count; i++)
+                {
+                    ItemModel itemModel = new ItemModel();
+                    itemModel.item_id = itemList[i].item_id;
+                    itemModel.item_brand = itemList[i].item_brand;
+                    itemModel.item_name = itemList[i].item_name;
+                    itemModel.item_description = itemList[i].item_description;
+                    itemModel.item_startDate = itemList[i].item_startDate;
+                    itemModel.item_endDate = itemList[i].item_endDate;
+                    itemModel.item_picture = itemList[i].item_picture;
+                    itemModel.item_cmuNumber = itemList[i].item_cmuNumber;
+                    itemModel.item_camtNumber = itemList[i].item_camtNumber;
+                    itemModel.item_serialNumber = itemList[i].item_serialNumber;
+                    itemModel.item_status = itemList[i].item_status;
+
+                    if (itemList[i].item_component != null)
+                    {
+                        int itemComponent = int.Parse(itemList[i].item_component.ToString());
+                        ItemModel itemModel2 = new ItemModel();
+                        itemModel2.viewItemModelByItemId(itemComponent);
+                        itemModel.item_component = itemModel2;
+
+                    }
+                    else
+                    {
+                        ItemModel itemModel2 = new ItemModel();
+                        itemModel.item_component = itemModel2;
+                    }
+                    itemModelList.Add(itemModel);
+                }
+
+                return itemModelList;
+
+            }
+            catch
+            {
+                List<ItemModel> itemModelList = new List<ItemModel>();
+                return itemModelList;
+            }
+        }
          
         public List<string> viewGroupByItemBrand()
         {

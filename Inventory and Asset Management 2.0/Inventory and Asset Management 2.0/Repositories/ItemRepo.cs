@@ -197,5 +197,28 @@ namespace Inventory_and_Asset_Management_2._0.Repositories
                 return item;
             }
         }
+
+
+        public List<Item> viewExpireItem(DateTime timeStart, DateTime timeEnd)
+        {
+            try
+            {
+                /*
+                 var events = this.coreDomainContext.Events.Where(
+                    e => e.EventDate.Value.Date >= DateTime.Today
+                      && e.EventDate.Value.Date <= endPeriod.Date)
+                    .OrderByDescending(e => e.EventDate)
+                    .ToList();
+                 * */
+                var query = context.Items.Where(i => i.item_endDate >= timeStart && i.item_endDate <= timeEnd).OrderByDescending(i => i.item_endDate).ToList();
+                List<Item> itemList = query.ToList();
+                return itemList;
+            }
+            catch
+            {
+                List<Item> itemList = new List<Item>();
+                return itemList;
+            }
+        }
     }
 }

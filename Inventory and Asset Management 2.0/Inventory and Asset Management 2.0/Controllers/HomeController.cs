@@ -559,6 +559,29 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
 
         }
 
+        public ActionResult MIS()
+        {
+            return View();
+        }
+
+        public ActionResult ItemMIS()
+        {
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult viewExpireItem()
+        {
+            DateTime dateTimeStart = DateTime.Parse(Request["time-start"].ToString());
+            DateTime dateTimeEnd = DateTime.Parse(Request["time-end"].ToString());
+
+            ItemModel itemModel = new ItemModel();
+            List<ItemModel> itemModelList = new List<ItemModel>();
+            itemModelList = itemModel.viewExpireItem(dateTimeStart, dateTimeEnd);
+            return RedirectToAction("ItemMIS");
+        }
+
         private Bitmap ResizeBitmap(Bitmap b, int nWidth, int nHeight)
         {
             Bitmap result = new Bitmap(nWidth, nHeight);
@@ -566,5 +589,7 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
                 g.DrawImage(b, 0, 0, nWidth, nHeight);
             return result;
         }
+        
+        
     }
 }
