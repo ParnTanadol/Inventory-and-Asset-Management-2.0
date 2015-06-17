@@ -182,5 +182,28 @@ namespace Inventory_and_Asset_Management_2._0.Repositories
                 return false;
             }
         }
+
+
+        public List<Report> viewReparationSummary(DateTime timeStart, DateTime timeEnd)
+        {
+            try
+            {
+                /*
+                 var events = this.coreDomainContext.Events.Where(
+                    e => e.EventDate.Value.Date >= DateTime.Today
+                      && e.EventDate.Value.Date <= endPeriod.Date)
+                    .OrderByDescending(e => e.EventDate)
+                    .ToList();
+                 * */
+                var query = context.Reports.Where(i => i.report_startDate >= timeStart && i.report_startDate <= timeEnd).OrderByDescending(i => i.report_startDate).ToList();
+                List<Report> reportList = query.ToList();
+                return reportList;
+            }
+            catch
+            {
+                List<Report> reportList = new List<Report>();
+                return reportList;
+            }
+        }
     }
 }

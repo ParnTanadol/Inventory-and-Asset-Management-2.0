@@ -21,5 +21,6 @@ namespace Inventory_and_Asset_Management_2._0.Repositories
         bool updateStatus(Report report);
         Report viewPreviousReport(int reporterId);
 
+        List<Report> viewReparationSummary(DateTime timeStart, DateTime timeEnd);
     }
 }

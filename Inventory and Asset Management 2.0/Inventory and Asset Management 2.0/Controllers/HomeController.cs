@@ -8,6 +8,7 @@ using System.IO;
 using System.Data;
 using System.Net.Mail;
 using Inventory_and_Asset_Management_2._0.Models;
+using Inventory_and_Asset_Management_2._0.Repositories;
 
 namespace Inventory_and_Asset_Management_2._0.Controllers
 {
@@ -224,8 +225,8 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
                         case "itemComponent":
                             try
                             {
-                            newItemOwnerModelList = itemOwnerModelList.Where(i => i.item_id.item_component.item_id == int.Parse(keyword)).ToList();
-                            newItemOwnerModelList = newItemOwnerModelList.OrderByDescending(i => i.item_id.item_id).ToList();
+                                newItemOwnerModelList = itemOwnerModelList.Where(i => i.item_id.item_component.item_id == int.Parse(keyword)).ToList();
+                                newItemOwnerModelList = newItemOwnerModelList.OrderByDescending(i => i.item_id.item_id).ToList();
                             }
                             catch
                             {
@@ -238,7 +239,7 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
                                                                                         || i.item_id.item_component.item_camtNumber.Contains(keyword)
                                                                                         || i.item_id.item_component.item_serialNumber.Contains(keyword)).ToList();
 
-                                newItemOwnerModelList = newItemOwnerModelList.OrderBy(i => i.item_id.item_id).ToList();    
+                                newItemOwnerModelList = newItemOwnerModelList.OrderBy(i => i.item_id.item_id).ToList();
                             }
                             break;
 
@@ -292,7 +293,7 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
             return View(camtUserModelList);
         }
 
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult addItem()
@@ -439,7 +440,7 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
             Nullable<int> itemComponent;
             if (!(Request["itemComponent"].ToString().Equals("0")))
             {
-                 itemComponent = int.Parse(Request["itemComponent"].ToString());
+                itemComponent = int.Parse(Request["itemComponent"].ToString());
             }
             else
             {
@@ -485,7 +486,7 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
                 itemModel.updateItem(itemId, itemBrand, itemName, itemDescription, itemStartDate, itemEndDate, itemStatus, itemPicturerName, cmuNumber, camtNumber, serialNumber, itemComponent);
             }
             TempData["msg"] = "Edit this item is success";
-            string url = "~/Home/EditItem?itemId="+itemId;
+            string url = "~/Home/EditItem?itemId=" + itemId;
             return Redirect(url);
         }
 
@@ -563,23 +564,73 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
         {
             return View();
         }
-
+        
         public ActionResult ItemMIS()
         {
+           
+            if (Request["mode"] != null)
+            {
+                string mode = Request["mode"].ToString();
+                switch (mode)
+                {
+                    case "expireItem":
+                        DateTime dateTimeStart = DateTime.Parse(Request["time-start"].ToString());
+                        DateTime dateTimeEnd = DateTime.Parse(Request["time-end"].ToString());
+                        ItemModel itemModel = new ItemModel();
+                        List<ItemModel> itemModelList = new List<ItemModel>();
+                        itemModelList = itemModel.viewExpireItem(dateTimeStart, dateTimeEnd);
+                        TempData["mode"] = "expireItem";
+                        ViewData["expireItemList"] = itemModelList;
+                        break;
+                    case "brandBroken":
+                        List<List<string>> brandBroken = new List<List<string>>();
+                        IItemRepo itemRepo = new ItemRepo(new INVENTORY_MANAGEMENT_2Entities());
+                        brandBroken = itemRepo.viewOftenBrokenBrand();
+                        ViewData["brandBroken"] = brandBroken;
+                        TempData["mode"] = "brandBroken";
+                        break;
+                    case "nameBroken":
+                        List<List<string>> nameBroken = new List<List<string>>();
+                        IItemRepo itemRepo2 = new ItemRepo(new INVENTORY_MANAGEMENT_2Entities());
+                        nameBroken = itemRepo2.viewOftenBrokenName();
+                        ViewData["nameBroken"] = nameBroken;
+                        TempData["mode"] = "nameBroken";
+                        break;
+                }
+                return View();
+            }
+            else
+            {
+                return View();
+            }
 
-            return View();
         }
 
-        [HttpPost]
-        public ActionResult viewExpireItem()
+        public ActionResult ReparationMIS()
         {
-            DateTime dateTimeStart = DateTime.Parse(Request["time-start"].ToString());
-            DateTime dateTimeEnd = DateTime.Parse(Request["time-end"].ToString());
 
-            ItemModel itemModel = new ItemModel();
-            List<ItemModel> itemModelList = new List<ItemModel>();
-            itemModelList = itemModel.viewExpireItem(dateTimeStart, dateTimeEnd);
-            return RedirectToAction("ItemMIS");
+            if (Request["mode"] != null)
+            {
+                string mode = Request["mode"].ToString();
+                switch (mode)
+                {
+                    case "repairSummary":
+                        DateTime dateTimeStart = DateTime.Parse(Request["time-start"].ToString());
+                        DateTime dateTimeEnd = DateTime.Parse(Request["time-end"].ToString());
+                        ItemModel itemModel = new ItemModel();
+                        List<ItemModel> itemModelList = new List<ItemModel>();
+                        itemModelList = itemModel.viewExpireItem(dateTimeStart, dateTimeEnd);
+                        TempData["mode"] = "expireItem";
+                        ViewData["expireItemList"] = itemModelList;
+                        break;
+
+                }
+                return View();
+            }
+            else
+            {
+                return View();
+            }
         }
 
         private Bitmap ResizeBitmap(Bitmap b, int nWidth, int nHeight)
@@ -589,7 +640,7 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
                 g.DrawImage(b, 0, 0, nWidth, nHeight);
             return result;
         }
-        
-        
+
+
     }
 }

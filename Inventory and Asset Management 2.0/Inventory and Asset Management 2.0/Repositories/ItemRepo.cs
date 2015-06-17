@@ -189,7 +189,7 @@ namespace Inventory_and_Asset_Management_2._0.Repositories
                         }
                     }
                 }
-                 
+
             }
             catch
             {
@@ -217,6 +217,70 @@ namespace Inventory_and_Asset_Management_2._0.Repositories
             catch
             {
                 List<Item> itemList = new List<Item>();
+                return itemList;
+            }
+        }
+
+        
+        public List<List<string>> viewOftenBrokenBrand()
+        {
+            try
+            {
+                /*
+                from s in db.Services
+                join sa in db.ServiceAssignments on s.Id equals sa.ServiceId
+                where sa.LocationId == 1
+                select s 
+                */
+               /*
+                var query = from i in context.Items group i.item_brand by i.item_brand;
+                IQueryable<IGrouping<string, string>> groups = query;
+                IQueryable<string> queryValue = groups.SelectMany(group => group);
+
+                List<string> itemBrands = queryValue.ToList().Distinct().ToList();
+                context.SaveChanges();
+                return itemBrands;
+                */
+
+                var query = (from i in context.Items join j in context.Reports on i.item_id equals j.item_id group i.item_brand by i.item_brand into g select new { brand = g.Key, count = g.Count() }).OrderByDescending(i => i.count).ToList();
+                List<List<string>> itemList = new List<List<string>>();
+                foreach (var i in query)
+                {          
+                    List<string> item = new List<string>();
+                    item.Add(i.brand);
+                    item.Add(i.count.ToString());
+                    itemList.Add(item);
+                }
+                context.SaveChanges();
+                return itemList;
+            }
+            catch
+            {
+                List<List<string>> itemList = new List<List<string>>();
+                return itemList;
+            }
+        }
+
+
+        public List<List<string>> viewOftenBrokenName()
+        {
+            try
+            {
+                var query = (from i in context.Items join j in context.Reports on i.item_id equals j.item_id group i.item_name by i.item_name into g select new { name = g.Key, count = g.Count() }).OrderByDescending(i => i.count).ToList();
+                List<List<string>> itemList = new List<List<string>>();
+                foreach (var i in query)
+                {
+                    List<string> item = new List<string>();
+                    item.Add(i.name);
+                    item.Add(i.count.ToString());
+                    itemList.Add(item);
+                }
+                context.SaveChanges();
+                return itemList;
+            }
+            catch
+            {
+                List<List<string>> itemList = new List<List<string>>();
                 return itemList;
             }
         }
