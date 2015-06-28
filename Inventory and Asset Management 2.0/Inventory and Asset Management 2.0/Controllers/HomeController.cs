@@ -19,6 +19,15 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
 
         public ActionResult Index()
         {
+            IReportRepo reportRepo = new ReportRepo(new INVENTORY_MANAGEMENT_2Entities());
+            ICAMTUserRepo camtUserRepo = new CAMTUserRepo(new INVENTORY_MANAGEMENT_2Entities());
+            ReportModel reportModel = new ReportModel();
+        //   reportModel.randomTechnician("2");
+          //  camtUserRepo.viewAllUserByUserTypeActive(2, true);
+          //  reportRepo.viewAverageWorkTime("1");
+           // reportRepo.viewTechnicianTask("1");
+            //reportRepo.viewWorkInProcess(2);
+           // reportRepo.viewExperienceTechnician(2);
             return View();
         }
 
@@ -39,7 +48,7 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
                 {
                     Session["userId"] = camtUserModel.user_id.ToString();
                     Session["userType"] = camtUserModel.user_type.ToString();
-                    return RedirectToAction("AdministratorMainpage");
+                    return RedirectToAction("ReparationManagement");
                 }
                 else if (camtUserModel.user_type == 2 && camtUserModel.user_active == true)
                 {
@@ -70,10 +79,6 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
             }
         }
 
-        public ActionResult AdministratorMainpage()
-        {
-            return View();
-        }
 
         public ActionResult UserManagement()
         {
@@ -129,7 +134,7 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
 
             if (status == false)
             {
-                TempData["msg"] = "Your information is incorrect, please fill information again";
+                TempData["msg"] = "Your username are duplicate with other username";
                 return RedirectToAction("UserRegistration");
             }
             else
@@ -183,7 +188,7 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
                 }
                 else
                 {
-                    TempData["msg"] = "Can't delete user successful";
+                    TempData["msg"] = "Can't delete user";
                     return RedirectToAction("TechnicianManagement");
                 }
 
@@ -197,7 +202,7 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
                 }
                 else
                 {
-                    TempData["msg"] = "Can't delete user successful";
+                    TempData["msg"] = "Can't delete user";
                     return RedirectToAction("ReporterManagement");
                 }
             }
@@ -412,12 +417,140 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
             return RedirectToAction("AddItem");
         }
 
+        public ActionResult ItemInformation()
+        {
+            int itemId = int.Parse(Request["itemId"].ToString());
+            ItemOwnerModel itemOwnerModel = new ItemOwnerModel();
+            List<ItemOwnerModel> itemOwnerModelList = new List<ItemOwnerModel>();
+            itemOwnerModelList = itemOwnerModel.viewItemOwnerInformation(itemId);
+            return View(itemOwnerModelList);
+        }
         public ActionResult EditItem()
         {
             int itemId = int.Parse(Request["itemId"].ToString());
+            ItemOwnerModel itemOwnerModel = new ItemOwnerModel();
+            itemOwnerModel = itemOwnerModel.viewItemOwnerByItemId(itemId);
+            return View(itemOwnerModel);
+        }
+
+        public ActionResult EditOwner()
+        {
+            
+            int itemId = int.Parse(Request["itemId"].ToString());
+            int itemOwnerId = int.Parse(Request["itemOwnerId"].ToString());
+            int ownerId = int.Parse(Request["ownerId"].ToString());
+
+            List<int> itemInfo = new List<int>();
+            itemInfo.Add(itemOwnerId);
+            itemInfo.Add(itemId);
+            itemInfo.Add(ownerId);
+            ViewData["itemInfo"] = itemInfo;
+
+            CAMTUserModel camtUserModel = new CAMTUserModel();
+            List<CAMTUserModel> camtUserModelList = new List<CAMTUserModel>();
+            camtUserModelList = camtUserModel.viewAllCAMTUser();
+
+            return View(camtUserModelList);
+        }
+
+        public ActionResult editItemOwner()
+        {
+            int itemId = int.Parse(Request["itemId"].ToString());
+            int itemOwnerId = int.Parse(Request["itemOwnerId"].ToString());
+            int ownerId = int.Parse(Request["ownerId"].ToString());
+            ItemOwnerModel itemOwnerModel = new ItemOwnerModel();
+
+            itemOwnerModel.updateItemOwner(itemOwnerId, ownerId);
+
+            string url = "~/Home/EditItem?itemId=" + itemId;
+            return Redirect(url);
+        }
+
+        public ActionResult AddComponent()
+        {
+            int itemId = int.Parse(Request["itemId"].ToString());
+            int ownerId = int.Parse(Request["ownerId"].ToString());
+
+            List<int> componentInfo = new List<int>();
+            componentInfo.Add(itemId);
+            componentInfo.Add(ownerId);
+            ViewData["componentInfo"] = componentInfo;
+
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult addComponent()
+        {
+            int itemComponent = int.Parse(Request["itemId"].ToString());
+            int ownerId = int.Parse(Request["ownerId"].ToString());
+
+            string itemBrand = Request["item-band"].ToString();
+            string itemName = Request["item-name"].ToString();
+            string itemDescription = Request["item-description"].ToString();
+            DateTime itemStartDate = DateTime.Now;
+            string endDate = Request["time-end"].ToString();
+
+            Nullable<DateTime> itemEndDate = null;
+
+            if (endDate != "")
+            {
+                itemEndDate = DateTime.Parse(endDate);
+            }
+
+            int itemStatus = int.Parse(Request["item-status"].ToString());
+            HttpPostedFileBase itemPicture = Request.Files["item-picture"];
+            string cmuNumber = Request["cmu-number"].ToString();
+            string camtNumber = Request["camt-number"].ToString();
+            string serialNumber = Request["serial-number"].ToString();
+
             ItemModel itemModel = new ItemModel();
-            itemModel.viewItemModelByItemId(itemId);
-            return View(itemModel);
+            bool status1 = itemModel.insertItem(itemBrand, itemName, itemDescription, itemStartDate, itemEndDate, itemStatus, cmuNumber, camtNumber, serialNumber, itemComponent);
+
+            if (status1 == true)
+            {
+
+                itemModel.viewPreviousItem();
+
+                // create picture name
+                string fileType = "";
+
+                if (itemPicture.ContentType.Contains("jpeg"))
+                {
+                    fileType = ".jpg";
+                }
+                else if (itemPicture.ContentType.Contains("png"))
+                {
+                    fileType = ".png";
+                }
+
+                var fileName = "picItem-" + itemModel.item_id + fileType;
+                itemModel.item_picture = fileName;
+
+                // add picturer in path
+                if (itemPicture.ContentLength > 0)
+                {
+                    System.Drawing.Image bm = System.Drawing.Image.FromStream(itemPicture.InputStream);
+                    bm = ResizeBitmap((Bitmap)bm, 200, 200); /// new width, height
+                    bm.Save(Path.Combine(Server.MapPath("~/Content/ItemPics"), fileName));
+                }
+
+                // update product info
+                Nullable<int> componentItemId = null;
+                if (itemModel.item_component.item_id != 0)
+                {
+                    componentItemId = itemModel.item_component.item_id;
+                }
+                itemModel.updateItem(itemModel.item_id, itemModel.item_brand, itemModel.item_name, itemModel.item_description, itemModel.item_startDate, itemModel.item_endDate, itemModel.item_status, itemModel.item_picture, itemModel.item_cmuNumber, itemModel.item_camtNumber, itemModel.item_serialNumber, componentItemId);
+
+                ItemOwnerModel itemOwnerModel = new ItemOwnerModel();
+                bool status2 = itemOwnerModel.insertItemOwner(itemModel.item_id, ownerId);
+            }
+            TempData["msg"] = "Add component success";
+
+            string url = "~/Home/ItemInformation?itemId=" + itemComponent;
+            return Redirect(url);
         }
 
         [HttpPost]
@@ -523,7 +656,7 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
             }
             else
             {
-                TempData["msg"] = "Update user infomation successful";
+                TempData["msg"] = "Update Administrator information  successful";
                 return RedirectToAction("AdministratorInfor");
             }
         }
@@ -632,6 +765,13 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
                 return View();
             }
         }
+
+        public ActionResult ReparationManagement()
+        {
+
+            return View();
+        }
+
 
         private Bitmap ResizeBitmap(Bitmap b, int nWidth, int nHeight)
         {

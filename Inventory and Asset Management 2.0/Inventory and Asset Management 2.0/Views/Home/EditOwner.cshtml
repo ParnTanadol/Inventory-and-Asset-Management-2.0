@@ -1,9 +1,8 @@
-﻿@{
-    ViewBag.Title = "AddItemOwner";
+﻿@model  IEnumerable<Inventory_and_Asset_Management_2._0.Models.CAMTUserModel>
+@using Inventory_and_Asset_Management_2._0.Models;
+@{
+    ViewBag.Title = "EditOwner";
 }
-
-
-
 @{
     if (Session["userType"] != null && Session["userType"].ToString().Equals("1"))
     {
@@ -72,32 +71,33 @@
                                                 </thead>
                                                 <tbody>
                                                     @{
-                                                        int i = 1;
-                                                        foreach (var item in Model)
-                                                        {
-                                                            <tr>
-                                                                <td>@i</td>
-                                                                <td>@item.user_username</td>
-                                                                <td>@item.user_name</td>
-                                                                <td>@item.user_department</td>
-                                                                <td>@item.user_room</td>
-                                                                <td>@item.user_address</td>
-                                                                <td>@item.user_tel</td>
-                                                                <td>@item.user_email</td>
-                                                                @{
-                                                            if (item.user_active == true)
-                                                            {
-                                                                <td>Active</td>
-                                                            }
-                                                            else
-                                                            {
-                                                                <td>Not Active</td>
-                                                            }
-                                                                }
-                                                                <td><input type="radio" name="userOwnerId" value="@item.user_id" /></td>
-                                                            </tr>
-                                                            i++;
-                                                        }
+
+        int i = 1;
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>@i</td>
+                <td>@item.user_username</td>
+                <td>@item.user_name</td>
+                <td>@item.user_department</td>
+                <td>@item.user_room</td>
+                <td>@item.user_address</td>
+                <td>@item.user_tel</td>
+                <td>@item.user_email</td>
+                @{
+            if (item.user_active == true)
+            {
+                <td>Active</td>
+            }
+            else
+            {
+                <td>Not Active</td>
+            }
+                }
+                <td><input type="radio" name="userOwnerId" value="@item.user_id" /></td>
+            </tr>
+            i++;
+        }
                                                     }
                                                 </tbody>
                                             </table>
@@ -105,9 +105,9 @@
                                         </form>
                                     </div>
                                     <div align="center">
-                                        <button class="btn btn-info" name="itemOwner" onclick="onAddItemOwner()">Add Owner</button>
+                                        <button class="btn btn-info" name="itemOwner" onclick="onEditItemOwner()">Edit Owner</button>
                                     </div>
-                                    
+
                                     <br />
                                 </div>
 
@@ -119,41 +119,46 @@
                 </div><!-- CONTENT -->
                 <div class="push"></div>
             </div> <!-- WRAPPER -->
+            @{
+        var itemInfo = ViewData["itemInfo"] as List<int>;
 
-            <script>
+        var userId = itemInfo[2].ToString();
 
-                if (localStorage.getItem("userOwnerId") != null) {
-                    var ownerId = localStorage.getItem("userOwnerId");
+        <script>
+            var userId = parseInt('@userId');
 
-                    var userOwnerId = document.forms[0].userOwnerId;
-                    for (var i = 0; i < userOwnerId.length; i++) {
-                        if (userOwnerId[i].value == ownerId) {
-                            userOwnerId[i].checked = true;
-                        }
+            var userOwnerId = document.forms[0].userOwnerId;
+            for (var i = 0; i < userOwnerId.length; i++) {
+                if (userOwnerId[i].value == userId) {
+                    userOwnerId[i].checked = true;
+                }
+            }
+        </script>
+
+            }
+
+            @{
+        var itemOwnerId = itemInfo[0].ToString();
+        var itemId = itemInfo[1].ToString();
+        <script>
+            function onEditItemOwner() {
+                var itemOwnerId = parseInt('@itemOwnerId');
+                var itemId = parseInt('@itemId');
+
+
+                var userOwnerId = document.forms[0].userOwnerId;
+                var userOwnerIdCheck = "";
+                for (var i = 0; i < userOwnerId.length; i++) {
+                    if (userOwnerId[i].checked) {
+                        userOwnerIdCheck = userOwnerId[i].value;
                     }
                 }
 
-                function onAddItemOwner() {
+                location.href = "editItemOwner?itemId=" + itemId + "&itemOwnerId=" + itemOwnerId + "&ownerId=" + userOwnerIdCheck;
+            }
+        </script>
+            }
 
-
-                    var userOwnerId = document.forms[0].userOwnerId;
-                    var userOwnerIdCheck = "";
-                    for (var i = 0; i < userOwnerId.length; i++) {
-                        if (userOwnerId[i].checked) {
-                            userOwnerIdCheck = userOwnerId[i].value;
-                        }
-                    }
-
-                    if (userOwnerIdCheck != "") {
-                        localStorage.setItem("userOwnerId", userOwnerIdCheck);
-                        location.href = '@Url.Action("AddItem", "Home")'
-                    }
-                    else {
-                        alert("Please select item owner")
-                    }
-
-                }
-            </script>
 
         </body>
     </html>

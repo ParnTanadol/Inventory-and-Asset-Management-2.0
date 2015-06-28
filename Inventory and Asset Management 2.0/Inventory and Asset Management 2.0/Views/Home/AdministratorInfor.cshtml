@@ -88,7 +88,7 @@
                       </div>
                       <div class="form-group">
                           <div class="col-sm-offset-3 col-sm-9">
-                              <button type="submit" class="btn btn-default">Save</button>
+                              <button type="submit" class="btn btn-default">Update Information</button>
                           </div>
                       </div>
                       @Html.Hidden("userActive", 1)
@@ -109,36 +109,28 @@
                               var email = document.getElementById("email").value;
 
 
-                              if (username == "") {
-                                  alert("Please fill your username");
-                                  return false;
-                              }
                               if (name == "") {
-                                  alert("Please fill your name");
+                                  alert("Please you fill name");
                                   return false;
                               }
                               if (department == "") {
-                                  alert("Please fill your department");
+                                  alert("Please you fill department");
                                   return false;
                               }
                               if (room == "") {
-                                  alert("Please fill your room");
+                                  alert("Please you fill room");
                                   return false;
                               }
                               if (address == "") {
-                                  alert("Please fill your address");
+                                  alert("Please you fill address");
                                   return false;
                               }
                               if (tel == "") {
-                                  alert("Please fill your telephone number");
+                                  alert("Please you fill telephone number");
                                   return false;
                               }
                               if (email == "") {
-                                  alert("Please fill your telephone email");
-                                  return false;
-                              }
-                              if (username.length < 4 || username.length > 16) {
-                                  alert("Please fill username 4-16 characters ");
+                                  alert("Please you fill telephone email");
                                   return false;
                               }
                           }
@@ -198,23 +190,23 @@
                               var comfirmPassword = document.getElementById("comfirmPassword").value;
 
                               if (oldPassword == "") {
-                                  alert("Please fill Old password");
+                                  alert("Please you fill old password");
                                   return false;
                               }
                               if (newPassword == "") {
-                                  alert("Please fill New password ");
+                                  alert("Please you fill new password ");
                                   return false;
                               }
                               if (comfirmPassword == "") {
-                                  alert("Please fill Confirm password");
+                                  alert("Please you fill confirm password");
                                   return false;
                               }
                               if (newPassword.length < 4 || newPassword.length > 16) {
-                                  alert("Please fill new password 4-16 characters ");
+                                  alert("Please you fill new password 4-16 characters ");
                                   return false;
                               }
                               if (comfirmPassword.length < 4 || comfirmPassword.length > 16) {
-                                  alert("Please fill Confirm password 4-16 characters ");
+                                  alert("Please you fill Confirm password 4-16 characters ");
                                   return false;
                               }
                               if (newPassword != comfirmPassword) {

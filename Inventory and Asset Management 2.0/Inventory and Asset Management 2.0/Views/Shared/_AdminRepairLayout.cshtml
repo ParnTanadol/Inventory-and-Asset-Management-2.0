@@ -20,7 +20,7 @@
     </div> <!-- container -->
 </div> <!-- sub-nav -->
 <!--Header End-->
-<!--Technician Menu-->
+<!--Admin Menu-->
 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" style="float: none !important;width: 100%; background-color: #EEE;">
     <font size="4"><i class="glyphicon glyphicon-th-list"></i> Menu</font>
 </button> <!-- button responsive -->
@@ -31,34 +31,42 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-2 col-menu">
-                    <a href="~/Technician/TechnicianMainpage">
-                        <div id="menu">
-                            <font size="5px"><i class="glyphicon glyphicon-asterisk"></i></font>&nbsp
-                            Technician
-                        </div>
-                    </a>
-                </div> <!-- col-md-3 -->
-                <div class="col-md-2 col-menu">
-                    <a href="~/Technician/Repairing">
-                        <div id="menu">
-                            <font size="5px"><i class="glyphicon glyphicon-signal"></i></font>&nbsp
-                            Repairing
-                        </div>
-                    </a>
-                </div> <!-- col-md-3 -->
-                <div class="col-md-2 col-menu">
-                    <a href="~/Technician/RepairingHistory">
+                    <a href="~/Home/ReparationManagement">
                         <div id="menu--hover">
                             <font size="5px"><i class="glyphicon glyphicon-download"></i></font>&nbsp
-                            History
+                            Reparation Management
                         </div>
                     </a>
                 </div> <!-- col-md-3 -->
                 <div class="col-md-2 col-menu">
-                    <a href="~/Technician/TechnicianInformation">
+                    <a href="~/Home/UserManagement">
+                        <div id="menu">
+                            <font size="5px"><i class="glyphicon glyphicon-asterisk"></i></font>&nbsp
+                            Users Management
+                        </div>
+                    </a>
+                </div> <!-- col-md-3 -->
+                <div class="col-md-2 col-menu">
+                    <a href="~/Home/ItemManagement">
+                        <div id="menu">
+                            <font size="5px"><i class="glyphicon glyphicon-signal"></i></font>&nbsp
+                            Items Management
+                        </div>
+                    </a>
+                </div> <!-- col-md-3 -->
+                <div class="col-md-2 col-menu">
+                    <a href="~/Home/MIS">
+                        <div id="menu">
+                            <font size="5px"><i class="glyphicon glyphicon-download"></i></font>&nbsp
+                            Items MIS
+                        </div>
+                    </a>
+                </div> <!-- col-md-3 -->
+                <div class="col-md-2 col-menu">
+                    <a href="~/Home/AdministratorInfor">
                         <div id="menu">
                             <font size="5px"><i class="glyphicon glyphicon-info-sign"></i></font>&nbsp
-                            Technician Information
+                            Admin Information
                         </div>
                     </a>
                 </div> <!-- col-md-3 -->
@@ -67,9 +75,8 @@
     </div> <!-- sub-nav-menu -->
 
 </div> <!-- nav-bar -->
-<!--Technician Menu end-->
+<!--Admin Menu End-->
 @RenderBody()
-<!--footer-->
 <footer class="footer">
     <div class="container">
         <div class="row">
@@ -79,4 +86,3 @@
         </div>
     </div>
 </footer>
-

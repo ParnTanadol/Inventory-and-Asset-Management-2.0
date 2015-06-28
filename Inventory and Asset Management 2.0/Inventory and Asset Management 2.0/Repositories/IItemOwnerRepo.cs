@@ -10,8 +10,7 @@ namespace Inventory_and_Asset_Management_2._0.Repositories
     {
         bool insertItemOwner(ItemOwner itemOwner);
         bool updateItemOwner(ItemOwner itemOwner);
-        ItemOwner viewItemOwnerByitemIdUserId(int itemId, int userId);
-        ItemOwner viewItemOwnerByItemOwnerId(int itemOwnerId);
+        ItemOwner viewItemOwnerByitemId(int itemId);
         List<ItemOwner> viewAllItemOwner();
     }
 }

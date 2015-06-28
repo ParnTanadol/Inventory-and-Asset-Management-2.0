@@ -119,7 +119,7 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
             }
             else
             {
-                TempData["msg"] = "Update user infomation successful";
+                TempData["msg"] = "Update Technician information successful” ";
                 return RedirectToAction("TechnicianInformation");
             }
         }
@@ -192,7 +192,7 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
                         MailAPI mailAPI = new MailAPI();
                         mailAPI.Send(reporterEmail, mailSubject, mailBody);
                     }
-                    TempData["msg"] = "Update repairing information sucess";
+                    TempData["msg"] = "Repairing information is updated";
                 }
                 else
                 {
@@ -222,11 +222,11 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
                         MailAPI mailAPI = new MailAPI();
                         mailAPI.Send(reporterEmail, mailSubject, mailBody);
                     }
-                    TempData["msg"] = "Repairing complete";
+                    TempData["msg"] = "Repairing information is updated";
                 }
                 else
                 {
-                    TempData["msg"] = "Can't Update information";
+                    TempData["msg"] = "Can't Update repairing information";
                 }
                 string url = "~/Technician/RepairingInformation?reportId=" + reportId;
                 return Redirect(url);

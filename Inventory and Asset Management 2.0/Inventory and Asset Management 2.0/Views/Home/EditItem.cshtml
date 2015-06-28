@@ -1,4 +1,4 @@
-﻿@model Inventory_and_Asset_Management_2._0.Models.ItemModel
+﻿@model Inventory_and_Asset_Management_2._0.Models.ItemOwnerModel
 @using Inventory_and_Asset_Management_2._0.Models;
 
 
@@ -51,38 +51,39 @@
                                     <div class="panel-body">
                                         <form class="form-horizontal" role="form" id="form" action="~/Home/editItem" method="post" enctype="multipart/form-data" onsubmit="return onEditItem();">
                                             @Html.AntiForgeryToken()
-                                            @Html.Hidden("itemId", @Model.item_id)
-                                            @Html.Hidden("itemStartDate", @Model.item_startDate)
-                                            @Html.Hidden("itemPicturerName", @Model.item_picture)
-                                            @Html.Hidden("itemComponent", @Model.item_component.item_id)
+                                            @Html.Hidden("itemId", @Model.item_id.item_id)
+                                            @Html.Hidden("itemStartDate", @Model.item_id.item_startDate)
+                                            @Html.Hidden("itemPicturerName", @Model.item_id.item_picture)
+                                            @Html.Hidden("itemComponent", @Model.item_id.item_component.item_id)
+                                           
                                             <div class="form-group">
                                                 <label class="control-label col-sm-3">Item Band:</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control" id="itemBrand" name="itemBrand" placeholder="Item Band" value="@Model.item_brand">
+                                                    <input type="text" class="form-control" id="itemBrand" name="itemBrand" placeholder="Item Band" value="@Model.item_id.item_brand">
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="control-label col-sm-3">Item Name:</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control" id="itemName" name="itemName" placeholder="Item Name" value="@Model.item_name">
+                                                    <input type="text" class="form-control" id="itemName" name="itemName" placeholder="Item Name" value="@Model.item_id.item_name">
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="control-label col-sm-3">Item Description:</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control" id="itemDescription" name="itemDescription" placeholder="Item Description" value="@Model.item_description">
+                                                    <input type="text" class="form-control" id="itemDescription" name="itemDescription" placeholder="Item Description" value="@Model.item_id.item_description">
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="control-label col-sm-3">Item Start date:</label>
                                                 <div class="col-sm-9">
-                                                    <label class="control-label">@Model.item_startDate</label>
+                                                    <label class="control-label">@Model.item_id.item_startDate</label>
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="control-label col-sm-3">Time End:</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control time-end" id="itemEndDate" name="itemEndDate" placeholder="Time End" value="@Model.item_endDate">
+                                                    <input type="text" class="form-control time-end" id="itemEndDate" name="itemEndDate" placeholder="Time End" value="@Model.item_id.item_endDate">
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -102,25 +103,33 @@
                                             <div class="form-group">
                                                 <label class="control-label col-sm-3">CMU Number:</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control" id="cmuNumber" name="cmuNumber" placeholder="CMU Number" value="@Model.item_cmuNumber">
+                                                    <input type="text" class="form-control" id="cmuNumber" name="cmuNumber" placeholder="CMU Number" value="@Model.item_id.item_cmuNumber">
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="control-label col-sm-3">CAMT Number:</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control" id="camtNumber" name="camtNumber" placeholder="CAMT Number" value="@Model.item_cmuNumber">
+                                                    <input type="text" class="form-control" id="camtNumber" name="camtNumber" placeholder="CAMT Number" value="@Model.item_id.item_cmuNumber">
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="control-label col-sm-3">Serial Number:</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control" id="serialNumber" name="serialNumber" placeholder="Serial Number" value="@Model.item_serialNumber">
+                                                    <input type="text" class="form-control" id="serialNumber" name="serialNumber" placeholder="Serial Number" value="@Model.item_id.item_serialNumber">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-3">Owner Name</label>
+                                                <div class="col-sm-9">
+                                                    <label class="form-control-static">@Model.user_id.user_name</label> 
+                                                    <br />
+                                                    <input type="button" class="btn btn-warning" placeholder="Item Owner" value="Owner" onclick="onEditOwner(@Model.itemOwner_id,@Model.item_id.item_id,@Model.user_id.user_id)">
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="control-label col-sm-3">Item Picture:</label>
                                                 <div class="col-sm-9">
-                                                    <img src="@Url.Content("~/Content/ItemPics/" + @Model.item_picture)" height="100" width="100" />
+                                                    <img src="@Url.Content("~/Content/ItemPics/" + @Model.item_id.item_picture)" height="100" width="100" />
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -136,13 +145,13 @@
                                             </div>
                                             <!-- set item Status-->
                                             @{
-                                            if (@Model.item_status == 1)
+                                            if (@Model.item_id.item_status == 1)
                                             {
                                                 <script>
                                                     document.getElementById("item-status1-1").checked = true;
                                                 </script>
                                             }
-                                            else if (@Model.item_status == 2)
+                                            else if (@Model.item_id.item_status == 2)
                                             {
                                                 <script>
                                                     document.getElementById("item-status1-2").checked = true;
@@ -160,44 +169,51 @@
                                         @{
                                         //-------------------------check edit item----------------------------------------------------------
                                         <script>
-                                            function onEditItem() {
 
-                                                var itemBand = document.getElementById("itemBrand").value;
-                                                var itemName = document.getElementById("itemName").value;
-                                                var itemDescription = document.getElementById("itemDescription").value;
-                                                var itemEndDate = document.getElementById("itemEndDate").value;
-                                                var cmuNumber = document.getElementById("cmuNumber").value;
-                                                var camtNumber = document.getElementById("camtNumber").value;
-                                                var serialNumber = document.getElementById("serialNumber").value;
+    function onEditOwner(ownerId,itemId,userId) {
+        location.href = "EditOwner?itemId=" + itemId + "&itemOwnerId=" + ownerId + "&ownerId=" + userId;
 
-                                                // get item status
-                                                var itemStatus = document.getElementsByName("itemStatus");
-                                                var itemStatusCheck = "";
-                                                for (var a = 0; a < itemStatus.length; a++) {
-                                                    if (itemStatus[a].checked) {
-                                                        itemStatusCheck = itemStatus[a].value;
-                                                    }
-                                                }
+    }
 
-                                                if (itemBand == "") {
-                                                    alert("Please fill Item band");
-                                                    return false;
-                                                }
-                                                else if (itemName == "") {
-                                                    alert("Please fill Item name");
-                                                }
-                                                else if (itemDescription == "") {
-                                                    alert("Please fill Item description");
-                                                }
-                                                else if (itemStatusCheck == "") {
-                                                    alert("Please fill Item status");
-                                                }
-                                                else if (camtNumber == "" && cmuNumber == "" && serialNumber == "") {
-                                                    alert("Please fill CAMT number, CMU number, or Serial number");
-                                                    return false;
-                                                }
-                                            }
+    function onEditItem() {
+
+        var itemBand = document.getElementById("itemBrand").value;
+        var itemName = document.getElementById("itemName").value;
+        var itemDescription = document.getElementById("itemDescription").value;
+        var itemEndDate = document.getElementById("itemEndDate").value;
+        var cmuNumber = document.getElementById("cmuNumber").value;
+        var camtNumber = document.getElementById("camtNumber").value;
+        var serialNumber = document.getElementById("serialNumber").value;
+
+        // get item status
+        var itemStatus = document.getElementsByName("itemStatus");
+        var itemStatusCheck = "";
+        for (var a = 0; a < itemStatus.length; a++) {
+            if (itemStatus[a].checked) {
+                itemStatusCheck = itemStatus[a].value;
+            }
+        }
+
+        if (itemBand == "") {
+            alert("Please you fill Item brand");
+            return false;
+        }
+        else if (itemName == "") {
+            alert("Please you fill Item name");
+        }
+        else if (itemDescription == "") {
+            alert("Please you fill Item description");
+        }
+        else if (itemStatusCheck == "") {
+            alert("Please you fill Item status");
+        }
+        else if (camtNumber == "" && cmuNumber == "" && serialNumber == "") {
+            alert("Please you fill CAMT number, CMU number, or Serial number");
+            return false;
+        }
+    }
                                         </script>
+                                            
                                         //--------------------------------------------------------------------------------------------------
                                         if (TempData["msg"] != null)
                                         {

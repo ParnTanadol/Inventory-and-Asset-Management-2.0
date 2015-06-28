@@ -51,7 +51,7 @@
 
                                 <div class="panel panel-info">
                                     <div class="panel-heading">
-                                        <h4>Reporter Management</h4>
+                                        <h4>Technicain Management</h4>
                                     </div>
                                     <div class="panel-body">
                                         <br />
@@ -89,11 +89,11 @@
                                 @{
             if (item.user_active == true)
             {
-                            <td>@Html.ActionLink("Disapprove", "disapproveUser", @item, new { onclick = "return confirm('Are you sure for disapproving this account !');" })</td>
+                            <td>@Html.ActionLink("Inactive", "disapproveUser", @item, new { onclick = "return confirm('Are you sure for disapproving this account !');" })</td>
             }
             else
             {
-                            <td>@Html.ActionLink("Approve", "approveUser", @item, new { onclick = "return confirm('Are you sure for approving this account !');" })</td>
+                            <td>@Html.ActionLink("Active", "approveUser", @item, new { onclick = "return confirm('Are you sure for approving this account !');" })</td>
             }
                                 }
                                 <td>@Html.ActionLink("Delete", "deleteCAMTUser", @item, new { onclick = "return confirm('Are you sure for deleting this account !');" })</td>

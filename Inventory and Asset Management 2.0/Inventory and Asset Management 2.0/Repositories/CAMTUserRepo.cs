@@ -133,5 +133,38 @@ namespace Inventory_and_Asset_Management_2._0.Repositories
                 return camtUserDBList;
             }
         }
+
+
+        public List<CAMTUser> viewAllUserByUserTypeActive(int userType, bool userActive)
+        {
+            try
+            {
+                var query = from i in context.CAMTUsers where i.user_type == userType && i.user_active == userActive select i;
+                List<CAMTUser> camtUserList = query.ToList();
+                context.SaveChanges();
+                return camtUserList;
+            }
+            catch
+            {
+                List<CAMTUser> camtUserList = new List<CAMTUser>();
+                return camtUserList;
+            }
+        }
+
+
+        public CAMTUser viewUserByUsername(string username)
+        {
+            try
+            {
+                CAMTUser camtUser = context.CAMTUsers.First(i => i.user_username == username);
+                context.SaveChanges();
+                return camtUser;
+            }
+            catch
+            {
+                CAMTUser camtUser = new CAMTUser();
+                return camtUser;
+            }
+        }
     }
 }

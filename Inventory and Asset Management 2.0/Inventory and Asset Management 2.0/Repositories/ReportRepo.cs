@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.SqlServer;
 using System.Linq;
 using System.Web;
 
@@ -183,18 +184,37 @@ namespace Inventory_and_Asset_Management_2._0.Repositories
             }
         }
 
+        public bool updateTypeBroken(Report report)
+        {
+            try
+            {
+                Report reportDb = context.Reports.First(i => i.report_id == report.report_id);
 
+                reportDb.technician_id = report.technician_id;
+                reportDb.report_typeBroken = report.report_typeBroken;
+
+                context.SaveChanges();
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        /*
         public List<Report> viewReparationSummary(DateTime timeStart, DateTime timeEnd)
         {
             try
             {
-                /*
-                 var events = this.coreDomainContext.Events.Where(
-                    e => e.EventDate.Value.Date >= DateTime.Today
-                      && e.EventDate.Value.Date <= endPeriod.Date)
-                    .OrderByDescending(e => e.EventDate)
-                    .ToList();
-                 * */
+                
+                // var events = this.coreDomainContext.Events.Where(
+                //    e => e.EventDate.Value.Date >= DateTime.Today
+               //       && e.EventDate.Value.Date <= endPeriod.Date)
+                //    .OrderByDescending(e => e.EventDate)
+                //    .ToList();
+                 
                 var query = context.Reports.Where(i => i.report_startDate >= timeStart && i.report_startDate <= timeEnd).OrderByDescending(i => i.report_startDate).ToList();
                 List<Report> reportList = query.ToList();
                 return reportList;
@@ -205,5 +225,151 @@ namespace Inventory_and_Asset_Management_2._0.Repositories
                 return reportList;
             }
         }
+        */
+        /*
+        public List<List<string>> viewAverageWorkTime(string typeWork)
+        {
+            try
+            {
+                var query = (from i in context.Reports 
+                              where i.report_typeBroken == typeWork && i.report_statusComplete == 3
+                              group i by i.technician_id into g 
+                              select new {  technicianId = g.Key, 
+                                            count = g.Count(),
+                                            time = g.Sum(i => SqlFunctions.DateDiff("minute", i.report_startDate, i.report_endDate))}).ToList();
+
+                List<List<string>> workTimeList = new List<List<string>>();
+                if(query.Count != 0)
+                {
+                    foreach (var i in query)
+                    {
+                        List<string> workTime = new List<string>();
+                        workTime.Add(i.technicianId.ToString());
+
+                        //find average time
+                        double averageTime = double.Parse(i.time.ToString()) / double.Parse(i.count.ToString());
+                        workTime.Add(averageTime.ToString());
+                        workTimeList.Add(workTime);
+                    }
+                }
+                context.SaveChanges();
+
+                return workTimeList;
+            }
+            catch
+            {
+                List<List<string>> workTimeList = new List<List<string>>();
+                return workTimeList;
+            }
+        }
+        */
+        public double viewExperienceTechnician(int technicainId)
+        {
+
+            try
+            {
+                var query = (from i in context.Reports
+                             where i.technician_id == technicainId && i.report_statusComplete == 3
+                             group i by i.report_typeBroken into g
+                             select new
+                             {
+                              //   technicainId = g.Select(i => i.technician_id),
+                                 typeBroken = g.Key,
+                                // count = g.Count(),
+                                 time = g.Sum(i => (double?)SqlFunctions.DateDiff("minute", i.report_startDate, i.report_endDate)) / g.Count()
+                                 
+                             }).ToList();
+
+         //       List<List<string>> workTimeList = new List<List<string>>();
+                double experience = 0.0;
+
+                if (query.Count != 0)
+                {
+                    foreach (var i in query)
+                    {
+                   //     List<string> workTime = new List<string>();
+                   //     workTime.Add(i.technicainId.ToString());
+                   //     workTime.Add(i.typeBroken.ToString());
+                   //     workTime.Add(i.time.ToString());
+
+                        string typeBroken = i.typeBroken.ToString();
+                        var query2 = (from j in context.Reports
+                                      where j.technician_id == technicainId &&
+                                          j.report_typeBroken == typeBroken && j.report_statusComplete != 3
+                                      select j).ToList();
+
+                        if (query2.Count != 0)
+                        {
+                            foreach (var j in query2)
+                            {
+                                experience = experience + double.Parse(i.time.ToString());
+                            }
+                        }
+
+                    //    workTimeList.Add(workTime);
+                    }
+                }
+                context.SaveChanges();
+
+                return experience;
+            }
+            catch
+            {
+               
+                return 0.0;
+            }
+        }
+
+
+        public List<List<int>> viewTechnicianTask(string typeWork)
+        {
+            try
+            {
+                var query = (from i in context.Reports 
+                              where i.report_statusComplete != 0 && i.report_typeBroken == typeWork
+                              group i by i.technician_id into g 
+                              select new {  technicianId = g.Key, 
+                                            amount = g.Count()}).ToList();
+                                 
+                List<List<int>> technicianTaskList = new List<List<int>>();
+
+                if (query.Count != 0)
+                {
+                    foreach (var i in query)
+                    {
+                        List<int> technicianTask = new List<int>();
+                        technicianTask.Add(i.technicianId);
+                        technicianTask.Add(i.amount);
+
+                        technicianTaskList.Add(technicianTask);
+                    }
+                }
+                return technicianTaskList;
+            }
+            catch
+            {
+                List<List<int>> technicianTaskList = new List<List<int>>();
+                return technicianTaskList;
+            }
+        }
+
+        /*
+        public List<Report> viewWorkInProcess(int technicianId)
+        {
+            try
+            {
+                var query = from i in context.Reports where i.technician_id == technicianId && i.report_statusComplete != 3 select i;
+                List<Report> reportList = query.ToList();
+                context.SaveChanges();
+
+                return reportList;
+            }
+            catch
+            {
+                List<Report> reportList = new List<Report>();
+                return reportList;
+            }
+        }
+         * */
     }
 }

@@ -34,7 +34,6 @@ namespace Inventory_and_Asset_Management_2._0.Repositories
                 ItemOwner ItemOwnerDb = context.ItemOwners.First(i => i.itemOwner_id == itemOwner.itemOwner_id);
 
                 ItemOwnerDb.itemOwner_id = itemOwner.itemOwner_id;
-                ItemOwnerDb.item_id = itemOwner.item_id;
                 ItemOwnerDb.user_id = itemOwner.user_id;
                 context.SaveChanges();
 
@@ -46,26 +45,11 @@ namespace Inventory_and_Asset_Management_2._0.Repositories
             }
         }
 
-        public ItemOwner viewItemOwnerByitemIdUserId(int itemId, int userId)
+        public ItemOwner viewItemOwnerByitemId(int itemId)
         {
             try
             {
-                ItemOwner itemOwner = context.ItemOwners.First(i => i.item_id == itemId && i.user_id == userId);
-                context.SaveChanges();
-                return itemOwner;
-            }
-            catch
-            {
-                ItemOwner itemOwner = new ItemOwner();
-                return itemOwner;
-            }
-        }
-
-        public ItemOwner viewItemOwnerByItemOwnerId(int itemOwnerId)
-        {
-            try
-            {
-                ItemOwner itemOwner = context.ItemOwners.First(i => i.itemOwner_id == itemOwnerId);
+                ItemOwner itemOwner = context.ItemOwners.First(i => i.item_id == itemId);
                 context.SaveChanges();
                 return itemOwner;
             }

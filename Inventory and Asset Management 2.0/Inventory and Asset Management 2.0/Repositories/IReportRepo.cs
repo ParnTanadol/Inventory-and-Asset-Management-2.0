@@ -11,6 +11,7 @@ namespace Inventory_and_Asset_Management_2._0.Repositories
 
         bool insertReport(Report report);
         bool updateReport(Report report);
+        bool updateTypeBroken(Report report);
         Report viewReportByReportId(int reportId);
         List<Report> viewAllReport();
         List<Report> viewReportbyTechnicianId(int technicianId);
@@ -20,7 +21,12 @@ namespace Inventory_and_Asset_Management_2._0.Repositories
 
         bool updateStatus(Report report);
         Report viewPreviousReport(int reporterId);
+    //    List<Report> viewReparationSummary(DateTime timeStart, DateTime timeEnd);
 
-        List<Report> viewReparationSummary(DateTime timeStart, DateTime timeEnd);
+    //    List<List<string>> viewAverageWorkTime(string typeWork);
+
+        List<List<int>> viewTechnicianTask(string typeWork);
+        double viewExperienceTechnician(int technicainId);
+    //    List<Report> viewWorkInProcess(int technicianId);
     }
 }

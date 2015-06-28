@@ -186,7 +186,8 @@ namespace Inventory_and_Asset_Management_2._0.Models
                 return this;
             }
         }
-        
+
+
         public ItemModel viewItemModelbySerialNum(string serialNumber)
         {
             try

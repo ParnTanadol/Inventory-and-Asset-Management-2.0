@@ -1,10 +1,12 @@
 ﻿@{
-    ViewBag.Title = "AdministratorMainpage";
+    ViewBag.Title = "ReparationManagement";
 }
+
 @{
     if (Session["userType"] != null && Session["userType"].ToString().Equals("1"))
     {
-        Layout = "~/Views/Shared/_AdminMainLayout.cshtml";
+        Layout = "~/Views/Shared/_AdminRepairLayout.cshtml";
+        //--------------------------------------------------------------------------------------
         <!DOCTYPE html>
         <html lang="en">
         <head>
@@ -35,8 +37,27 @@
                     <div class="container-fluid">
                         <div class="row">
 
-                            <div class="col-xs-12">
-                                <div class="text-center"><h1>Inventory and Asset management</h1></div>
+                            <br />
+
+                            <div class="col-md-12">
+                                <a href="~/Home/ItemMIS">
+                                    <div class="menu__admin">
+                                        <h4>
+                                            <font size="6"><i class="glyphicon glyphicon-list-alt"></i></font> <br />
+                                            New Reparation
+                                        </h4>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-12">
+                                <a href="~/Home/ReparationMIS">
+                                    <div class="menu__admin">
+                                        <h4>
+                                            <font size="6"><i class="glyphicon glyphicon-list-alt"></i></font> <br />
+                                            All Reparations
+                                        </h4>
+                                    </div>
+                                </a>
                             </div>
 
                         </div><!-- ROW -->
@@ -52,6 +73,7 @@
     <script type="text/javascript" src="~/Content/bootstrap/js/bootstrap.min.js"></script>
 
         //--------------------------------------------------------------------------------------
+
     }
     else
     {

@@ -173,7 +173,7 @@
                                                         <td><img src="@Url.Content("~/Content/ItemPics/" + item.item_id.item_picture)" height="50" width="50" /></td>
                                                         <td>@item.user_id.user_name</td>
                                                         <td>
-                                                            @using (Html.BeginForm("EditItem", "Home", FormMethod.Get))
+                                                            @using (Html.BeginForm("ItemInformation", "Home", FormMethod.Get))
                                                             {
                                                                 @Html.AntiForgeryToken()
                                                                 @Html.Hidden("itemId", item.item_id.item_id);

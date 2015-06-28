@@ -38,7 +38,7 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
         public ActionResult addReport()
         {
             string serialNumber = Request["serialNumber"].ToString();
-            string typeBroken = Request["typeBroken"].ToString();
+          //  string typeBroken = Request["typeBroken"].ToString();
             string description = Request["description"].ToString();
             string contact = Request["contact"].ToString();
             bool reportRecieveMsg;
@@ -52,7 +52,7 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
             }
             int reporterId = int.Parse(Session["userId"].ToString());
             ReportModel reportModel = new ReportModel();
-            bool status = reportModel.insertReport(reporterId, serialNumber, typeBroken, description, contact, reportRecieveMsg);
+            bool status = reportModel.insertReport(reporterId, serialNumber, description, contact, reportRecieveMsg);
             if (status == true)
             {
                 ReportModel reportModel2 = new ReportModel();

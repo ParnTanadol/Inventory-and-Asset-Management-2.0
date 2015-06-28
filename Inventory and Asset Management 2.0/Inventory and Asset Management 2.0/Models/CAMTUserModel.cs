@@ -34,32 +34,41 @@ namespace Inventory_and_Asset_Management_2._0.Models
         {
             try
             {
-                CAMTUser camtUser = new CAMTUser();
-                camtUser.user_username = username;
-                camtUser.user_password = password;
-                camtUser.user_name = userName;
-                camtUser.user_department = userDepartment;
-                camtUser.user_room = userRoom;
-                camtUser.user_address = userAddress;
-                camtUser.user_tel = userTel;
-                camtUser.user_email = userEmail;
-                camtUser.user_type = userType;
-                if (userActive == 0)
-                {
-                    camtUser.user_active = false;
-                }
-                else
-                {
-                    camtUser.user_active = true;
-                }
-
-
                 ICAMTUserRepo camtUserRepo = new CAMTUserRepo(new INVENTORY_MANAGEMENT_2Entities());
-                bool status = camtUserRepo.insertCAMTUser(camtUser);
+                CAMTUser camtUser = new CAMTUser();
+                camtUser = camtUserRepo.viewUserByUsername(username);
 
-                if (status == true)
+                if (camtUser.user_id == 0)
                 {
-                    return true;
+                    CAMTUser camtUser2 = new CAMTUser();
+                    camtUser2.user_username = username;
+                    camtUser2.user_password = password;
+                    camtUser2.user_name = userName;
+                    camtUser2.user_department = userDepartment;
+                    camtUser2.user_room = userRoom;
+                    camtUser2.user_address = userAddress;
+                    camtUser2.user_tel = userTel;
+                    camtUser2.user_email = userEmail;
+                    camtUser2.user_type = userType;
+                    if (userActive == 0)
+                    {
+                        camtUser2.user_active = false;
+                    }
+                    else
+                    {
+                        camtUser2.user_active = true;
+                    }
+
+                    bool status = camtUserRepo.insertCAMTUser(camtUser2);
+
+                    if (status == true)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
                 else
                 {

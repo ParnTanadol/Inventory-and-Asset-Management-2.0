@@ -32,7 +32,7 @@ namespace Inventory_and_Asset_Management_2._0.Models
             return false;
         }
 
-        
+        /*
         public bool insertReport(int reporterId, string serialNumber, string reportTypeBroken, string reportCase, string reportContact, bool reportRecieveMsg)
         {
             try
@@ -196,9 +196,206 @@ namespace Inventory_and_Asset_Management_2._0.Models
                 return false;
             }
         }
+        */
+
+        public bool insertReport(int reporterId, string serialNumber, string reportCase, string reportContact, bool reportRecieveMsg)
+        {
+            try
+            {
+                // Find itemId
+                ItemModel itemModel = new ItemModel();
+                itemModel.viewItemModelbySerialNum(serialNumber);
+
+                if (itemModel.item_id != 0)
+                {
+
+                        string reportRepairDetail = "Wait to accept from technician";
+                        Report report1 = new Report();
+                        report1.technician_id = 1;
+                        report1.reporter_id = reporterId;
+                        report1.item_id = itemModel.item_id;
+                        report1.report_typeBroken = "";
+                        report1.report_case = reportCase;
+                        report1.report_contact = reportContact;
+                        report1.report_repairDetail = reportRepairDetail;
+                        report1.report_startDate = DateTime.Now;
+                        report1.report_endDate = null;
+                        report1.report_statusComplete = 0;
+                        report1.report_recieveMsg = reportRecieveMsg;
 
 
-        public bool updateReport(int reportId,string reportRepairDetail, int statusComplete)
+                        IReportRepo reportRepo = new ReportRepo(new INVENTORY_MANAGEMENT_2Entities());
+                        bool status = reportRepo.insertReport(report1);
+
+                        if (status == true)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+
+                }
+                else
+                {
+                    return false;
+                }
+
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public bool distributeWork(int reportId, string typeWork)
+        {
+            try
+            {
+                IReportRepo reportRepo = new ReportRepo(new INVENTORY_MANAGEMENT_2Entities());
+                int technicianId = randomTechnician(typeWork);
+                Report report = new Report();
+                report.report_id = reportId;
+                report.report_typeBroken = typeWork;
+                report.technician_id = technicianId;
+                bool status = true;
+                status = reportRepo.updateTypeBroken(report);
+
+                if (status == true)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        public int randomTechnician(string typeWork)
+        {
+            try
+            {
+                ICAMTUserRepo camtUserRepo = new CAMTUserRepo(new INVENTORY_MANAGEMENT_2Entities());
+                List<CAMTUser> camtUserAvailable = new List<CAMTUser>();
+                camtUserAvailable = camtUserRepo.viewAllUserByUserTypeActive(2, true);
+
+                // check technician that availabale
+                if (camtUserAvailable.Count != 0)
+                {
+                    IReportRepo reportRepo = new ReportRepo(new INVENTORY_MANAGEMENT_2Entities());
+                    List<List<int>> technicianTaskList = new List<List<int>>();
+                    technicianTaskList = reportRepo.viewTechnicianTask(typeWork);
+                    // check task of technicain that < 2
+                    if (technicianTaskList.Count != 0)
+                    {
+                        List<CAMTUser> camtUserList = new List<CAMTUser>();
+
+                        // หา technician ที่ไม่ได้อยู่ใน technicianTaskList (คนที่ไม่มีงานทำ)
+                        List<int> technicianIdTaskList = new List<int>();
+                        foreach (var item in technicianTaskList)
+                        {
+                            technicianIdTaskList.Add(item[0]);
+                        }
+
+                        // หาคนไหนบ้างที่ไม่เคยทำงาน ประเภทนี้
+                        for (int z = 0; z < camtUserAvailable.Count; z++)
+                        {
+                            bool status = technicianIdTaskList.Contains(camtUserAvailable[z].user_id);
+                            if (status == false)
+                            {
+                                camtUserList.Add(camtUserAvailable[z]);
+                            }
+                        }
+                        // ทุกคนเคยทำงาน ประเภทนี้
+                        if (camtUserList.Count == 0)
+                        {
+                            //check คนที่ทำงานน้อยกว่า 2 
+                            for (int i = 0; i < camtUserAvailable.Count(); i++)
+                            {
+                                for (int j = 0; j < technicianTaskList.Count; j++)
+                                {
+                                    if (camtUserAvailable[i].user_id == technicianTaskList[j][0] && technicianTaskList[j][1] < 2)
+                                    {
+                                        camtUserList.Add(camtUserAvailable[i]);
+                                    }
+                                }
+                            }
+                            // มีคนที่ทำงานน้อยกว่า 2
+                            if (camtUserList.Count > 0)
+                            {
+                                Random random = new Random();
+                                int technicianId = camtUserList[random.Next(0, camtUserList.Count)].user_id;
+                                return technicianId;
+                            }
+                            // ทุกคนทำงานมากกว่า 2
+                            else
+                            {
+                                // หางานที่ค่าเฉลี่ยการทำงานของทุกคน
+                                List<Technician> technicianList = new List<Technician>();
+
+                                for (int a = 0; a < camtUserAvailable.Count(); a++)
+                                {
+                                    Technician technician = new Technician(camtUserAvailable[a].user_id);
+                                    technician.experience = reportRepo.viewExperienceTechnician(camtUserAvailable[a].user_id);
+                                    technicianList.Add(technician);
+                                }
+                                // หา technician ที่ทำงานน้อยที่สุด
+                                int technicianIdMin = 0;
+                                double technicianExperience = 0.0;
+                                for (int b = 0; b < technicianList.Count; b++)
+                                {
+                                    if (b == 0)
+                                    {
+                                        technicianExperience = technicianList[b].experience;
+                                        technicianIdMin = technicianList[b].technicianId;
+                                    }
+                                    if (technicianExperience > technicianList[b].experience)
+                                    {
+                                        technicianExperience = technicianList[b].experience;
+                                        technicianIdMin = technicianList[b].technicianId;
+                                    }
+                                }
+
+                                return technicianIdMin;
+                            }
+                        }
+                        // จ่ายงานให้กับคนที่ไม่เคยทำงาน
+                        else
+                        {
+                            Random random = new Random();
+                            int technicianId = camtUserList[random.Next(0, camtUserList.Count)].user_id;
+                            return technicianId;
+                        }
+                    }
+
+                    // Nobody that don't have task, So distribute task to technician
+                    else
+                    {
+                        Random random = new Random();
+                        int technicianId = camtUserAvailable[random.Next(0, camtUserAvailable.Count)].user_id;
+
+                        return technicianId;
+                    }
+                }
+                // Don't Have Technician
+                else
+                {
+                    return 0;
+                }
+            }
+            catch
+            {
+                return 0;
+            }
+
+        }
+        public bool updateReport(int reportId, string reportRepairDetail, int statusComplete)
         {
             try
             {
@@ -416,8 +613,8 @@ namespace Inventory_and_Asset_Management_2._0.Models
                 return this;
             }
         }
-        
-        public class Technician
+
+        /*public class Technician
         {
             public int technicianId { get; set; }
             public List<int> reportIdList;
@@ -427,5 +624,16 @@ namespace Inventory_and_Asset_Management_2._0.Models
                 reportIdList = new List<int>();
             }
         }
+       */
+        public class Technician
+        {
+            public int technicianId { get; set; }
+            public double experience { get; set; }
+            public Technician(int technicianId)
+            {
+                this.technicianId = technicianId;
+            }
+        }
+
     }
 }
