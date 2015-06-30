@@ -55,14 +55,13 @@ namespace Inventory_and_Asset_Management_2._0.Repositories
             }
         }
 
-        public bool removeItem(int itemId)
+        public bool updateItemComponent(Item item)
         {
             try
             {
-                Item itemDb = context.Items.First(i => i.item_id == itemId);
-                context.Items.Remove(itemDb);
+                Item ItemDb = context.Items.First(i => i.item_id == item.item_id);
+                ItemDb.item_component = item.item_component;
                 context.SaveChanges();
-
                 return true;
             }
             catch

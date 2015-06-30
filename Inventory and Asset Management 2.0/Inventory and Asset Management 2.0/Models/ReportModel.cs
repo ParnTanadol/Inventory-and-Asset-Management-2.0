@@ -259,11 +259,26 @@ namespace Inventory_and_Asset_Management_2._0.Models
                 report.report_id = reportId;
                 report.report_typeBroken = typeWork;
                 report.technician_id = technicianId;
+                report.report_startDate = DateTime.Now;
+                report.report_statusComplete = 1;
                 bool status = true;
                 status = reportRepo.updateTypeBroken(report);
 
                 if (status == true)
                 {
+                    
+                    viewReportByReportId(reportId);
+                    MailAPI mailAPI = new MailAPI();
+                    string emailSubject = "New report form: " + this.reporter_id.user_name;
+                    string emailBody = "New report form: " + this.reporter_id.user_name + "\r\n"
+                                  + "Item Information " + "\r\n"
+                                  + "Item Brand: " + this.item_id.item_brand + "\r\n"
+                                  + "Item Name: " + this.item_id.item_name + "\r\n"
+                                  + "Broken type: " + this.report_typeBroken + "\r\n"
+                                  + "Description: " + this.report_case + "\r\n"
+                                  + "Reporter Contract: " + this.report_contact;
+                    mailAPI.Send(this.technician_id.user_email, emailSubject, emailBody);
+
                     return true;
                 }
                 else
@@ -394,6 +409,169 @@ namespace Inventory_and_Asset_Management_2._0.Models
                 return 0;
             }
 
+        }
+
+        public bool resetDistributeWork(int reportId, string typeWork, int userId )
+        {
+            try
+            {
+                IReportRepo reportRepo = new ReportRepo(new INVENTORY_MANAGEMENT_2Entities());
+                int technicianId = resetRandomTechnician(typeWork,userId);
+                Report report = new Report();
+                report.report_id = reportId;
+                report.report_typeBroken = typeWork;
+                report.technician_id = technicianId;
+                report.report_startDate = DateTime.Now;
+                report.report_statusComplete = 1;
+                bool status = true;
+                status = reportRepo.updateTypeBroken(report);
+
+                if (status == true)
+                {
+
+                    viewReportByReportId(reportId);
+                    MailAPI mailAPI = new MailAPI();
+                    string emailSubject = "New report form: " + this.reporter_id.user_name;
+                    string emailBody = "New report form: " + this.reporter_id.user_name + "\r\n"
+                                  + "Item Information " + "\r\n"
+                                  + "Item Brand: " + this.item_id.item_brand + "\r\n"
+                                  + "Item Name: " + this.item_id.item_name + "\r\n"
+                                  + "Broken type: " + this.report_typeBroken + "\r\n"
+                                  + "Description: " + this.report_case + "\r\n"
+                                  + "Reporter Contract: " + this.report_contact;
+                    mailAPI.Send(this.technician_id.user_email, emailSubject, emailBody);
+
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        public int resetRandomTechnician(string typeWork , int userId)
+        {
+            try
+            {
+                ICAMTUserRepo camtUserRepo = new CAMTUserRepo(new INVENTORY_MANAGEMENT_2Entities());
+                List<CAMTUser> camtUserAvailable = new List<CAMTUser>();
+                camtUserAvailable = camtUserRepo.viewAllUserByUserTypeActive(2, true);
+
+                // check technician that availabale
+                if (camtUserAvailable.Count != 0)
+                {
+                    // delete technician
+                    camtUserAvailable.RemoveAll(i => i.user_id == userId);
+
+                    IReportRepo reportRepo = new ReportRepo(new INVENTORY_MANAGEMENT_2Entities());
+                    List<List<int>> technicianTaskList = new List<List<int>>();
+                    technicianTaskList = reportRepo.viewTechnicianTask(typeWork);
+                    // check task of technicain that < 2
+                    if (technicianTaskList.Count != 0)
+                    {
+                        List<CAMTUser> camtUserList = new List<CAMTUser>();
+
+                        // หา technician ที่ไม่ได้อยู่ใน technicianTaskList (คนที่ไม่มีงานทำ)
+                        List<int> technicianIdTaskList = new List<int>();
+                        foreach (var item in technicianTaskList)
+                        {
+                            technicianIdTaskList.Add(item[0]);
+                        }
+
+                        // หาคนไหนบ้างที่ไม่เคยทำงาน ประเภทนี้
+                        for (int z = 0; z < camtUserAvailable.Count; z++)
+                        {
+                            bool status = technicianIdTaskList.Contains(camtUserAvailable[z].user_id);
+                            if (status == false)
+                            {
+                                camtUserList.Add(camtUserAvailable[z]);
+                            }
+                        }
+                        // ทุกคนเคยทำงาน ประเภทนี้
+                        if (camtUserList.Count == 0)
+                        {
+                            //check คนที่ทำงานน้อยกว่า 2 
+                            for (int i = 0; i < camtUserAvailable.Count(); i++)
+                            {
+                                for (int j = 0; j < technicianTaskList.Count; j++)
+                                {
+                                    if (camtUserAvailable[i].user_id == technicianTaskList[j][0] && technicianTaskList[j][1] < 2)
+                                    {
+                                        camtUserList.Add(camtUserAvailable[i]);
+                                    }
+                                }
+                            }
+                            // มีคนที่ทำงานน้อยกว่า 2
+                            if (camtUserList.Count > 0)
+                            {
+                                Random random = new Random();
+                                int technicianId = camtUserList[random.Next(0, camtUserList.Count)].user_id;
+                                return technicianId;
+                            }
+                            // ทุกคนทำงานมากกว่า 2
+                            else
+                            {
+                                // หางานที่ค่าเฉลี่ยการทำงานของทุกคน
+                                List<Technician> technicianList = new List<Technician>();
+
+                                for (int a = 0; a < camtUserAvailable.Count(); a++)
+                                {
+                                    Technician technician = new Technician(camtUserAvailable[a].user_id);
+                                    technician.experience = reportRepo.viewExperienceTechnician(camtUserAvailable[a].user_id);
+                                    technicianList.Add(technician);
+                                }
+                                // หา technician ที่ทำงานน้อยที่สุด
+                                int technicianIdMin = 0;
+                                double technicianExperience = 0.0;
+                                for (int b = 0; b < technicianList.Count; b++)
+                                {
+                                    if (b == 0)
+                                    {
+                                        technicianExperience = technicianList[b].experience;
+                                        technicianIdMin = technicianList[b].technicianId;
+                                    }
+                                    if (technicianExperience > technicianList[b].experience)
+                                    {
+                                        technicianExperience = technicianList[b].experience;
+                                        technicianIdMin = technicianList[b].technicianId;
+                                    }
+                                }
+
+                                return technicianIdMin;
+                            }
+                        }
+                        // จ่ายงานให้กับคนที่ไม่เคยทำงาน
+                        else
+                        {
+                            Random random = new Random();
+                            int technicianId = camtUserList[random.Next(0, camtUserList.Count)].user_id;
+                            return technicianId;
+                        }
+                    }
+
+                    // Nobody that don't have task, So distribute task to technician
+                    else
+                    {
+                        Random random = new Random();
+                        int technicianId = camtUserAvailable[random.Next(0, camtUserAvailable.Count)].user_id;
+
+                        return technicianId;
+                    }
+                }
+                // Don't Have Technician
+                else
+                {
+                    return 0;
+                }
+            }
+            catch
+            {
+                return 0;
+            }
         }
         public bool updateReport(int reportId, string reportRepairDetail, int statusComplete)
         {
@@ -550,6 +728,51 @@ namespace Inventory_and_Asset_Management_2._0.Models
             }
         }
 
+        public List<ReportModel> viewReportByTechnicianId(int texhnicianId)
+        {
+            try
+            {
+                IReportRepo reportRepo = new ReportRepo(new INVENTORY_MANAGEMENT_2Entities());
+                List<Report> reportList = new List<Report>();
+                reportList = reportRepo.viewReportbyTechnicianId(texhnicianId);
+
+                List<ReportModel> reportModelList = new List<ReportModel>();
+                for (int i = 0; i < reportList.Count; i++)
+                {
+                    ReportModel reportModel = new ReportModel();
+                    reportModel.report_id = reportList[i].report_id;
+
+                    CAMTUserModel technicianModel = new CAMTUserModel();
+                    technicianModel.viewUserByuserId(reportList[i].technician_id);
+                    reportModel.technician_id = technicianModel;
+
+                    CAMTUserModel reporterModel = new CAMTUserModel();
+                    reporterModel.viewUserByuserId(reportList[i].reporter_id);
+                    reportModel.reporter_id = reporterModel;
+
+                    ItemModel itemModel = new ItemModel();
+                    itemModel.viewItemModelByItemId(reportList[i].item_id);
+                    reportModel.item_id = itemModel;
+
+                    reportModel.report_typeBroken = reportList[i].report_typeBroken;
+                    reportModel.report_case = reportList[i].report_case;
+                    reportModel.report_contact = reportList[i].report_contact;
+                    reportModel.report_repairDetail = reportList[i].report_repairDetail;
+                    reportModel.report_startDate = reportList[i].report_startDate;
+                    reportModel.report_endDate = reportList[i].report_endDate;
+                    reportModel.report_statusComplete = reportList[i].report_statusComplete;
+                    reportModel.report_recieveMsg = reportList[i].report_recieveMsg;
+                    reportModelList.Add(reportModel);
+                }
+
+                return reportModelList;
+            }
+            catch
+            {
+                List<ReportModel> reportModelList = new List<ReportModel>();
+                return reportModelList;
+            }
+        }
 
         public bool updateRepairingStatus(int reportId, int statusComplete)
         {
@@ -614,17 +837,6 @@ namespace Inventory_and_Asset_Management_2._0.Models
             }
         }
 
-        /*public class Technician
-        {
-            public int technicianId { get; set; }
-            public List<int> reportIdList;
-            public Technician(int technicianId)
-            {
-                this.technicianId = technicianId;
-                reportIdList = new List<int>();
-            }
-        }
-       */
         public class Technician
         {
             public int technicianId { get; set; }

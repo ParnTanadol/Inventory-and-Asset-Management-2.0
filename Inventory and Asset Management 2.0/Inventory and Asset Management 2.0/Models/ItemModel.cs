@@ -105,6 +105,30 @@ namespace Inventory_and_Asset_Management_2._0.Models
             }
         }
 
+        public bool removeComponent(int itemId)
+        {
+            try
+            {
+                IItemRepo itemRepo = new ItemRepo(new INVENTORY_MANAGEMENT_2Entities());
+                Item item = new Item();
+                item.item_id = itemId;
+                item.item_component = null;
+                bool status = itemRepo.updateItemComponent(item);
+                if (status == true)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         public ItemModel viewPreviousItem()
         {
             try

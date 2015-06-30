@@ -41,6 +41,7 @@
                             <div class="col-md-12">
                                 @{
         int i = 0;
+        List<ItemOwnerModel> itemOwnerList = Model.ToList();
         foreach (var item in Model)
         {
             if (i == 0)
@@ -53,7 +54,6 @@
                         <form class="form-horizontal" role="form" id="form" action="~/Home/EditItem" method="get" enctype="multipart/form-data">
                             @Html.AntiForgeryToken()
                             @Html.Hidden("itemId", @item.item_id.item_id)
-
                             <div class="form-group">
                                 <label class="control-label col-sm-3" align="right">Item Band:</label>
                                 <div class="col-sm-9">
@@ -260,6 +260,18 @@
                             </div>
 
                         </form>
+                        <form class="form-horizontal" role="form" id="form" action="~/Home/removeComponent" method="get" enctype="multipart/form-data" onsubmit="return onRemove();">
+                            @Html.Hidden("itemId", @itemOwnerList[0].item_id.item_id)
+                            @Html.Hidden("itemComponent", @item.item_id.item_id)
+                            <div class="form-group">
+                                <div class="col-sm-offset-3 col-sm-9">
+                                    <button class="btn btn-danger">
+                                        <i class="glyphicon glyphicon-magnet"></i>
+                                        Remove Component
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
 
                     </div>
                 </div>
@@ -296,6 +308,19 @@
 
     <script type="text/javascript" src="~/Content/jquery-ui/jquery-ui.js"></script>
     <script type="text/javascript" src="~/Content/bootstrap/js/bootstrap.min.js"></script>
+    
+    <script>
+        function onRemove() {
+            var result = confirm("Do you sure to remove this item component?");
+            if (result == true) {
+                return true;
+            }
+            else {
+                return false
+            }
+        }
+    </script>
+    
     }
     else
     {

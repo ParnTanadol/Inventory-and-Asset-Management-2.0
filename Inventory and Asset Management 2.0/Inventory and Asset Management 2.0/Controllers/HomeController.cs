@@ -22,11 +22,12 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
             IReportRepo reportRepo = new ReportRepo(new INVENTORY_MANAGEMENT_2Entities());
             ICAMTUserRepo camtUserRepo = new CAMTUserRepo(new INVENTORY_MANAGEMENT_2Entities());
             ReportModel reportModel = new ReportModel();
+       //     reportModel.resetRandomTechnician("2", 2);
         //   reportModel.randomTechnician("2");
           //  camtUserRepo.viewAllUserByUserTypeActive(2, true);
           //  reportRepo.viewAverageWorkTime("1");
            // reportRepo.viewTechnicianTask("1");
-            //reportRepo.viewWorkInProcess(2);
+          //  reportRepo.viewWorkInProcess();
            // reportRepo.viewExperienceTechnician(2);
             return View();
         }
@@ -553,6 +554,17 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
             return Redirect(url);
         }
 
+        public ActionResult removeComponent()
+        {
+            int itemId = int.Parse(Request["itemId"].ToString());
+            int itemComponent = int.Parse(Request["itemComponent"].ToString());
+            ItemModel itemModel = new ItemModel();
+            itemModel.removeComponent(itemComponent);
+
+            string url = "~/Home/ItemInformation?itemId=" + itemId;
+            return Redirect(url);
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult editItem()
@@ -766,10 +778,59 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
             }
         }
 
+      
         public ActionResult ReparationManagement()
         {
-
             return View();
+        }
+
+        public ActionResult NewReparation()
+        {
+            ReportModel reportModel = new ReportModel();
+            List<ReportModel> reportModelList = new List<ReportModel>();
+            reportModelList = reportModel.viewReportByStatusAndUserId(1, 0);
+            return View(reportModelList);
+        }
+
+        public ActionResult updateTypeBroken()
+        {
+            int reportId = int.Parse(Request["reportId"].ToString());
+            string typeBroken = Request["typeBroken"].ToString();
+
+            ReportModel reportModel = new ReportModel();
+            reportModel.distributeWork(reportId, typeBroken);
+            List<ReportModel> reportModelList = new List<ReportModel>();
+            reportModelList = reportModel.viewReportByStatusAndUserId(1, 0);
+            return RedirectToAction("NewReparation", reportModelList);
+        }
+
+        public ActionResult AllReparation()
+        {
+            List<CAMTUserModel> camtUserModelList = new List<CAMTUserModel>();
+            CAMTUserModel camtUserModel = new CAMTUserModel();
+            camtUserModelList = camtUserModel.viewAllUserByUserType(2);
+            return View(camtUserModelList);
+        }
+
+
+        public ActionResult TechnicianReparation()
+        {
+            int technicianId = int.Parse(Request["technicianId"].ToString()); 
+            ReportModel reportModel = new ReportModel();
+            List<ReportModel> reportModelList = new List<ReportModel>();
+            reportModelList = reportModel.viewReportByTechnicianId(technicianId);
+            return View(reportModelList);
+        }
+
+        public ActionResult resetRandomTechnician()
+        {
+            int technicianId = int.Parse(Request["technicianId"].ToString());
+            int reportId = int.Parse(Request["reportId"].ToString());
+            string typeBroken = Request["typeBroken"].ToString();
+            ReportModel reportModel = new ReportModel();
+            reportModel.resetDistributeWork(reportId, typeBroken, technicianId);
+            string url = "~/Home/TechnicianReparation?technicianId=" + technicianId;
+            return Redirect(url);
         }
 
 

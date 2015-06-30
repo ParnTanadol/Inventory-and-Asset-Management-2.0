@@ -89,7 +89,7 @@ namespace Inventory_and_Asset_Management_2._0.Repositories
             try
             {
                 var query = from i in context.Reports where i.technician_id == technicianId select i;
-                List<Report> reportList = query.ToList();
+                List<Report> reportList = query.OrderByDescending(i => i.report_id).ToList();
                 context.SaveChanges();
                 return reportList;
             }
@@ -192,6 +192,8 @@ namespace Inventory_and_Asset_Management_2._0.Repositories
 
                 reportDb.technician_id = report.technician_id;
                 reportDb.report_typeBroken = report.report_typeBroken;
+                reportDb.report_statusComplete = report.report_statusComplete;
+                reportDb.report_startDate = report.report_startDate;
 
                 context.SaveChanges();
 
@@ -203,66 +205,6 @@ namespace Inventory_and_Asset_Management_2._0.Repositories
             }
         }
 
-        /*
-        public List<Report> viewReparationSummary(DateTime timeStart, DateTime timeEnd)
-        {
-            try
-            {
-                
-                // var events = this.coreDomainContext.Events.Where(
-                //    e => e.EventDate.Value.Date >= DateTime.Today
-               //       && e.EventDate.Value.Date <= endPeriod.Date)
-                //    .OrderByDescending(e => e.EventDate)
-                //    .ToList();
-                 
-                var query = context.Reports.Where(i => i.report_startDate >= timeStart && i.report_startDate <= timeEnd).OrderByDescending(i => i.report_startDate).ToList();
-                List<Report> reportList = query.ToList();
-                return reportList;
-            }
-            catch
-            {
-                List<Report> reportList = new List<Report>();
-                return reportList;
-            }
-        }
-        */
-        /*
-        public List<List<string>> viewAverageWorkTime(string typeWork)
-        {
-            try
-            {
-                var query = (from i in context.Reports 
-                              where i.report_typeBroken == typeWork && i.report_statusComplete == 3
-                              group i by i.technician_id into g 
-                              select new {  technicianId = g.Key, 
-                                            count = g.Count(),
-                                            time = g.Sum(i => SqlFunctions.DateDiff("minute", i.report_startDate, i.report_endDate))}).ToList();
-
-                List<List<string>> workTimeList = new List<List<string>>();
-                if(query.Count != 0)
-                {
-                    foreach (var i in query)
-                    {
-                        List<string> workTime = new List<string>();
-                        workTime.Add(i.technicianId.ToString());
-
-                        //find average time
-                        double averageTime = double.Parse(i.time.ToString()) / double.Parse(i.count.ToString());
-                        workTime.Add(averageTime.ToString());
-                        workTimeList.Add(workTime);
-                    }
-                }
-                context.SaveChanges();
-
-                return workTimeList;
-            }
-            catch
-            {
-                List<List<string>> workTimeList = new List<List<string>>();
-                return workTimeList;
-            }
-        }
-        */
         public double viewExperienceTechnician(int technicainId)
         {
 
@@ -275,22 +217,17 @@ namespace Inventory_and_Asset_Management_2._0.Repositories
                              {
                               //   technicainId = g.Select(i => i.technician_id),
                                  typeBroken = g.Key,
-                                // count = g.Count(),
+                                 count = g.Count(),
                                  time = g.Sum(i => (double?)SqlFunctions.DateDiff("minute", i.report_startDate, i.report_endDate)) / g.Count()
-                                 
+
                              }).ToList();
 
-         //       List<List<string>> workTimeList = new List<List<string>>();
                 double experience = 0.0;
 
                 if (query.Count != 0)
                 {
                     foreach (var i in query)
                     {
-                   //     List<string> workTime = new List<string>();
-                   //     workTime.Add(i.technicainId.ToString());
-                   //     workTime.Add(i.typeBroken.ToString());
-                   //     workTime.Add(i.time.ToString());
 
                         string typeBroken = i.typeBroken.ToString();
                         var query2 = (from j in context.Reports
@@ -305,8 +242,6 @@ namespace Inventory_and_Asset_Management_2._0.Repositories
                                 experience = experience + double.Parse(i.time.ToString());
                             }
                         }
-
-                    //    workTimeList.Add(workTime);
                     }
                 }
                 context.SaveChanges();
@@ -353,23 +288,5 @@ namespace Inventory_and_Asset_Management_2._0.Repositories
             }
         }
 
-        /*
-        public List<Report> viewWorkInProcess(int technicianId)
-        {
-            try
-            {
-                var query = from i in context.Reports where i.technician_id == technicianId && i.report_statusComplete != 3 select i;
-                List<Report> reportList = query.ToList();
-                context.SaveChanges();
-
-                return reportList;
-            }
-            catch
-            {
-                List<Report> reportList = new List<Report>();
-                return reportList;
-            }
-        }
-         * */
     }
 }

@@ -10,7 +10,8 @@ namespace Inventory_and_Asset_Management_2._0.Repositories
     {
         bool insertItem(Item item);
         bool updateItem(Item item);
-        bool removeItem(int itemId);
+
+        bool updateItemComponent(Item item);
         Item viewItemByitemId(int itemId);
         List<Item> viewAllItem();
         Item viewPreviousItem();

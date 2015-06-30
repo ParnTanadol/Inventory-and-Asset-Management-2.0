@@ -64,7 +64,6 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
                               + "Item Information " + "\r\n"
                               + "Item Brand: " + reportModel2.item_id.item_brand + "\r\n"
                               + "Item Name: " + reportModel2.item_id.item_name + "\r\n"
-                              + "Broken type: " + reportModel2.report_typeBroken + "\r\n"
                               + "Description: " + reportModel2.report_case + "\r\n"
                               + "Reporter Contract: " + reportModel2.report_contact;
                 mailAPI.Send(reportModel2.technician_id.user_email, emailSubject, emailBody);
