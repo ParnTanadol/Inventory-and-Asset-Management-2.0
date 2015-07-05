@@ -36,5 +36,15 @@ namespace Inventory_and_Asset_Management_2._0
         public virtual ICollection<ItemOwner> ItemOwners { get; set; }
         public virtual ICollection<Report> Reports { get; set; }
         public virtual ICollection<Report> Reports1 { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is CAMTUser)
+            {
+                CAMTUser other = (CAMTUser)obj;
+                return Equals(other.user_id, this.user_id) && Equals(other.user_username, this.user_username) && Equals(other.user_password, this.user_password) && Equals(other.user_name, this.user_name) && Equals(other.user_department, this.user_department) && Equals(other.user_room, this.user_room) && Equals(other.user_address, this.user_address) && Equals(other.user_tel, this.user_tel) && Equals(other.user_email, this.user_email) && Equals(other.user_type, this.user_type) && Equals(other.user_active, this.user_active);
+            }
+            return false;
+        }
     }
 }

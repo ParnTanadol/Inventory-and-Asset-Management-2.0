@@ -30,5 +30,15 @@ namespace Inventory_and_Asset_Management_2._0
         public virtual CAMTUser CAMTUser { get; set; }
         public virtual CAMTUser CAMTUser1 { get; set; }
         public virtual Item Item { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is Report)
+            {
+                Report other = (Report)obj;
+                return Equals(other.report_id, this.report_id) && Equals(other.technician_id, this.technician_id) && Equals(other.reporter_id, this.reporter_id) && Equals(other.item_id, this.item_id) && Equals(other.report_typeBroken, this.report_typeBroken) && Equals(other.report_case, this.report_case) && Equals(other.report_contact, this.report_contact) && Equals(other.report_repairDetail, this.report_repairDetail) && Equals(other.report_startDate, this.report_startDate) && Equals(other.report_endDate, this.report_endDate) && Equals(other.report_statusComplete, this.report_statusComplete) && Equals(other.report_recieveMsg, this.report_recieveMsg);
+            }
+            return false;
+        }
     }
 }

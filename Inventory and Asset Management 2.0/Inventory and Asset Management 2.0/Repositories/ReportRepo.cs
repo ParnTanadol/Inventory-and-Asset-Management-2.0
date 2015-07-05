@@ -66,24 +66,6 @@ namespace Inventory_and_Asset_Management_2._0.Repositories
             }
         }
 
-
-        public List<Report> viewAllReport()
-        {
-            try
-            {
-                List<Report> reportDbList = context.Reports.ToList();
-                context.SaveChanges();
-
-                return reportDbList;
-            }
-            catch
-            {
-                List<Report> reportDbList = new List<Report>();
-                return reportDbList;
-            }
-        }
-
-
         public List<Report> viewReportbyTechnicianId(int technicianId)
         {
             try
@@ -188,7 +170,7 @@ namespace Inventory_and_Asset_Management_2._0.Repositories
                 return false;
             }
         }
-
+        
         public double viewExperienceTechnician(int technicainId)
         {
 

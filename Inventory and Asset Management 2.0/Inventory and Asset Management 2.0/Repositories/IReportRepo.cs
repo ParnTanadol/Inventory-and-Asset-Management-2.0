@@ -13,7 +13,6 @@ namespace Inventory_and_Asset_Management_2._0.Repositories
         bool updateReport(Report report);
         bool updateTypeBroken(Report report);
         Report viewReportByReportId(int reportId);
-        List<Report> viewAllReport();
         List<Report> viewReportbyTechnicianId(int technicianId);
         List<Report> viewReportbyReporterId(int reporterId);
         List<Report> viewReportByStatusAndUserId(int technicianId, int statusComplete);

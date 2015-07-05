@@ -35,5 +35,15 @@ namespace Inventory_and_Asset_Management_2._0
     
         public virtual ICollection<ItemOwner> ItemOwners { get; set; }
         public virtual ICollection<Report> Reports { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is Item)
+            {
+                Item other = (Item)obj;
+                return Equals(other.item_id, this.item_id) && Equals(other.item_brand, this.item_brand) && Equals(other.item_name, this.item_name) && Equals(other.item_description, this.item_description) && Equals(other.item_startDate, this.item_startDate) && Equals(other.item_endDate, this.item_endDate) && Equals(other.item_status, this.item_status) && Equals(other.item_picture, this.item_picture) && Equals(other.item_cmuNumber, this.item_cmuNumber) && Equals(other.item_camtNumber, this.item_camtNumber) && Equals(other.item_serialNumber, this.item_serialNumber) && Equals(other.item_component, this.item_component);
+            }
+            return false;
+        }
     }
 }

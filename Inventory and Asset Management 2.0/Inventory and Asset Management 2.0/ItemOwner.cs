@@ -20,5 +20,15 @@ namespace Inventory_and_Asset_Management_2._0
     
         public virtual CAMTUser CAMTUser { get; set; }
         public virtual Item Item { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is ItemOwner)
+            {
+                ItemOwner other = (ItemOwner)obj;
+                return Equals(other.itemOwner_id, this.itemOwner_id) && Equals(other.item_id, this.item_id) && Equals(other.user_id, this.user_id);
+            }
+            return false;
+        }
     }
 }
