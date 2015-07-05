@@ -30,7 +30,7 @@ namespace Inventory_and_Asset_Management_2._0.Models
             return false;
         }
 
-        public bool insertCAMTUser(string username, string password, string userName, string userDepartment, string userRoom, string userAddress, string userTel, string userEmail, int userType, int userActive)
+        public bool insertCAMTUser(string username, string password, string name, string dpartment, string room, string address, string tel, string email, int type, int active)
         {
             try
             {
@@ -43,14 +43,14 @@ namespace Inventory_and_Asset_Management_2._0.Models
                     CAMTUser camtUser2 = new CAMTUser();
                     camtUser2.user_username = username;
                     camtUser2.user_password = password;
-                    camtUser2.user_name = userName;
-                    camtUser2.user_department = userDepartment;
-                    camtUser2.user_room = userRoom;
-                    camtUser2.user_address = userAddress;
-                    camtUser2.user_tel = userTel;
-                    camtUser2.user_email = userEmail;
-                    camtUser2.user_type = userType;
-                    if (userActive == 0)
+                    camtUser2.user_name = name;
+                    camtUser2.user_department = dpartment;
+                    camtUser2.user_room = room;
+                    camtUser2.user_address = address;
+                    camtUser2.user_tel = tel;
+                    camtUser2.user_email = email;
+                    camtUser2.user_type = type;
+                    if (active == 0)
                     {
                         camtUser2.user_active = false;
                     }

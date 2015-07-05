@@ -16,7 +16,6 @@ namespace Inventory_and_Asset_Management_2._0.Repositories
         List<Report> viewAllReport();
         List<Report> viewReportbyTechnicianId(int technicianId);
         List<Report> viewReportbyReporterId(int reporterId);
-        List<Report> viewReportbyStatus(int statusComplete);
         List<Report> viewReportByStatusAndUserId(int technicianId, int statusComplete);
 
         bool updateStatus(Report report);

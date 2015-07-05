@@ -19,16 +19,6 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
 
         public ActionResult Index()
         {
-            IReportRepo reportRepo = new ReportRepo(new INVENTORY_MANAGEMENT_2Entities());
-            ICAMTUserRepo camtUserRepo = new CAMTUserRepo(new INVENTORY_MANAGEMENT_2Entities());
-            ReportModel reportModel = new ReportModel();
-       //     reportModel.resetRandomTechnician("2", 2);
-        //   reportModel.randomTechnician("2");
-          //  camtUserRepo.viewAllUserByUserTypeActive(2, true);
-          //  reportRepo.viewAverageWorkTime("1");
-           // reportRepo.viewTechnicianTask("1");
-          //  reportRepo.viewWorkInProcess();
-           // reportRepo.viewExperienceTechnician(2);
             return View();
         }
 
@@ -228,26 +218,6 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
                             newItemOwnerModelList = itemOwnerModelList.Where(i => i.item_id.item_brand.Contains(keyword)).ToList();
                             newItemOwnerModelList = newItemOwnerModelList.OrderBy(i => i.item_id.item_brand).ToList();
                             break;
-                        case "itemComponent":
-                            try
-                            {
-                                newItemOwnerModelList = itemOwnerModelList.Where(i => i.item_id.item_component.item_id == int.Parse(keyword)).ToList();
-                                newItemOwnerModelList = newItemOwnerModelList.OrderByDescending(i => i.item_id.item_id).ToList();
-                            }
-                            catch
-                            {
-                                List<ItemOwnerModel> itemOwnerModelListNotNull = new List<ItemOwnerModel>();
-                                itemOwnerModelListNotNull = itemOwnerModelList.Where(i => !String.IsNullOrEmpty(i.item_id.item_component.item_cmuNumber)
-                                                                                        && !String.IsNullOrEmpty(i.item_id.item_component.item_camtNumber)
-                                                                                        && !String.IsNullOrEmpty(i.item_id.item_component.item_cmuNumber)).ToList();
-
-                                newItemOwnerModelList = itemOwnerModelListNotNull.Where(i => i.item_id.item_component.item_cmuNumber.Contains(keyword)
-                                                                                        || i.item_id.item_component.item_camtNumber.Contains(keyword)
-                                                                                        || i.item_id.item_component.item_serialNumber.Contains(keyword)).ToList();
-
-                                newItemOwnerModelList = newItemOwnerModelList.OrderBy(i => i.item_id.item_id).ToList();
-                            }
-                            break;
 
                         case "itemStatus":
                             if (keyword == "0")
@@ -426,6 +396,13 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
             itemOwnerModelList = itemOwnerModel.viewItemOwnerInformation(itemId);
             return View(itemOwnerModelList);
         }
+
+        /*
+        public ActionResult ItemInformationView()
+        {
+
+        }
+         * */
         public ActionResult EditItem()
         {
             int itemId = int.Parse(Request["itemId"].ToString());
@@ -673,6 +650,7 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
             }
         }
 
+        // เพื่ม srs old password
         [HttpPost]
         public ActionResult editAdminPass()
         {

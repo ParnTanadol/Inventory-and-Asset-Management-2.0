@@ -85,22 +85,6 @@ namespace Inventory_and_Asset_Management_2._0.Repositories
             }
         }
 
-        public List<Item> viewAllItem()
-        {
-            try
-            {
-                List<Item> itemDBList = context.Items.ToList();
-                context.SaveChanges();
-
-                return itemDBList;
-            }
-            catch
-            {
-                List<Item> itemDBList = new List<Item>();
-                return itemDBList;
-            }
-        }
-
         public Item viewPreviousItem()
         {
             try

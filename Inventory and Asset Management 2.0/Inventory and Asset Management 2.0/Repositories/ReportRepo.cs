@@ -116,22 +116,6 @@ namespace Inventory_and_Asset_Management_2._0.Repositories
             }
         }
 
-        public List<Report> viewReportbyStatus(int statusComplete)
-        {
-            try
-            {
-                var query = from i in context.Reports where i.report_statusComplete == statusComplete select i;
-                List<Report> reportList = query.ToList();
-                context.SaveChanges();
-                return reportList;
-            }
-            catch
-            {
-                List<Report> reportList = new List<Report>();
-                return reportList;
-            }
-        }
-
         public List<Report> viewReportByStatusAndUserId(int technicianId, int statusComplete)
         {
             try

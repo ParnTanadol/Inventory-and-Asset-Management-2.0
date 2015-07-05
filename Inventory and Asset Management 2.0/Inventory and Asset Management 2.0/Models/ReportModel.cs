@@ -401,12 +401,12 @@ namespace Inventory_and_Asset_Management_2._0.Models
                 // Don't Have Technician
                 else
                 {
-                    return 0;
+                    return 1;
                 }
             }
             catch
             {
-                return 0;
+                return 1;
             }
 
         }

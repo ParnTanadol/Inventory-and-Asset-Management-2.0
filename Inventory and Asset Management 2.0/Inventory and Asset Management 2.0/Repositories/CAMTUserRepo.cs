@@ -72,11 +72,11 @@ namespace Inventory_and_Asset_Management_2._0.Repositories
             }
         }
 
-        public CAMTUser viewUserByUsernamePassword(string usernameUser, string passwordUser)
+        public CAMTUser viewUserByUsernamePassword(string username, string password)
         {
             try
             {
-                CAMTUser camtUser = context.CAMTUsers.First(i => i.user_username == usernameUser && i.user_password == passwordUser);
+                CAMTUser camtUser = context.CAMTUsers.First(i => i.user_username == username && i.user_password == password);
                 context.SaveChanges();
                 return camtUser;
             }

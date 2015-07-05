@@ -80,9 +80,9 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
 
         public ActionResult TechnicianInformation()
         {
-            int reporterId = int.Parse(Session["userId"].ToString());
+            int technicianId = int.Parse(Session["userId"].ToString());
             CAMTUserModel camtUserModel = new CAMTUserModel();
-            camtUserModel.viewUserByuserId(reporterId);
+            camtUserModel.viewUserByuserId(technicianId);
             return View(camtUserModel);
         }
 
@@ -177,8 +177,6 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
             {
                 ReportModel reportModel = new ReportModel();
                 bool status = reportModel.updateReport(reportId, repairingDetail, 2);
-                if (status == true)
-                {
 
                     if (recieveMsgStatus == true)
                     {
@@ -193,12 +191,8 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
                         mailAPI.Send(reporterEmail, mailSubject, mailBody);
                     }
                     TempData["msg"] = "Repairing information is updated";
-                }
-                else
-                {
-                    TempData["msg"] = "Can't Update repairing information";
+                
 
-                }
                 string url = "~/Technician/RepairingInformation?reportId=" + reportId;
                 return Redirect(url);
             }
@@ -206,8 +200,6 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
             {
                 ReportModel reportModel = new ReportModel();
                 bool status = reportModel.updateReport(reportId, repairingDetail, 3);
-                if (status == true)
-                {
 
                     if (recieveMsgStatus == true)
                     {
@@ -223,11 +215,7 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
                         mailAPI.Send(reporterEmail, mailSubject, mailBody);
                     }
                     TempData["msg"] = "Repairing information is updated";
-                }
-                else
-                {
-                    TempData["msg"] = "Can't Update repairing information";
-                }
+
                 string url = "~/Technician/RepairingInformation?reportId=" + reportId;
                 return Redirect(url);
             }
