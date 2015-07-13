@@ -162,6 +162,116 @@ namespace Test_Inventory
             }
         }
 
+        public bool addReport2()
+        {
+            try
+            {
+                conn.Open();
+                cmd.Connection = conn;
+                cmd.CommandText = "USE INVENTORY_MANAGEMENT_2;";
+                cmd.ExecuteNonQuery();
+                cmd.CommandText = "set IDENTITY_INSERT Report ON";
+                cmd.ExecuteNonQuery();
+                cmd.CommandText = "INSERT INTO Report(report_id, technician_id, reporter_id, item_id, report_typeBroken, report_case, report_contact, report_repairDetail, report_startDate, report_endDate, report_statusComplete, report_recieveMsg) values(1, 2, 4, 1, 'Error about Application of Computer', 'Cannot open Keynote', '0833201787' , 'Complete', '2015-06-09 15:36:48.3488602', '2015-06-10 15:36:48.3488602', 3, 1);";
+                cmd.ExecuteNonQuery();
+                cmd.CommandText = "INSERT INTO Report(report_id, technician_id, reporter_id, item_id, report_typeBroken, report_case, report_contact, report_repairDetail, report_startDate, report_endDate, report_statusComplete, report_recieveMsg) values(2, 2, 4, 1, 'Error about Application of Computer', 'Cannot open iPhoto', '0833201787' , 'Complete', '2015-06-11 15:36:48.3488602', '2015-06-12 15:36:48.3488602', 3, 1);";
+                cmd.ExecuteNonQuery();
+                cmd.CommandText = "INSERT INTO Report(report_id, technician_id, reporter_id, item_id, report_typeBroken, report_case, report_contact, report_repairDetail, report_startDate, report_endDate, report_statusComplete, report_recieveMsg) values(3, 3, 4, 1, 'Error about Application of Computer', 'Cannot open iPhoto', '0833201787' , 'Complete', '2015-06-11 15:36:48.3488602', '2015-06-12 15:36:48.3488602', 3, 1);";
+                cmd.ExecuteNonQuery();
+                cmd.CommandText = "set IDENTITY_INSERT Report OFF";
+                cmd.ExecuteNonQuery();
+
+                return true;
+
+            }
+            catch
+            {
+                return false;
+            }
+            finally
+            {
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+            }
+        }
+
+        public bool addReport3()
+        {
+            try
+            {
+                conn.Open();
+                cmd.Connection = conn;
+                cmd.CommandText = "USE INVENTORY_MANAGEMENT_2;";
+                cmd.ExecuteNonQuery();
+                cmd.CommandText = "set IDENTITY_INSERT Report ON";
+                cmd.ExecuteNonQuery();
+                cmd.CommandText = "INSERT INTO Report(report_id, technician_id, reporter_id, item_id, report_typeBroken, report_case, report_contact, report_repairDetail, report_startDate, report_endDate, report_statusComplete, report_recieveMsg) values(1, 2, 4, 1, 'Error about Application of Computer', 'Cannot open Keynote', '0833201787' , 'Complete', '2015-06-09 15:36:48.3488602', '2015-06-10 15:36:48.3488602', 3, 1);";
+                cmd.ExecuteNonQuery();
+                cmd.CommandText = "INSERT INTO Report(report_id, technician_id, reporter_id, item_id, report_typeBroken, report_case, report_contact, report_repairDetail, report_startDate, report_endDate, report_statusComplete, report_recieveMsg) values(2, 2, 4, 1, 'Error about Application of Computer', 'Cannot open iPhoto', '0833201787' , 'Complete', '2015-06-11 15:36:48.3488602', '2015-06-12 15:36:48.3488602', 3, 1);";
+                cmd.ExecuteNonQuery();
+                cmd.CommandText = "INSERT INTO Report(report_id, technician_id, reporter_id, item_id, report_typeBroken, report_case, report_contact, report_repairDetail, report_startDate, report_endDate, report_statusComplete, report_recieveMsg) values(3, 3, 4, 1, 'Error about Application of Computer', 'Cannot open iPhoto', '0833201787' , 'Complete', '2015-06-11 15:36:48.3488602', '2015-06-12 15:36:48.3488602', 3, 1);";
+                cmd.ExecuteNonQuery();
+                cmd.CommandText = "INSERT INTO Report(report_id, technician_id, reporter_id, item_id, report_typeBroken, report_case, report_contact, report_repairDetail, report_startDate, report_endDate, report_statusComplete, report_recieveMsg) values(4, 3, 4, 1, 'Error about Application of Computer', 'Cannot open iPhoto', '0833201787' , 'Complete', '2015-06-11 15:36:48.3488602', '2015-06-12 15:36:48.3488602', 3, 1);";
+                cmd.ExecuteNonQuery();
+                cmd.CommandText = "set IDENTITY_INSERT Report OFF";
+                cmd.ExecuteNonQuery();
+
+                return true;
+
+            }
+            catch
+            {
+                return false;
+            }
+            finally
+            {
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+            }
+        }
+
+        public bool addReport4()
+        {
+            try
+            {
+                conn.Open();
+                cmd.Connection = conn;
+                cmd.CommandText = "USE INVENTORY_MANAGEMENT_2;";
+                cmd.ExecuteNonQuery();
+                cmd.CommandText = "set IDENTITY_INSERT Report ON";
+                cmd.ExecuteNonQuery();
+                cmd.CommandText = "INSERT INTO Report(report_id, technician_id, reporter_id, item_id, report_typeBroken, report_case, report_contact, report_repairDetail, report_startDate, report_endDate, report_statusComplete, report_recieveMsg) values(1, 2, 4, 1, 'Error about Application of Computer', 'Cannot open Keynote', '0833201787' , 'Complete', '2015-06-09 15:36:48.3488602', '2015-06-10 15:36:48.3488602', 3, 1);";
+                cmd.ExecuteNonQuery();
+                cmd.CommandText = "INSERT INTO Report(report_id, technician_id, reporter_id, item_id, report_typeBroken, report_case, report_contact, report_repairDetail, report_startDate, report_endDate, report_statusComplete, report_recieveMsg) values(2, 2, 4, 1, 'Error about Application of Computer', 'Cannot open iPhoto', '0833201787' , 'Complete', '2015-06-11 15:36:48.3488602', '2015-06-12 15:36:48.3488602', 3, 1);";
+                cmd.ExecuteNonQuery();
+                cmd.CommandText = "INSERT INTO Report(report_id, technician_id, reporter_id, item_id, report_typeBroken, report_case, report_contact, report_repairDetail, report_startDate, report_endDate, report_statusComplete, report_recieveMsg) values(3, 3, 4, 1, 'Error about Application of Computer', 'Cannot open iPhoto', '0833201787' , 'Complete', '2015-06-11 15:36:48.3488602', '2015-06-12 15:36:48.3488602', 3, 1);";
+                cmd.ExecuteNonQuery();
+                cmd.CommandText = "INSERT INTO Report(report_id, technician_id, reporter_id, item_id, report_typeBroken, report_case, report_contact, report_repairDetail, report_startDate, report_endDate, report_statusComplete, report_recieveMsg) values(4, 3, 4, 1, 'Error about Application of Computer', 'Cannot open iPhoto', '0833201787' , 'Complete', '2015-06-11 15:36:48.3488602', '2015-06-12 15:36:48.3488602', 3, 1);";
+                cmd.ExecuteNonQuery();
+                cmd.CommandText = "INSERT INTO Report(report_id, technician_id, reporter_id, item_id, report_typeBroken, report_case, report_contact, report_repairDetail, report_startDate, report_endDate, report_statusComplete, report_recieveMsg) values(5, 3, 4, 1, 'Error about Application of Computer', 'Cannot open iPhoto', '0833201787' , 'Complete', '2015-06-11 15:36:48.3488602', '2015-06-12 15:36:48.3488602', 2, 1);";
+                cmd.ExecuteNonQuery();
+                cmd.CommandText = "set IDENTITY_INSERT Report OFF";
+                cmd.ExecuteNonQuery();
+
+                return true;
+
+            }
+            catch
+            {
+                return false;
+            }
+            finally
+            {
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+            }
+        }
 
         //#######################-----------Delete----------#########################
 

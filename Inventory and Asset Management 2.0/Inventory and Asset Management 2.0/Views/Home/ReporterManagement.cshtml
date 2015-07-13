@@ -13,7 +13,7 @@
         <!DOCTYPE html>
         <html lang="en">
         <head>
-            <title>TEST PROJECT</title>
+            <title>IT Equipment Management System</title>
             <meta charset="utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -96,7 +96,7 @@
                 <td>@Html.ActionLink("Active", "approveUser", @item, new { onclick = "return confirm('Are you sure for approving this account !');" })</td>
             }
                 }
-                <td>@Html.ActionLink("Delete", "deleteCAMTUser", @item, new { onclick = "return confirm('Are you sure for deleting this account !');" })</td>
+                <td>@Html.ActionLink("Delete", "deleteCAMTUser", @item, new { onclick = "return confirm('Do you sure to delete this account?');" })</td>
 
             </tr>
             i++;

@@ -27,6 +27,7 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
             Session.Clear();
             return RedirectToAction("Index");
         }
+        //Pass
         public ActionResult login()
         {
             string username = Request["username"].ToString();
@@ -106,6 +107,7 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
             return View(camtUserModelList);
         }
 
+        // Pass
         [HttpPost]
         public ActionResult registerCAMTUser()
         {
@@ -166,6 +168,7 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
 
         }
 
+        // Can't delete user ไม่ได้เขียนใน SRS ต้องรอถามจานอีกที
         public ActionResult deleteCAMTUser(CAMTUserModel camtUserModel1)
         {
             CAMTUserModel camtUserModel2 = new CAMTUserModel();
@@ -201,6 +204,7 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
 
         public ActionResult ItemManagement()
         {
+            /*
             try
             {
                 string searchType = Request["searchType"].ToString();
@@ -240,9 +244,8 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
                 ViewData["itemBrand"] = itemBrand;
 
                 return View(newItemOwnerModelList);
-            }
-            catch
-            {
+            }*/
+
                 ItemModel itemModel = new ItemModel();
                 List<string> itemBrand = new List<string>();
                 itemBrand = itemModel.viewGroupByItemBrand();
@@ -253,7 +256,7 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
 
                 ViewData["itemBrand"] = itemBrand;
                 return View(itemOwnerModelList);
-            }
+            
 
         }
         public ActionResult AddItem()
@@ -456,7 +459,7 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
 
             return View();
         }
-
+        //Pass
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult addComponent()
@@ -541,7 +544,7 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
             string url = "~/Home/ItemInformation?itemId=" + itemId;
             return Redirect(url);
         }
-
+        //Pass
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult editItem()
@@ -611,7 +614,7 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
             string url = "~/Home/EditItem?itemId=" + itemId;
             return Redirect(url);
         }
-
+        //Pass
         [HttpPost]
         public ActionResult editAdminInfo()
         {
@@ -638,19 +641,12 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
             CAMTUserModel camtUserModel = new CAMTUserModel();
             bool status = camtUserModel.updateCAMTUser(userId, username, password, name, department, room, address, tel, email, userType, userActive);
 
-            if (status == false)
-            {
-                TempData["msg"] = "Your information is incorrect, please fill information again";
-                return RedirectToAction("AdministratorInfor");
-            }
-            else
-            {
-                TempData["msg"] = "Update Administrator information  successful";
-                return RedirectToAction("AdministratorInfor");
-            }
+            TempData["msg"] = "Update Administrator information  successful";
+            return RedirectToAction("AdministratorInfor");
+            
         }
 
-        // เพื่ม srs old password
+        
         [HttpPost]
         public ActionResult editAdminPass()
         {
@@ -664,16 +660,8 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
             {
                 CAMTUserModel camtUserModel = new CAMTUserModel();
                 bool status = camtUserModel.updateCAMTUserPass(userId, newPassword);
-                if (status == false)
-                {
-                    TempData["msg"] = "Your information is incorrect, please fill information again";
-                    return RedirectToAction("AdministratorInfor");
-                }
-                else
-                {
-                    TempData["msg"] = "Update your password successful";
-                    return RedirectToAction("AdministratorInfor");
-                }
+                TempData["msg"] = "Update your password successful";
+                return RedirectToAction("AdministratorInfor");
             }
             else
             {
@@ -729,33 +717,6 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
 
         }
 
-        public ActionResult ReparationMIS()
-        {
-
-            if (Request["mode"] != null)
-            {
-                string mode = Request["mode"].ToString();
-                switch (mode)
-                {
-                    case "repairSummary":
-                        DateTime dateTimeStart = DateTime.Parse(Request["time-start"].ToString());
-                        DateTime dateTimeEnd = DateTime.Parse(Request["time-end"].ToString());
-                        ItemModel itemModel = new ItemModel();
-                        List<ItemModel> itemModelList = new List<ItemModel>();
-                        itemModelList = itemModel.viewExpireItem(dateTimeStart, dateTimeEnd);
-                        TempData["mode"] = "expireItem";
-                        ViewData["expireItemList"] = itemModelList;
-                        break;
-
-                }
-                return View();
-            }
-            else
-            {
-                return View();
-            }
-        }
-
       
         public ActionResult ReparationManagement()
         {
@@ -779,6 +740,7 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
             reportModel.distributeWork(reportId, typeBroken);
             List<ReportModel> reportModelList = new List<ReportModel>();
             reportModelList = reportModel.viewReportByStatusAndUserId(1, 0);
+            TempData["msg"] = "Define type of broken already";
             return RedirectToAction("NewReparation", reportModelList);
         }
 
@@ -799,7 +761,7 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
             reportModelList = reportModel.viewReportByTechnicianId(technicianId);
             return View(reportModelList);
         }
-
+        //Pass
         public ActionResult resetRandomTechnician()
         {
             int technicianId = int.Parse(Request["technicianId"].ToString());
@@ -807,6 +769,7 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
             string typeBroken = Request["typeBroken"].ToString();
             ReportModel reportModel = new ReportModel();
             reportModel.resetDistributeWork(reportId, typeBroken, technicianId);
+            TempData["msg"] = "Repair task is distributed to a technician";
             string url = "~/Home/TechnicianReparation?technicianId=" + technicianId;
             return Redirect(url);
         }

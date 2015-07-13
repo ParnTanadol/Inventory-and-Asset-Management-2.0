@@ -188,6 +188,103 @@ namespace Test_Inventory.Test_Repositories
             Assert.IsFalse(actual);
         }
 
+        [TestMethod]
+        public void testInsertReport6()
+        {
+            // Arrange
+            IReportRepo reportRepo = new ReportRepo(new INVENTORY_MANAGEMENT_2Entities());
+            Report report = new Report();
+            report.technician_id = 0;
+            report.reporter_id = 4;
+            report.item_id = 1;
+            report.report_typeBroken = "Error about Application of Computer";
+            report.report_case = "Cannot open Keynote";
+            report.report_contact = "0833201787";
+            report.report_repairDetail = "Complete";
+
+
+            string dateStart = "2015-06-09 15:36:48.3488602";
+            DateTime dateTimeStart = Convert.ToDateTime(dateStart);
+            report.report_startDate = dateTimeStart;
+
+            string dateEnd = "2015-06-10 15:36:48.3488602";
+            DateTime dateTimeEnd = Convert.ToDateTime(dateEnd);
+            report.report_endDate = dateTimeEnd;
+
+            report.report_statusComplete = 3;
+            report.report_recieveMsg = true;
+
+            //Act
+            var actual = reportRepo.insertReport(report);
+            //Assert
+            Assert.IsFalse(actual);
+        }
+
+        [TestMethod]
+        public void testInsertReport7()
+        {
+            // Arrange
+            IReportRepo reportRepo = new ReportRepo(new INVENTORY_MANAGEMENT_2Entities());
+            Report report = new Report();
+            report.technician_id = 2;
+            report.reporter_id = 0;
+            report.item_id = 1;
+            report.report_typeBroken = "Error about Application of Computer";
+            report.report_case = "Cannot open Keynote";
+            report.report_contact = "0833201787";
+            report.report_repairDetail = "Complete";
+
+
+            string dateStart = "2015-06-09 15:36:48.3488602";
+            DateTime dateTimeStart = Convert.ToDateTime(dateStart);
+            report.report_startDate = dateTimeStart;
+
+            string dateEnd = "2015-06-10 15:36:48.3488602";
+            DateTime dateTimeEnd = Convert.ToDateTime(dateEnd);
+            report.report_endDate = dateTimeEnd;
+
+            report.report_statusComplete = 3;
+            report.report_recieveMsg = true;
+
+            //Act
+            var actual = reportRepo.insertReport(report);
+            //Assert
+            Assert.IsFalse(actual);
+        }
+
+        [TestMethod]
+        public void testInsertReport8()
+        {
+            // Arrange
+            IReportRepo reportRepo = new ReportRepo(new INVENTORY_MANAGEMENT_2Entities());
+            Report report = new Report();
+            report.technician_id = 2;
+            report.reporter_id = 4;
+            report.item_id = 0;
+            report.report_typeBroken = "Error about Application of Computer";
+            report.report_case = "Cannot open Keynote";
+            report.report_contact = "0833201787";
+            report.report_repairDetail = "Complete";
+
+
+            string dateStart = "2015-06-09 15:36:48.3488602";
+            DateTime dateTimeStart = Convert.ToDateTime(dateStart);
+            report.report_startDate = dateTimeStart;
+
+            string dateEnd = "2015-06-10 15:36:48.3488602";
+            DateTime dateTimeEnd = Convert.ToDateTime(dateEnd);
+            report.report_endDate = dateTimeEnd;
+
+            report.report_statusComplete = 3;
+            report.report_recieveMsg = true;
+
+            //Act
+            var actual = reportRepo.insertReport(report);
+            //Assert
+            Assert.IsFalse(actual);
+        }
+
+
 
         //---------------------updateReport---------------------
         [TestMethod]
@@ -205,9 +302,24 @@ namespace Test_Inventory.Test_Repositories
             //Assert
             Assert.IsTrue(actual);
         }
-
         [TestMethod]
         public void testUpdateReport2()
+        {
+            // Arrange
+            IReportRepo reportRepo = new ReportRepo(new INVENTORY_MANAGEMENT_2Entities());
+            Report report = new Report();
+            report.report_id = 0;
+            report.report_repairDetail = "Complete";
+            report.report_statusComplete = 3;
+
+            //Act
+            var actual = reportRepo.updateReport(report);
+            //Assert
+            Assert.IsFalse(actual);
+        }
+
+        [TestMethod]
+        public void testUpdateReport3()
         {
             // Arrange
             IReportRepo reportRepo = new ReportRepo(new INVENTORY_MANAGEMENT_2Entities());
@@ -221,6 +333,7 @@ namespace Test_Inventory.Test_Repositories
             //Assert
             Assert.IsFalse(actual);
         }
+
 
         //---------------------viewReportByReportId---------------------
         [TestMethod]
@@ -328,6 +441,21 @@ namespace Test_Inventory.Test_Repositories
             CollectionAssert.AreEqual(reportList, actual);
         }
 
+        [TestMethod]
+        public void testViewReportbyTechnicianIdd2()
+        {
+            // Arrange
+            IReportRepo reportRepo = new ReportRepo(new INVENTORY_MANAGEMENT_2Entities());
+
+            List<Report> reportList = new List<Report>();
+
+
+            //Act
+            var actual = reportRepo.viewReportbyTechnicianId(0);
+            //Assert
+            CollectionAssert.AreEqual(reportList, actual);
+        }
+
         //---------------------viewReportbyReporterId---------------------
         [TestMethod]
         public void testViewReportbyReporterId1()
@@ -384,6 +512,21 @@ namespace Test_Inventory.Test_Repositories
 
             //Act
             var actual = reportRepo.viewReportbyReporterId(4);
+            //Assert
+            CollectionAssert.AreEqual(reportList, actual);
+        }
+
+        [TestMethod]
+        public void testViewReportbyReporterId2()
+        {
+            // Arrange
+            IReportRepo reportRepo = new ReportRepo(new INVENTORY_MANAGEMENT_2Entities());
+
+            List<Report> reportList = new List<Report>();
+
+
+            //Act
+            var actual = reportRepo.viewReportbyReporterId(0);
             //Assert
             CollectionAssert.AreEqual(reportList, actual);
         }
@@ -448,6 +591,20 @@ namespace Test_Inventory.Test_Repositories
             CollectionAssert.AreEqual(reportList, actual);
         }
 
+        [TestMethod]
+        public void testViewReportByStatusAndUserId2()
+        {
+            // Arrange
+            IReportRepo reportRepo = new ReportRepo(new INVENTORY_MANAGEMENT_2Entities());
+
+            List<Report> reportList = new List<Report>();
+
+            //Act
+            var actual = reportRepo.viewReportByStatusAndUserId(0, 3);
+            //Assert
+            CollectionAssert.AreEqual(reportList, actual);
+        }
+
         //---------------------viewPreviousReport---------------------
         [TestMethod]
         public void testViewPreviousReport1()
@@ -483,6 +640,7 @@ namespace Test_Inventory.Test_Repositories
             Assert.AreEqual(report, actual);
         }
 
+
         //---------------------updateStatus---------------------
         [TestMethod]
         public void testUpdateStatus1()
@@ -498,6 +656,22 @@ namespace Test_Inventory.Test_Repositories
             var actual = reportRepo.updateStatus(report);
             //Assert
             Assert.IsTrue(actual);
+        }
+
+        [TestMethod]
+        public void testUpdateStatus2()
+        {
+            // Arrange
+            IReportRepo reportRepo = new ReportRepo(new INVENTORY_MANAGEMENT_2Entities());
+
+            Report report = new Report();
+            report.report_id = 0;
+            report.report_statusComplete = 3;
+
+            //Act
+            var actual = reportRepo.updateStatus(report);
+            //Assert
+            Assert.IsFalse(actual);
         }
 
 
@@ -527,6 +701,52 @@ namespace Test_Inventory.Test_Repositories
 
         [TestMethod]
         public void testUpdateTypeBroken2()
+        {
+            // Arrange
+            IReportRepo reportRepo = new ReportRepo(new INVENTORY_MANAGEMENT_2Entities());
+            Report report = new Report();
+            report.report_id = 0;
+            report.technician_id = 2;
+            report.report_typeBroken = "Error about Application of Computer";
+
+            string dateStart = "2015-06-09 15:36:48.3488602";
+            DateTime dateTimeStart = Convert.ToDateTime(dateStart);
+            report.report_startDate = dateTimeStart;
+
+            report.report_statusComplete = 3;
+
+
+            //Act
+            var actual = reportRepo.updateTypeBroken(report);
+            //Assert
+            Assert.IsFalse(actual);
+        }
+
+        [TestMethod]
+        public void testUpdateTypeBroken3()
+        {
+            // Arrange
+            IReportRepo reportRepo = new ReportRepo(new INVENTORY_MANAGEMENT_2Entities());
+            Report report = new Report();
+            report.report_id = 1;
+            report.technician_id = 0;
+            report.report_typeBroken = "Error about Application of Computer";
+
+            string dateStart = "2015-06-09 15:36:48.3488602";
+            DateTime dateTimeStart = Convert.ToDateTime(dateStart);
+            report.report_startDate = dateTimeStart;
+
+            report.report_statusComplete = 3;
+
+
+            //Act
+            var actual = reportRepo.updateTypeBroken(report);
+            //Assert
+            Assert.IsFalse(actual);
+        }
+
+        [TestMethod]
+        public void testUpdateTypeBroken4()
         {
             // Arrange
             IReportRepo reportRepo = new ReportRepo(new INVENTORY_MANAGEMENT_2Entities());
@@ -561,6 +781,18 @@ namespace Test_Inventory.Test_Repositories
             Assert.AreEqual(0, actual);
         }
 
+        [TestMethod]
+        public void testViewExperienceTechnician2()
+        {
+            // Arrange
+            IReportRepo reportRepo = new ReportRepo(new INVENTORY_MANAGEMENT_2Entities());
+
+            //Act
+            var actual = reportRepo.viewExperienceTechnician(0);
+            //Assert
+            Assert.AreEqual(0, actual);
+        }
+
         //---------------------viewTechnicianTask---------------------
         [TestMethod]
         public void testViewTechnicianTask1()
@@ -575,6 +807,20 @@ namespace Test_Inventory.Test_Repositories
             var actual = reportRepo.viewTechnicianTask("Error about Application of Computer");
             //Assert
             CollectionAssert.AreEqual(technicianTaskList[0], actual[0]);
+        }
+
+        [TestMethod]
+        public void testViewTechnicianTask2()
+        {
+            // Arrange
+            IReportRepo reportRepo = new ReportRepo(new INVENTORY_MANAGEMENT_2Entities());
+
+            List<List<int>> technicianTaskList = new List<List<int>>();
+
+            //Act
+            var actual = reportRepo.viewTechnicianTask(null);
+            //Assert
+            Assert.AreEqual(actual.Count, technicianTaskList.Count);
         }
 
     }

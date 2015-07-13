@@ -411,9 +411,6 @@
     <Content Include="Views\Home\ItemMIS.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\ReparationMIS.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Shared\_AdminRepairLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>

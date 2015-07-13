@@ -12,7 +12,7 @@
         //---------------------------------------------------------------------------------------
         <html>
         <head>
-            <title></title>
+            <title>IT Equipment Management System</title>
             <meta charset="utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -95,13 +95,13 @@
                                                 <label class="control-label col-sm-3">Item Status:</label>
                                                 <div class="col-sm-9">
                                                     <div class="radio-inline">
-                                                        <label><input type="radio" id="item-status1-1" name="item-status1" value="1">Good</label>
+                                                        <label><input type="radio" id="item-status1-1" name="item-status1" value="1">Normal</label>
                                                     </div>
                                                     <div class="radio-inline">
-                                                        <label><input type="radio" id="item-status1-2" name="item-status1" value="2">Normal</label>
+                                                        <label><input type="radio" id="item-status1-2" name="item-status1" value="2">Broken</label>
                                                     </div>
                                                     <div class="radio-inline">
-                                                        <label><input type="radio" id="item-status1-3" name="item-status1" value="3">Broken</label>
+                                                        <label><input type="radio" id="item-status1-3" name="item-status1" value="3">Expire</label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -261,51 +261,57 @@
 
         function onAddItem() {
 
+            var result = confirm("Do you sure to add an item?");
+            if (result == true) {
+                for (var j = 1; j <= i ; j++) {
+                    var index = j;
+                    var itemBandIndex = "item-band" + index.toString();
+                    var itemNameIndex = "item-name" + index.toString();
+                    var itemDescriptionIndex = "item-description" + index.toString();
+                    var itemPictureIndex = "item-picture" + index.toString();
+                    var camtNumberIndex = "camt-number" + index.toString();
+                    var cmuNumberIndex = "cmu-number" + index.toString();
+                    var serialNumberIndex = "serial-number" + index.toString();
 
-            for (var j = 1; j <= i ; j++) {
-                var index = j;
-                var itemBandIndex = "item-band" + index.toString();
-                var itemNameIndex = "item-name" + index.toString();
-                var itemDescriptionIndex = "item-description" + index.toString();
-                var itemPictureIndex = "item-picture" + index.toString();
-                var camtNumberIndex = "camt-number" + index.toString();
-                var cmuNumberIndex = "cmu-number" + index.toString();
-                var serialNumberIndex = "serial-number" + index.toString();
+                    var itemStatus = "item-status" + index.toString();
+                    var itemBand = document.getElementById(itemBandIndex).value;
+                    var itemName = document.getElementById(itemNameIndex).value;
+                    var itemDescription = document.getElementById(itemDescriptionIndex).value;
+                    var itemPicture = document.getElementById(itemPictureIndex).value;
+                    var camtNumber = document.getElementById(camtNumberIndex).value;
+                    var cmuNumber = document.getElementById(cmuNumberIndex).value;
+                    var serialNumber = document.getElementById(serialNumberIndex).value;
 
-                var itemStatus = "item-status" + index.toString();
-                var itemBand = document.getElementById(itemBandIndex).value;
-                var itemName = document.getElementById(itemNameIndex).value;
-                var itemDescription = document.getElementById(itemDescriptionIndex).value;
-                var itemPicture = document.getElementById(itemPictureIndex).value;
-                var camtNumber = document.getElementById(camtNumberIndex).value;
-                var cmuNumber = document.getElementById(cmuNumberIndex).value;
-                var serialNumber = document.getElementById(serialNumberIndex).value;
+                    // get item status
+                    var itemStatus = document.getElementsByName(itemStatus);
+                    var itemStatusCheck = "";
+                    for (var a = 0; a < itemStatus.length; a++) {
+                        if (itemStatus[a].checked) {
+                            itemStatusCheck = itemStatus[a].value;
+                        }
+                    }
 
-                // get item status
-                var itemStatus = document.getElementsByName(itemStatus);
-                var itemStatusCheck = "";
-                for (var a = 0; a < itemStatus.length; a++) {
-                    if (itemStatus[a].checked) {
-                        itemStatusCheck = itemStatus[a].value;
+                    if (itemBand == "" || itemName == "" || itemDescription == "" || itemStatusCheck == "" || itemPicture == "") {
+                        alert("Please you fill Item brand, Item name, Item description, Item status, and Item picture information");
+                        return false;
+                    }
+                    else if (camtNumber == "" && cmuNumber == "" && serialNumber == "") {
+                        alert("Please you fill CAMT number, CMU number, or Serial number");
+                        return false;
                     }
                 }
 
-                if (itemBand == "" || itemName == "" || itemDescription == "" || itemStatusCheck == "" || itemPicture == "") {
-                    alert("Please you fill Item brand, Item name, Item description, Item status, and Item picture information");
-                    return false;
-                }
-                else if (camtNumber == "" && cmuNumber == "" && serialNumber == "") {
-                    alert("Please you fill CAMT number, CMU number, or Serial number");
-                    return false;
-                }
+
+                var hiddenItemComponent = document.createElement("input");
+                hiddenItemComponent.setAttribute("type", "hidden");
+                hiddenItemComponent.setAttribute("name", "count");
+                hiddenItemComponent.setAttribute("value", i);
+                document.getElementById("form").appendChild(hiddenItemComponent);
             }
-
-
-            var hiddenItemComponent = document.createElement("input");
-            hiddenItemComponent.setAttribute("type", "hidden");
-            hiddenItemComponent.setAttribute("name", "count");
-            hiddenItemComponent.setAttribute("value", i);
-            document.getElementById("form").appendChild(hiddenItemComponent);
+            else {
+                return false;
+            }
+            
         }
 
         function onAddOwner() {

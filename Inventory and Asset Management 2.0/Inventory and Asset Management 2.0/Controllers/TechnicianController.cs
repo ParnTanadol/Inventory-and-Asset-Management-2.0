@@ -85,7 +85,7 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
             camtUserModel.viewUserByuserId(technicianId);
             return View(camtUserModel);
         }
-
+        //Pass
         [HttpPost]
         public ActionResult editTechnicianInfo()
         {
@@ -112,18 +112,10 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
             CAMTUserModel camtUserModel = new CAMTUserModel();
             bool status = camtUserModel.updateCAMTUser(userId, username, password, name, department, room, address, tel, email, userType, userActive);
 
-            if (status == false)
-            {
-                TempData["msg"] = "Your information is incorrect, please fill information again";
-                return RedirectToAction("TechnicianInformation");
-            }
-            else
-            {
-                TempData["msg"] = "Update Technician information successful” ";
-                return RedirectToAction("TechnicianInformation");
-            }
+            TempData["msg"] = "Update Technician information successful” ";
+            return RedirectToAction("TechnicianInformation");
         }
-
+        //Pass
         [HttpPost]
         public ActionResult editTechnicianPass()
         {
@@ -137,16 +129,10 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
             {
                 CAMTUserModel camtUserModel = new CAMTUserModel();
                 bool status = camtUserModel.updateCAMTUserPass(userId, newPassword);
-                if (status == false)
-                {
-                    TempData["msg"] = "Your information is incorrect, please fill information again";
-                    return RedirectToAction("TechnicianInformation");
-                }
-                else
-                {
-                    TempData["msg"] = "Update your password successful";
-                    return RedirectToAction("TechnicianInformation");
-                }
+
+                TempData["msg"] = "Update your password successful";
+                return RedirectToAction("TechnicianInformation");
+                
             }
             else
             {

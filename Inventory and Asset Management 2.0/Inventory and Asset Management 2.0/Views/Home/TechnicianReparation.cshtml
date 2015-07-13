@@ -10,7 +10,7 @@
         <!DOCTYPE html>
         <html lang="en">
         <head>
-            <title>TEST PROJECT</title>
+            <title>IT Equipment Management System</title>
             <meta charset="utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -151,7 +151,20 @@
     
     <script type="text/javascript" src="~/Content/jquery-ui/jquery-ui.js"></script>
     <script type="text/javascript" src="~/Content/bootstrap/js/bootstrap.min.js"></script>
+    
+     
+        if (TempData["msg"] != null)
+        {
+            var message = TempData["msg"].ToString();
+
+            <script>
+                var msg = '@message';
+                alert(msg);
+            </script>
+            TempData["msg"] = null;
+        }
     }
+    
     else
     {
         <script>

@@ -12,6 +12,15 @@ namespace Inventory_and_Asset_Management_2._0.Models
         public ItemModel item_id { get; set; }
         public CAMTUserModel user_id { get; set; }
 
+        public override bool Equals(object obj)
+        {
+            if (obj is ItemOwnerModel)
+            {
+                ItemOwnerModel other = (ItemOwnerModel)obj;
+                return Equals(other.itemOwner_id, this.itemOwner_id) && Equals(other.item_id, this.item_id) && Equals(other.user_id, this.user_id);
+            }
+            return false;
+        }
 
         public bool insertItemOwner(int itemId, int userId)
         {

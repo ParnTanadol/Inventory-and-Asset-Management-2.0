@@ -63,6 +63,12 @@
   <ItemGroup>
     <Compile Include="Appendix.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Test-Model\Test-CAMTUserModel.cs" />
+    <Compile Include="Test-Model\Test-ItemModel.cs" />
+    <Compile Include="Test-Model\Test-ItemOwnerModel.cs" />
+    <Compile Include="Test-Model\Test-MailAPI.cs" />
+    <Compile Include="Test-Model\Test-ReportModel-Distribute.cs" />
+    <Compile Include="Test-Model\Test-ReportModel.cs" />
     <Compile Include="Test-Repositories\Test-CAMTUserRepo.cs" />
     <Compile Include="Test-Repositories\Test-ItemOwnerRepo.cs" />
     <Compile Include="Test-Repositories\Test-ItemRepo.cs" />

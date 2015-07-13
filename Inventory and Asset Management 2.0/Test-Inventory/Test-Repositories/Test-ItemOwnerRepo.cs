@@ -45,6 +45,35 @@ namespace Test_Inventory.Test_Repositories
             Assert.IsTrue(actual);
         }
 
+        [TestMethod]
+        public void testInsertItemOwner2()
+        {
+            // Arrange
+            IItemOwnerRepo itemOwnerRepo = new ItemOwnerRepo(new INVENTORY_MANAGEMENT_2Entities());
+            ItemOwner itemOwner = new ItemOwner();
+            itemOwner.item_id = 0;
+            itemOwner.user_id = 4;
+
+            //Act
+            var actual = itemOwnerRepo.insertItemOwner(itemOwner);
+            //Assert
+            Assert.IsFalse(actual);
+        }
+
+        [TestMethod]
+        public void testInsertItemOwner3()
+        {
+            // Arrange
+            IItemOwnerRepo itemOwnerRepo = new ItemOwnerRepo(new INVENTORY_MANAGEMENT_2Entities());
+            ItemOwner itemOwner = new ItemOwner();
+            itemOwner.item_id = 1;
+            itemOwner.user_id = 0;
+
+            //Act
+            var actual = itemOwnerRepo.insertItemOwner(itemOwner);
+            //Assert
+            Assert.IsFalse(actual);
+        }
         //---------------------updateItemOwner---------------------
         [TestMethod]
         public void testUpdateItemOwner1()
@@ -53,13 +82,42 @@ namespace Test_Inventory.Test_Repositories
             IItemOwnerRepo itemOwnerRepo = new ItemOwnerRepo(new INVENTORY_MANAGEMENT_2Entities());
             ItemOwner itemOwner = new ItemOwner();
             itemOwner.itemOwner_id = 1;
-            itemOwner.item_id = 1;
             itemOwner.user_id = 4;
 
             //Act
             var actual = itemOwnerRepo.updateItemOwner(itemOwner);
             //Assert
             Assert.IsTrue(actual);
+        }
+
+        [TestMethod]
+        public void testUpdateItemOwner2()
+        {
+            // Arrange
+            IItemOwnerRepo itemOwnerRepo = new ItemOwnerRepo(new INVENTORY_MANAGEMENT_2Entities());
+            ItemOwner itemOwner = new ItemOwner();
+            itemOwner.itemOwner_id = 0;
+            itemOwner.user_id = 4;
+
+            //Act
+            var actual = itemOwnerRepo.updateItemOwner(itemOwner);
+            //Assert
+            Assert.IsFalse(actual);
+        }
+
+        [TestMethod]
+        public void testUpdateItemOwner3()
+        {
+            // Arrange
+            IItemOwnerRepo itemOwnerRepo = new ItemOwnerRepo(new INVENTORY_MANAGEMENT_2Entities());
+            ItemOwner itemOwner = new ItemOwner();
+            itemOwner.itemOwner_id = 1;
+            itemOwner.user_id = 0;
+
+            //Act
+            var actual = itemOwnerRepo.updateItemOwner(itemOwner);
+            //Assert
+            Assert.IsFalse(actual);
         }
 
         //---------------------viewItemOwnerByitemId---------------------

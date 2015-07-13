@@ -38,7 +38,6 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
         public ActionResult addReport()
         {
             string serialNumber = Request["serialNumber"].ToString();
-          //  string typeBroken = Request["typeBroken"].ToString();
             string description = Request["description"].ToString();
             string contact = Request["contact"].ToString();
             bool reportRecieveMsg;
@@ -113,16 +112,10 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
             CAMTUserModel camtUserModel = new CAMTUserModel();
             bool status = camtUserModel.updateCAMTUser(userId,username, password, name, department, room, address, tel, email, userType, userActive);
 
-            if (status == false)
-            {
-                TempData["msg"] = "Your information is incorrect, please fill information again";
+
+                TempData["msg"] = "Update Reporter information successful";
                 return RedirectToAction("ReporterInformation");
-            }
-            else
-            {
-                TempData["msg"] = "Update user infomation successful";
-                return RedirectToAction("ReporterInformation");
-            }
+
         }
 
          [HttpPost]
@@ -138,16 +131,10 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
             {
                 CAMTUserModel camtUserModel = new CAMTUserModel();
                 bool status = camtUserModel.updateCAMTUserPass(userId, newPassword);
-                if (status == false)
-                {
-                    TempData["msg"] = "Your information is incorrect, please fill information again";
-                    return RedirectToAction("ReporterInformation");
-                }
-                else
-                {
-                    TempData["msg"] = "Update your password successful";
-                    return RedirectToAction("ReporterInformation");
-                }
+
+                TempData["msg"] = "Update your password successful";
+                return RedirectToAction("ReporterInformation");
+
             }
             else
             {

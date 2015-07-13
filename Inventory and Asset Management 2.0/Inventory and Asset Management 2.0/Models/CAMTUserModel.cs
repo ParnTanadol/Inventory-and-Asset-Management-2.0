@@ -30,7 +30,7 @@ namespace Inventory_and_Asset_Management_2._0.Models
             return false;
         }
 
-        public bool insertCAMTUser(string username, string password, string name, string dpartment, string room, string address, string tel, string email, int type, int active)
+        public bool insertCAMTUser(string username, string password, string name, string department, string room, string address, string tel, string email, int type, int active)
         {
             try
             {
@@ -44,7 +44,7 @@ namespace Inventory_and_Asset_Management_2._0.Models
                     camtUser2.user_username = username;
                     camtUser2.user_password = password;
                     camtUser2.user_name = name;
-                    camtUser2.user_department = dpartment;
+                    camtUser2.user_department = department;
                     camtUser2.user_room = room;
                     camtUser2.user_address = address;
                     camtUser2.user_tel = tel;

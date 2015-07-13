@@ -14,7 +14,7 @@
         <!DOCTYPE html>
         <html lang="en">
         <head>
-            <title>TEST PROJECT</title>
+            <title>IT Equipment Management System</title>
             <meta charset="utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -67,7 +67,7 @@
 
 
                                         <hr />
-                                        <!-- Select brand-->
+                                        <!-- 
                                          <div>
                                              <form class="form-horizontal" role="form" action="~/Home/ItemManagement" method="get">
                                                  <input type="text" name="searchType" value="itemBrand" style=" display:none;" />
@@ -75,12 +75,7 @@
                                                      <label class="control-label col-sm-3">Search by band:</label>
                                                      <div class="col-sm-3">
                                                          <select class="form-control" id="itemBrand" name="keyword">
-                                                             @{
-                                                                foreach (var item in ViewData["itemBrand"] as List<string>)
-                                                                {
-                                                                <option value="@item">@item</option>
-                                                                }
-                                                             }
+
                                                          </select>
                                                      </div>
                                                      <div class="col-sm-6">
@@ -90,9 +85,9 @@
                                              </form>
 
                                          </div>
-
+                                        Select brand-->
                                         <!-- Select brand-End-->
-                                        <!-- Select type broken-->
+                                        <!-- 
                                         <form class="form-horizontal" role="form" action="~/Home/ItemManagement" method="get">
                                             <input type="text" name="searchType" value="itemStatus" style=" display:none;" />
                                             <div class="form-group">
@@ -100,9 +95,9 @@
                                                 <div class="col-sm-3">
                                                     <select class="form-control" id="itemBrand" name="keyword">
                                                         <option value="0">All</option>
-                                                        <option value="1">Good</option>
-                                                        <option value="2">Normal</option>
-                                                        <option value="3">Broken</option>
+                                                        <option value="1">Normal</option>
+                                                        <option value="2">Broken</option>
+                                                        <option value="3">Expire</option>
                                                     </select>
                                                 </div>
                                                 <div class="col-sm-6">
@@ -110,12 +105,7 @@
                                                 </div>
                                             </div>
                                         </form>
-                                        <!-- Select type broken-End-->
-                                        <hr />
-
-
-
-
+                                        -->
                                         <table id="itemTable" class="table table-hover table-striped">
                                             <thead>
                                                 <tr>
@@ -155,7 +145,22 @@
                                                         <td>@item.item_id.item_cmuNumber</td>
                                                         <td>@item.item_id.item_camtNumber</td>
                                                         <td>@item.item_id.item_serialNumber</td>
-                                                        <td>@item.item_id.item_status</td>
+                                                        
+                                                            @{
+                                                            if (item.item_id.item_status == 1)
+                                                            {
+                                                                <td>Normal</td>
+                                                            }
+                                                            else if (item.item_id.item_status == 2)
+                                                            {
+                                                                <td>Broken</td>
+                                                            }
+                                                            else
+                                                            {
+                                                                <td>Expire</td>
+                                                            }
+                                                            }
+                                                        
                                                         <td><img src="@Url.Content("~/Content/ItemPics/" + item.item_id.item_picture)" height="50" width="50" /></td>
                                                         <td>@item.user_id.user_name</td>
                                                         <td>

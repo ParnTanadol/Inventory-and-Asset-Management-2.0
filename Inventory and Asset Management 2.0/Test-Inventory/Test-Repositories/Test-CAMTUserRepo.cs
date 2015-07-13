@@ -504,6 +504,18 @@ namespace Test_Inventory.Test_Repositories
             Assert.AreEqual(camtUser, actual);
         }
 
+        [TestMethod]
+        public void testViewUserByuserId2()
+        {
+            // Arrange
+            ICAMTUserRepo camtUserRepo = new CAMTUserRepo(new INVENTORY_MANAGEMENT_2Entities());
+            CAMTUser camtUser = new CAMTUser();
+            //Act
+            var actual = camtUserRepo.viewUserByuserId(0);
+            //Assert
+            Assert.AreEqual(camtUser, actual);
+        }
+
         //----------------viewAllUserByUserType----------------
         [TestMethod]
         public void testViewAllUserByUserType1()
@@ -527,6 +539,20 @@ namespace Test_Inventory.Test_Repositories
             camtUserList.Add(camtUser);
             //Act
             var actual = camtUserRepo.viewAllUserByUserType(1);
+            //Assert
+            CollectionAssert.AreEqual(camtUserList, actual);
+        }
+
+        [TestMethod]
+        public void testViewAllUserByUserType2()
+        {
+            // Arrange
+            ICAMTUserRepo camtUserRepo = new CAMTUserRepo(new INVENTORY_MANAGEMENT_2Entities());
+
+            List<CAMTUser> camtUserList = new List<CAMTUser>();
+
+            //Act
+            var actual = camtUserRepo.viewAllUserByUserType(0);
             //Assert
             CollectionAssert.AreEqual(camtUserList, actual);
         }
@@ -623,6 +649,19 @@ namespace Test_Inventory.Test_Repositories
             camtUserList.Add(camtUser);
             //Act
             var actual = camtUserRepo.viewAllUserByUserTypeActive(1, true);
+            //Assert
+            CollectionAssert.AreEqual(camtUserList, actual);
+        }
+
+        [TestMethod]
+        public void testViewAllUserByUserTypeActive2()
+        {
+            // Arrange
+            ICAMTUserRepo camtUserRepo = new CAMTUserRepo(new INVENTORY_MANAGEMENT_2Entities());
+            List<CAMTUser> camtUserList = new List<CAMTUser>();
+
+            //Act
+            var actual = camtUserRepo.viewAllUserByUserTypeActive(0, true);
             //Assert
             CollectionAssert.AreEqual(camtUserList, actual);
         }

@@ -15,7 +15,7 @@
 
         <html>
         <head>
-            <title></title>
+            <title>IT Equipment Management System</title>
             <meta charset="utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -90,13 +90,13 @@
                                                 <label class="control-label col-sm-3">Item Status:</label>
                                                 <div class="col-sm-9">
                                                     <div class="radio-inline">
-                                                        <label><input type="radio" id="item-status1-1" name="itemStatus" value="1">Good</label>
+                                                        <label><input type="radio" id="item-status1-1" name="itemStatus" value="1">Normal</label>
                                                     </div>
                                                     <div class="radio-inline">
-                                                        <label><input type="radio" id="item-status1-2" name="itemStatus" value="2">Normal</label>
+                                                        <label><input type="radio" id="item-status1-2" name="itemStatus" value="2">Broken</label>
                                                     </div>
                                                     <div class="radio-inline">
-                                                        <label><input type="radio" id="item-status1-3" name="itemStatus" value="3">Broken</label>
+                                                        <label><input type="radio" id="item-status1-3" name="itemStatus" value="3">Expire</label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -176,41 +176,50 @@
     }
 
     function onEditItem() {
+        var result = confirm("Do you sure to edit this item?");
+        if (result == true) {
+            var itemBand = document.getElementById("itemBrand").value;
+            var itemName = document.getElementById("itemName").value;
+            var itemDescription = document.getElementById("itemDescription").value;
+            var itemEndDate = document.getElementById("itemEndDate").value;
+            var cmuNumber = document.getElementById("cmuNumber").value;
+            var camtNumber = document.getElementById("camtNumber").value;
+            var serialNumber = document.getElementById("serialNumber").value;
 
-        var itemBand = document.getElementById("itemBrand").value;
-        var itemName = document.getElementById("itemName").value;
-        var itemDescription = document.getElementById("itemDescription").value;
-        var itemEndDate = document.getElementById("itemEndDate").value;
-        var cmuNumber = document.getElementById("cmuNumber").value;
-        var camtNumber = document.getElementById("camtNumber").value;
-        var serialNumber = document.getElementById("serialNumber").value;
+            // get item status
+            var itemStatus = document.getElementsByName("itemStatus");
+            var itemStatusCheck = "";
+            for (var a = 0; a < itemStatus.length; a++) {
+                if (itemStatus[a].checked) {
+                    itemStatusCheck = itemStatus[a].value;
+                }
+            }
 
-        // get item status
-        var itemStatus = document.getElementsByName("itemStatus");
-        var itemStatusCheck = "";
-        for (var a = 0; a < itemStatus.length; a++) {
-            if (itemStatus[a].checked) {
-                itemStatusCheck = itemStatus[a].value;
+            if (itemBand == "") {
+                alert("Please you fill Item brand");
+                return false;
+            }
+            else if (itemName == "") {
+                alert("Please you fill Item name");
+                return false;
+            }
+            else if (itemDescription == "") {
+                alert("Please you fill Item description");
+                return false;
+            }
+            else if (itemStatusCheck == "") {
+                alert("Please you fill Item status");
+                return false;
+            }
+            else if (camtNumber == "" && cmuNumber == "" && serialNumber == "") {
+                alert("Please you fill CAMT number, CMU number, or Serial number");
+                return false;
             }
         }
+        else {
+            return false;
+        }
 
-        if (itemBand == "") {
-            alert("Please you fill Item brand");
-            return false;
-        }
-        else if (itemName == "") {
-            alert("Please you fill Item name");
-        }
-        else if (itemDescription == "") {
-            alert("Please you fill Item description");
-        }
-        else if (itemStatusCheck == "") {
-            alert("Please you fill Item status");
-        }
-        else if (camtNumber == "" && cmuNumber == "" && serialNumber == "") {
-            alert("Please you fill CAMT number, CMU number, or Serial number");
-            return false;
-        }
     }
                                         </script>
                                             

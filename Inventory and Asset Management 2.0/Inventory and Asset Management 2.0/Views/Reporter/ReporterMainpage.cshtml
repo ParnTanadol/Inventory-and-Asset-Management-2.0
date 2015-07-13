@@ -11,7 +11,7 @@
         <!DOCTYPE html>
         <html lang="en">
         <head>
-            <title>TEST PROJECT</title>
+            <title>IT Equipment Management System</title>
             <meta charset="utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -40,7 +40,7 @@
 
                                 <div class="panel panel-info">
                                     <div class="panel-heading">
-                                        <h4>Report</h4>
+                                        <h4>Reporter Main page</h4>
                                     </div>
                                     <div class="panel-body">
 
@@ -82,41 +82,41 @@
 
                                             <script>
                                                 function onReport() {
+                                                    var result = confirm("Do you sure for informing about broken IT equipment ?");
+                                                    if (result == true) {
+                                                        var serialNumber = document.getElementById("serialNumber").value;
+                                                        var description = document.getElementById("description").value;
+                                                        var contact = document.getElementById("contact").value;
 
-                                                    var serialNumber = document.getElementById("serialNumber").value;
-                                                    var typeBroken = document.getElementById("typeBroken").value;
-                                                    var description = document.getElementById("description").value;
-                                                    var contact = document.getElementById("contact").value;
+                                                        var reportRecieveMsg = document.forms[0].reportRecieveMsg;
+                                                        var reportRecieveMsgCheck = "";
+                                                        for (var i = 0; i < reportRecieveMsg.length; i++) {
+                                                            if (reportRecieveMsg[i].checked) {
+                                                                reportRecieveMsgCheck = reportRecieveMsg[i].value;
+                                                            }
+                                                        }
 
-                                                    var reportRecieveMsg = document.forms[0].reportRecieveMsg;
-                                                    var reportRecieveMsgCheck = "";
-                                                    for (var i = 0; i < reportRecieveMsg.length; i++) {
-                                                        if (reportRecieveMsg[i].checked) {
-                                                            reportRecieveMsgCheck = reportRecieveMsg[i].value;
+                                                        if (serialNumber == "") {
+                                                            alert("Please you fill Serial number");
+                                                            return false;
+                                                        }
+                                                        if (description == "") {
+                                                            alert("Please you fill description");
+                                                            return false;
+                                                        }
+                                                        if (contact == "") {
+                                                            alert("Please you fill contact");
+                                                            return false;
+                                                        }
+                                                        if (reportRecieveMsgCheck == "") {
+                                                            alert("Please you select Notification mode");
+                                                            return false;
                                                         }
                                                     }
-
-                                                    if (serialNumber == "") {
-                                                        alert("Please you fill Serial number");
+                                                    else
+                                                    {
                                                         return false;
                                                     }
-                                                    if (typeBroken == "") {
-                                                        alert("Please you fill type of broken");
-                                                        return false;
-                                                    }
-                                                    if (description == "") {
-                                                        alert("Please you fill description");
-                                                        return false;
-                                                    }
-                                                    if (contact == "") {
-                                                        alert("Please you fill contact");
-                                                        return false;
-                                                    }
-                                                    if (reportRecieveMsgCheck == "") {
-                                                        alert("Please you select Notification mode");
-                                                        return false;
-                                                    }
-
                                                 }
                                             </script>
                                             @{

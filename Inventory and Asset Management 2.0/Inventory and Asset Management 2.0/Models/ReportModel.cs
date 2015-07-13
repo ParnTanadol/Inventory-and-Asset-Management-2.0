@@ -363,6 +363,7 @@ namespace Inventory_and_Asset_Management_2._0.Models
                                 // หา technician ที่ทำงานน้อยที่สุด
                                 int technicianIdMin = 0;
                                 double technicianExperience = 0.0;
+                                double count = 0;
                                 for (int b = 0; b < technicianList.Count; b++)
                                 {
                                     if (b == 0)
@@ -370,6 +371,13 @@ namespace Inventory_and_Asset_Management_2._0.Models
                                         technicianExperience = technicianList[b].experience;
                                         technicianIdMin = technicianList[b].technicianId;
                                     }
+
+                                    // check experience ว่าเท่ากันทั้งหมดหรือไม่
+                                    if (technicianExperience == technicianList[b].experience)
+                                    {
+                                        count++;
+                                    }
+
                                     if (technicianExperience > technicianList[b].experience)
                                     {
                                         technicianExperience = technicianList[b].experience;
@@ -377,7 +385,16 @@ namespace Inventory_and_Asset_Management_2._0.Models
                                     }
                                 }
 
-                                return technicianIdMin;
+                                if (count == technicianList.Count)
+                                {
+                                    Random random = new Random();
+                                    int technicianId = camtUserAvailable[random.Next(0, camtUserList.Count)].user_id;
+                                    return technicianId;
+                                }
+                                else
+                                {
+                                    return technicianIdMin;
+                                }   
                             }
                         }
                         // จ่ายงานให้กับคนที่ไม่เคยทำงาน
@@ -527,6 +544,7 @@ namespace Inventory_and_Asset_Management_2._0.Models
                                 // หา technician ที่ทำงานน้อยที่สุด
                                 int technicianIdMin = 0;
                                 double technicianExperience = 0.0;
+                                double count = 0;
                                 for (int b = 0; b < technicianList.Count; b++)
                                 {
                                     if (b == 0)
@@ -534,6 +552,13 @@ namespace Inventory_and_Asset_Management_2._0.Models
                                         technicianExperience = technicianList[b].experience;
                                         technicianIdMin = technicianList[b].technicianId;
                                     }
+
+                                    // check experience ว่าเท่ากันทั้งหมดหรือไม่
+                                    if (technicianExperience == technicianList[b].experience)
+                                    {
+                                        count++;
+                                    }
+
                                     if (technicianExperience > technicianList[b].experience)
                                     {
                                         technicianExperience = technicianList[b].experience;
@@ -541,7 +566,17 @@ namespace Inventory_and_Asset_Management_2._0.Models
                                     }
                                 }
 
-                                return technicianIdMin;
+                                if (count == technicianList.Count)
+                                {
+                                    Random random = new Random();
+                                    int technicianId = camtUserAvailable[random.Next(0, camtUserList.Count)].user_id;
+                                    return technicianId;
+                                }
+                                else
+                                {
+                                    return technicianIdMin;
+                                } 
+
                             }
                         }
                         // จ่ายงานให้กับคนที่ไม่เคยทำงาน
@@ -565,12 +600,12 @@ namespace Inventory_and_Asset_Management_2._0.Models
                 // Don't Have Technician
                 else
                 {
-                    return 0;
+                    return 1;
                 }
             }
             catch
             {
-                return 0;
+                return 1;
             }
         }
         public bool updateReport(int reportId, string reportRepairDetail, int statusComplete)
@@ -728,13 +763,13 @@ namespace Inventory_and_Asset_Management_2._0.Models
             }
         }
 
-        public List<ReportModel> viewReportByTechnicianId(int texhnicianId)
+        public List<ReportModel> viewReportByTechnicianId(int technicianId)
         {
             try
             {
                 IReportRepo reportRepo = new ReportRepo(new INVENTORY_MANAGEMENT_2Entities());
                 List<Report> reportList = new List<Report>();
-                reportList = reportRepo.viewReportbyTechnicianId(texhnicianId);
+                reportList = reportRepo.viewReportbyTechnicianId(technicianId);
 
                 List<ReportModel> reportModelList = new List<ReportModel>();
                 for (int i = 0; i < reportList.Count; i++)

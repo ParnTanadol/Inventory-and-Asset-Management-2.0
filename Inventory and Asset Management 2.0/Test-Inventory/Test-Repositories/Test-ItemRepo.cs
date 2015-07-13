@@ -60,6 +60,7 @@ namespace Test_Inventory.Test_Repositories
             Assert.IsTrue(actual);
         }
 
+
         //---------------------updateItem---------------------
         [TestMethod]
         public void testUpdateItem1()
@@ -93,6 +94,38 @@ namespace Test_Inventory.Test_Repositories
             Assert.IsTrue(actual);
         }
 
+        [TestMethod]
+        public void testUpdateItem2()
+        {
+            // Arrange
+            IItemRepo itemRepo = new ItemRepo(new INVENTORY_MANAGEMENT_2Entities());
+            Item item = new Item();
+            item.item_id = 0;
+            item.item_brand = "Apple";
+            item.item_name = "iMac";
+            item.item_description = "iMac 27-inch";
+
+            string dateStart = "2015-05-07 15:35:35.0000000";
+            DateTime dateTimeStart = Convert.ToDateTime(dateStart);
+            item.item_startDate = dateTimeStart;
+
+            string dateEnd = "2015-06-20 00:00:00.0000000";
+            DateTime dateTimeEnd = Convert.ToDateTime(dateEnd);
+            item.item_endDate = dateTimeEnd;
+
+            item.item_status = 1;
+            item.item_picture = "picItem-1.jpg";
+            item.item_cmuNumber = "CMU01";
+            item.item_camtNumber = "CAMT01";
+            item.item_serialNumber = "";
+            item.item_component = null;
+
+            //Act
+            var actual = itemRepo.updateItem(item);
+            //Assert
+            Assert.IsFalse(actual);
+        }
+
         //---------------------updateItemComponent---------------------
         [TestMethod]
         public void testUpdateItemComponent1()
@@ -101,12 +134,27 @@ namespace Test_Inventory.Test_Repositories
             IItemRepo itemRepo = new ItemRepo(new INVENTORY_MANAGEMENT_2Entities());
             Item item = new Item();
             item.item_id = 1;
-            item.item_component = null;
+            item.item_component = 2;
 
             //Act
             var actual = itemRepo.updateItemComponent(item);
             //Assert
             Assert.IsTrue(actual);
+        }
+
+        [TestMethod]
+        public void testUpdateItemComponent2()
+        {
+            // Arrange
+            IItemRepo itemRepo = new ItemRepo(new INVENTORY_MANAGEMENT_2Entities());
+            Item item = new Item();
+            item.item_id = 0;
+            item.item_component = 2;
+
+            //Act
+            var actual = itemRepo.updateItemComponent(item);
+            //Assert
+            Assert.IsFalse(actual);
         }
 
         //---------------------viewItemByitemId---------------------
@@ -138,6 +186,19 @@ namespace Test_Inventory.Test_Repositories
 
             //Act
             var actual = itemRepo.viewItemByitemId(1);
+            //Assert
+            Assert.AreEqual(item, actual);
+        }
+
+        [TestMethod]
+        public void testViewItemByitemId2()
+        {
+            // Arrange
+            IItemRepo itemRepo = new ItemRepo(new INVENTORY_MANAGEMENT_2Entities());
+            Item item = new Item();
+
+            //Act
+            var actual = itemRepo.viewItemByitemId(0);
             //Assert
             Assert.AreEqual(item, actual);
         }
@@ -230,6 +291,20 @@ namespace Test_Inventory.Test_Repositories
 
             //Act
             var actual = itemRepo.viewItemComponentbyItemId(1);
+            //Assert
+            CollectionAssert.AreEqual(itemList, actual);
+        }
+
+        [TestMethod]
+        public void testViewItemComponentbyItemId2()
+        {
+            // Arrange
+            IItemRepo itemRepo = new ItemRepo(new INVENTORY_MANAGEMENT_2Entities());
+
+            List<Item> itemList = new List<Item>();
+
+            //Act
+            var actual = itemRepo.viewItemComponentbyItemId(0);
             //Assert
             CollectionAssert.AreEqual(itemList, actual);
         }

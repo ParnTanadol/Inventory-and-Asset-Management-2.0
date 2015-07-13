@@ -11,7 +11,7 @@
         <!DOCTYPE html>
         <html lang="en">
         <head>
-            <title></title>
+            <title>IT Equipment Management System</title>
             <meta charset="utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -158,11 +158,11 @@
                                                                     <td>@item.item_status</td>
                                                                     <td><img src="@Url.Content("~/Content/ItemPics/" + item.item_picture)" height="50" width="50" /></td>
                                                                     <td>
-                                                                        @using (Html.BeginForm("EditItem", "Home", FormMethod.Get))
+                                                                        @using (Html.BeginForm("ItemInformation", "Home", FormMethod.Get))
                                                                         {
                                                                             @Html.AntiForgeryToken()
                                                                             @Html.Hidden("itemId", item.item_id);
-                                                                            <button class="btn btn-warning" style="color: #fff">Edit</button>
+                                                                            <button class="btn btn-warning" style="color: #fff">View</button>
                                                                         }
                                                                     </td>
                                                                 </tr>
