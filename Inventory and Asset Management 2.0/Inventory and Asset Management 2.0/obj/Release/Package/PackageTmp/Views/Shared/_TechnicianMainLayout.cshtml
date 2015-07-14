@@ -1,0 +1,82 @@
+﻿<!-- Header-->
+<div class="sub-nav" style="background-color:#FFF;">
+    <div class="container">
+        <div class="sub-nav-left">
+            <div class="header__logo">
+
+                <a href="index.html"><i class="glyphicon glyphicon-wrench"></i> IT Equipment Management System</a>
+
+            </div>
+        </div>
+        <div class="sub-nav-right">
+            <a href="~/Home/logout">
+                <div class="logoutBT">
+                    <div class="signOutButton" style="">
+                        <i class="glyphicon glyphicon-lock"></i> Logout
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div> <!-- container -->
+</div> <!-- sub-nav -->
+<!--Header End-->
+<!--Technician Menu-->
+<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" style="float: none !important;width: 100%; background-color: #EEE;">
+    <font size="4"><i class="glyphicon glyphicon-th-list"></i> Menu</font>
+</button> <!-- button responsive -->
+
+<div id="navbar" class="navbar-collapse collapse" aria-expanded="false" style="height: 1px;padding: 0px;">
+
+    <div class="sub-nav-menu">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2 col-menu">
+                    <a href="~/Technician/TechnicianMainpage">
+                        <div id="menu--hover">
+                            <font size="5px"><i class="glyphicon glyphicon-asterisk"></i></font>&nbsp
+                            Technician
+                        </div>
+                    </a>
+                </div> <!-- col-md-3 -->
+                <div class="col-md-2 col-menu">
+                    <a href="~/Technician/Repairing">
+                        <div id="menu">
+                            <font size="5px"><i class="glyphicon glyphicon-signal"></i></font>&nbsp
+                            Repairing
+                        </div>
+                    </a>
+                </div> <!-- col-md-3 -->
+                <div class="col-md-2 col-menu">
+                    <a href="~/Technician/RepairingHistory">
+                        <div id="menu">
+                            <font size="5px"><i class="glyphicon glyphicon-download"></i></font>&nbsp
+                            History
+                        </div>
+                    </a>
+                </div> <!-- col-md-3 -->
+                <div class="col-md-2 col-menu">
+                    <a href="~/Technician/TechnicianInformation">
+                        <div id="menu">
+                            <font size="5px"><i class="glyphicon glyphicon-info-sign"></i></font>&nbsp
+                            Technician Information
+                        </div>
+                    </a>
+                </div> <!-- col-md-3 -->
+            </div> <!-- row -->
+        </div> <!-- container -->
+    </div> <!-- sub-nav-menu -->
+
+</div> <!-- nav-bar -->
+<!--Technician Menu end-->
+@RenderBody()
+<!--footer-->
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <i class="glyphicon glyphicon-lock"></i> CAMT : College of Arts, Media and Technology
+            </div>
+        </div>
+    </div>
+</footer>
+

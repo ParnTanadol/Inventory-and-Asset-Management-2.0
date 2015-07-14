@@ -250,7 +250,9 @@
     <Content Include="Content\js\jquery.datetimepicker.js" />
     <Content Include="Content\js\responsiveslides.min.js" />
     <Content Include="Global.asax" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -433,6 +435,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\TechnicianReparation.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\PublishProfiles\itemcamt - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\itemcamt - Web Deploy.pubxml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="INVENTORY_MANAGEMENT_2Entities-Web.config Connection String" description="INVENTORY_MANAGEMENT_2Entities Connection String used in web.config by the application to access the database." defaultValue="metadata=&quot;res://*/Inventory and Asset Management System.csdl|res://*/Inventory and Asset Management System.ssdl|res://*/Inventory and Asset Management System.msl&quot;;provider=System.Data.SqlClient;provider connection string=&quot;data source=fk5okbur8m.database.windows.net,1433;initial catalog=INVENTORY_MANAGEMENT_2;user id=tanadolsql;password=Parn-1993;MultipleActiveResultSets=True;App=EntityFramework&quot;" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\ParnTanadol\\Documents\\GitHub\\Inventory-and-Asset-Management-2\.0\\Inventory\ and\ Asset\ Management\ 2\.0\\Inventory\ and\ Asset\ Management\ 2\.0\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='INVENTORY_MANAGEMENT_2Entities']/@connectionString" />
+  </parameter>
+</parameters>

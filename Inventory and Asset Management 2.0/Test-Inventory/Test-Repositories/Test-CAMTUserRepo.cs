@@ -225,7 +225,27 @@ namespace Test_Inventory.Test_Repositories
             Assert.IsFalse(actual);
         }
 
-
+        [TestMethod]
+        public void testInsertCAMTUser9()
+        {
+            // Arrange
+            ICAMTUserRepo camtUserRepo = new CAMTUserRepo(new INVENTORY_MANAGEMENT_2Entities());
+            CAMTUser camtUser = new CAMTUser();
+            camtUser.user_username = null;
+            camtUser.user_password = null;
+            camtUser.user_name = null;
+            camtUser.user_department = null;
+            camtUser.user_room = "512";
+            camtUser.user_address = null;
+            camtUser.user_tel = null;
+            camtUser.user_email = null;
+            camtUser.user_type = 1;
+            camtUser.user_active = true;
+            //Act
+            var actual = camtUserRepo.insertCAMTUser(camtUser);
+            //Assert
+            Assert.IsFalse(actual);
+        }
         //-----------------updateCAMTUser------------
         [TestMethod]
         public void testUpdateCAMTUser1()
@@ -256,8 +276,8 @@ namespace Test_Inventory.Test_Repositories
             // Arrange
             ICAMTUserRepo camtUserRepo = new CAMTUserRepo(new INVENTORY_MANAGEMENT_2Entities());
             CAMTUser camtUser = new CAMTUser();
-            camtUser.user_id = 1;
-            camtUser.user_username = null;
+            camtUser.user_id = 0;
+            camtUser.user_username = "admin";
             camtUser.user_password = "123456";
             camtUser.user_name = "admin one";
             camtUser.user_department = "CAMT";
@@ -280,8 +300,8 @@ namespace Test_Inventory.Test_Repositories
             ICAMTUserRepo camtUserRepo = new CAMTUserRepo(new INVENTORY_MANAGEMENT_2Entities());
             CAMTUser camtUser = new CAMTUser();
             camtUser.user_id = 1;
-            camtUser.user_username = "admin";
-            camtUser.user_password = null;
+            camtUser.user_username = null;
+            camtUser.user_password = "123456";
             camtUser.user_name = "admin one";
             camtUser.user_department = "CAMT";
             camtUser.user_room = "512";
@@ -304,8 +324,8 @@ namespace Test_Inventory.Test_Repositories
             CAMTUser camtUser = new CAMTUser();
             camtUser.user_id = 1;
             camtUser.user_username = "admin";
-            camtUser.user_password = "123456";
-            camtUser.user_name = null;
+            camtUser.user_password = null;
+            camtUser.user_name = "admin one";
             camtUser.user_department = "CAMT";
             camtUser.user_room = "512";
             camtUser.user_address = "Chiang mai, Thailand";
@@ -328,8 +348,8 @@ namespace Test_Inventory.Test_Repositories
             camtUser.user_id = 1;
             camtUser.user_username = "admin";
             camtUser.user_password = "123456";
-            camtUser.user_name = "admin one";
-            camtUser.user_department = null;
+            camtUser.user_name = null;
+            camtUser.user_department = "CAMT";
             camtUser.user_room = "512";
             camtUser.user_address = "Chiang mai, Thailand";
             camtUser.user_tel = "0833201787";
@@ -352,9 +372,9 @@ namespace Test_Inventory.Test_Repositories
             camtUser.user_username = "admin";
             camtUser.user_password = "123456";
             camtUser.user_name = "admin one";
-            camtUser.user_department = "CAMT";
+            camtUser.user_department = null;
             camtUser.user_room = "512";
-            camtUser.user_address = null;
+            camtUser.user_address = "Chiang mai, Thailand";
             camtUser.user_tel = "0833201787";
             camtUser.user_email = "se542115021.developer@gmail.com";
             camtUser.user_type = 1;
@@ -377,8 +397,8 @@ namespace Test_Inventory.Test_Repositories
             camtUser.user_name = "admin one";
             camtUser.user_department = "CAMT";
             camtUser.user_room = "512";
-            camtUser.user_address = "Chiang mai, Thailand";
-            camtUser.user_tel = null;
+            camtUser.user_address = null;
+            camtUser.user_tel = "0833201787";
             camtUser.user_email = "se542115021.developer@gmail.com";
             camtUser.user_type = 1;
             camtUser.user_active = true;
@@ -401,7 +421,53 @@ namespace Test_Inventory.Test_Repositories
             camtUser.user_department = "CAMT";
             camtUser.user_room = "512";
             camtUser.user_address = "Chiang mai, Thailand";
+            camtUser.user_tel = null;
+            camtUser.user_email = "se542115021.developer@gmail.com";
+            camtUser.user_type = 1;
+            camtUser.user_active = true;
+            //Act
+            var actual = camtUserRepo.updateCAMTUser(camtUser);
+            //Assert
+            Assert.IsFalse(actual);
+        }
+
+        [TestMethod]
+        public void testUpdateCAMTUser9()
+        {
+            // Arrange
+            ICAMTUserRepo camtUserRepo = new CAMTUserRepo(new INVENTORY_MANAGEMENT_2Entities());
+            CAMTUser camtUser = new CAMTUser();
+            camtUser.user_id = 1;
+            camtUser.user_username = "admin";
+            camtUser.user_password = "123456";
+            camtUser.user_name = "admin one";
+            camtUser.user_department = "CAMT";
+            camtUser.user_room = "512";
+            camtUser.user_address = "Chiang mai, Thailand";
             camtUser.user_tel = "0833201787";
+            camtUser.user_email = null;
+            camtUser.user_type = 1;
+            camtUser.user_active = true;
+            //Act
+            var actual = camtUserRepo.updateCAMTUser(camtUser);
+            //Assert
+            Assert.IsFalse(actual);
+        }
+
+        [TestMethod]
+        public void testUpdateCAMTUser10()
+        {
+            // Arrange
+            ICAMTUserRepo camtUserRepo = new CAMTUserRepo(new INVENTORY_MANAGEMENT_2Entities());
+            CAMTUser camtUser = new CAMTUser();
+            camtUser.user_id = 1;
+            camtUser.user_username = null;
+            camtUser.user_password = null;
+            camtUser.user_name = null;
+            camtUser.user_department = null;
+            camtUser.user_room = "512";
+            camtUser.user_address = null;
+            camtUser.user_tel = null;
             camtUser.user_email = null;
             camtUser.user_type = 1;
             camtUser.user_active = true;
@@ -476,6 +542,18 @@ namespace Test_Inventory.Test_Repositories
             CAMTUser camtUser = new CAMTUser();
             //Act
             var actual = camtUserRepo.viewUserByUsernamePassword("admin", null);
+            //Assert
+            Assert.AreEqual(camtUser, actual);
+        }
+
+        [TestMethod]
+        public void testViewUserByUsernamePassword4()
+        {
+            // Arrange
+            ICAMTUserRepo camtUserRepo = new CAMTUserRepo(new INVENTORY_MANAGEMENT_2Entities());
+            CAMTUser camtUser = new CAMTUser();
+            //Act
+            var actual = camtUserRepo.viewUserByUsernamePassword(null, null);
             //Assert
             Assert.AreEqual(camtUser, actual);
         }

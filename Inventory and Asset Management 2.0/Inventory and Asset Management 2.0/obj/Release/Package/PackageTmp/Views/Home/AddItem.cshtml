@@ -1,0 +1,370 @@
+﻿@{
+    ViewBag.Title = "AddItem";
+}
+
+
+
+@{
+    if (Session["userType"] != null && Session["userType"].ToString().Equals("1"))
+    {
+
+        Layout = "~/Views/Shared/_AdminItemLayout.cshtml";
+        //---------------------------------------------------------------------------------------
+        <html>
+        <head>
+            <title>IT Equipment Management System</title>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+            <link rel="stylesheet" href="~/Content/bootstrap/css/bootstrap.min.css">
+            <link rel="stylesheet" href="~/Content/bootstrap/css/bootstrap-theme.css">
+            <link rel="stylesheet" href="~/Content/jquery-ui/jquery-ui.css">
+            <link rel="stylesheet" href="~/Content/css/mycss.css">
+
+            <script type="text/javascript" src="~/Content/js/jquery-2.1.1.min.js"></script>
+            <script type="text/javascript" src="~/Content/js/responsiveslides.min.js"></script>
+            <!--[if lt IE 9]>
+            <script type="text/javascript" src="js/html5.js"></script>
+            <link rel="stylesheet" href="css/ie.css" type="text/css" media="screen">
+            <![endif]-->
+
+
+        </head>
+        <body>
+
+            <div class="wrapper">
+                <div class="content">
+                    <!-- ///////////////////////////////////////////////////////////////////////////////////////// -->
+
+                    <link rel="stylesheet" type="text/css" href="~/Content/css/jquery.datetimepicker.css" />
+
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+
+                                <div class="panel panel-success">
+                                    <div class="panel-heading">
+                                        <h3><i class="glyphicon glyphicon-tasks"></i> Add Item</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <form class="form-horizontal" role="form" id="form" action="~/Home/addItem" method="post" enctype="multipart/form-data" onsubmit="return onAddItem();">
+                                            @Html.AntiForgeryToken()
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-3">Item Band:</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control" id="item-band1" name="item-band1" placeholder="Item Band">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-3">Item Name:</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control" id="item-name1" name="item-name1" placeholder="Item Name">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-3">Item Description:</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control" id="item-description1" name="item-description1" placeholder="Item Description">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-3">CAMT Number:</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control" id="camt-number1" name="camt-number1" placeholder="CAMT Number">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-3">CMU Number:</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control" id="cmu-number1" name="cmu-number1" placeholder="CMU Number">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-3">Serial Number:</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control" id="serial-number1" name="serial-number1" placeholder="Serial Number">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-3">Time End:</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control time-end" id="time-end1" name="time-end1" placeholder="Time End">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-3">Item Status:</label>
+                                                <div class="col-sm-9">
+                                                    <div class="radio-inline">
+                                                        <label><input type="radio" id="item-status1-1" name="item-status1" value="1">Normal</label>
+                                                    </div>
+                                                    <div class="radio-inline">
+                                                        <label><input type="radio" id="item-status1-2" name="item-status1" value="2">Broken</label>
+                                                    </div>
+                                                    <div class="radio-inline">
+                                                        <label><input type="radio" id="item-status1-3" name="item-status1" value="3">Expire</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-3">Item Owner:</label>
+                                                <div class="col-sm-9">
+                                                    <input type="button" class="btn btn-default" placeholder="Item Owner" value="Owner" onclick="onAddOwner()">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-3">Item Component:</label>
+                                                <div class="col-sm-9">
+                                                    <div class="btn btn-default" onclick="addComponent()">
+                                                        <i class="glyphicon glyphicon-magnet"></i>
+                                                        Add Component
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-3">Item Picture:</label>
+                                                <div class="col-sm-9">
+                                                    <input id="item-picture1" name="item-picture1" type="file" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-sm-offset-3 col-sm-9">
+                                                    <!-- <button type="submit" class="btn btn-default">Submit</button> -->
+                                                    <!-- <a href="#" onclick="$(this).closest('form').submit()">test</a> -->
+                                                    <button class="btn btn-info">Add item</button>
+                                                    
+                                                </div>
+                                            </div>
+                                            <!-- Component item-->
+                                            <div class="form-horizontal">
+                                                <div id="component"></div>
+                                            </div>
+                                            <!-- End Component item-->
+                                        </form>
+                                    </div>
+                                </div>
+
+                            </div> <!-- col-md-12 -->
+                            <!-- old form -->
+
+                        </div> <!-- row -->
+                    </div> <!-- container -->
+                    <!-- ///////////////////////////////////////////////////////////////////////////////////////// -->
+                </div><!-- content -->
+                <div class="push"></div>
+            </div> <!-- WRAPPER -->
+        </body>
+    </html>
+
+    <script type="text/javascript" src="~/Content/jquery-ui/jquery-ui.js"></script>
+    <script type="text/javascript" src="~/Content/bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="~/Content/js/jquery.datetimepicker.js"></script>
+
+    <script type="text/javascript">
+
+        var userOwnerId = localStorage.getItem("userOwnerId");
+
+        if (userOwnerId != null) {
+            var hiddenUserOwnerId = document.createElement("input");
+            hiddenUserOwnerId.setAttribute("type", "hidden");
+            hiddenUserOwnerId.setAttribute("name", "userOwnerId");
+            hiddenUserOwnerId.setAttribute("value", userOwnerId);
+            document.getElementById("form").appendChild(hiddenUserOwnerId);
+        }
+
+
+        if (localStorage.getItem("itemBand") != null) {
+            document.getElementById("item-band1").value = localStorage.getItem("itemBand");
+        }
+
+        if (localStorage.getItem("itemName") != null) {
+            document.getElementById("item-name1").value = localStorage.getItem("itemName");
+        }
+
+        if (localStorage.getItem("itemDescription") != null) {
+            document.getElementById("item-description1").value = localStorage.getItem("itemDescription");
+        }
+
+        if (localStorage.getItem("camtNumber") != null) {
+            document.getElementById("camt-number1").value = localStorage.getItem("camtNumber");
+        }
+
+        if (localStorage.getItem("cmuNumber") != null) {
+            document.getElementById("cmu-number1").value = localStorage.getItem("cmuNumber");
+        }
+
+        if (localStorage.getItem("serialNumber") != null) {
+            document.getElementById("serial-number1").value = localStorage.getItem("serialNumber");
+        }
+
+        if (localStorage.getItem("timeEnd") != null) {
+            document.getElementById("time-end1").value = localStorage.getItem("timeEnd");
+        }
+
+        if (localStorage.getItem("itemStatusCheck") != null) {
+            var status = localStorage.getItem("itemStatusCheck");
+            if (status == "1") {
+                document.getElementById("item-status1-1").checked = true;
+            }
+            else if (status == "2") {
+                document.getElementById("item-status1-2").checked = true;
+            }
+            else {
+                document.getElementById("item-status1-3").checked = true;
+            }
+        }
+
+        var i = 1;
+
+        function addComponent() {
+            i += 1;
+
+            var component = document.getElementById("component");
+
+            component.innerHTML += "<h3 style='background-color:#EEE;padding:10px;'><i class='glyphicon glyphicon-th-large'></i> Component " + (i - 1) + "</h3>";
+
+            component.innerHTML += "<hr/>";
+
+            component.innerHTML += "<div class='form-group'><label class='control-label col-sm-3'>Item Band:</label><div class='col-sm-9'><input type='text' class='form-control' id='item-band" + i + "' name='item-band" + i + "' placeholder='Item Band'></div></div>";
+
+            component.innerHTML += "<div class='form-group'><label class='control-label col-sm-3'>Item Name:</label><div class='col-sm-9'><input type='text' class='form-control' id='item-name" + i + "' name='item-name" + i + "' placeholder='Item Name'></div></div>";
+
+            component.innerHTML += "<div class='form-group'><label class='control-label col-sm-3'>Item Description:</label><div class='col-sm-9'><input type='text' class='form-control' id='item-description" + i + "' name='item-description" + i + "' placeholder='Item Description'></div></div>";
+
+            component.innerHTML += "<div class='form-group'><label class='control-label col-sm-3'>CAMT Number:</label><div class='col-sm-9'><input type='text' class='form-control' id='camt-number" + i + "' name='camt-number" + i + "' placeholder='CAMT Number'></div></div>";
+
+            component.innerHTML += "<div class='form-group'><label class='control-label col-sm-3'>CMU Number:</label><div class='col-sm-9'><input type='text' class='form-control' id='cmu-number" + i + "' name='cmu-number" + i + "' placeholder='CMU Number'></div></div>";
+
+            component.innerHTML += "<div class='form-group'><label class='control-label col-sm-3'>Serial Number:</label><div class='col-sm-9'><input type='text' class='form-control' id='serial-number" + i + "' name='serial-number" + i + "' placeholder='Serial Number'></div></div>";
+
+            component.innerHTML += "<div class='form-group'><label class='control-label col-sm-3'>Time End:</label><div class='col-sm-9'><input type='text' class='form-control time-end' id='time-end" + i + "' name='time-end" + i + "' placeholder='Time End'></div></div>";
+
+            component.innerHTML += "<div class='form-group'><label class='control-label col-sm-3'>Item Status:</label><div class='col-sm-9'><div class='radio-inline'><label><input type='radio' id='item-status" + i + "' name='item-status" + i + "' value='1'>Good</label></div><div class='radio-inline'><label><input type='radio' id='item-status" + i + "' name='item-status" + i + "' value='2'>Normal</label></div><div class='radio-inline'><label><input type='radio' id='item-status" + i + "' name='item-status" + i + "' value='3'>Broken</label></div></div></div>";
+
+            component.innerHTML += "<div class='form-group'><label class='control-label col-sm-3'>Item Picture:</label><div class='col-sm-9'><input type='file' class='form-control' id='item-picture" + i + "' name='item-picture" + i + "' ></div></div>";
+
+            component.innerHTML += "<hr style='height: 10px'>";
+
+          //  var time = "#time-end" + i;
+            $("#time-end"+i).datetimepicker({
+                dayOfWeekStart: 1,
+                lang: 'en',
+                disabledDates: ['1986/01/08', '1986/01/09', '1986/01/10'],
+                startDate: '2015/01/01'
+            });
+            $('#datetimepicker').datetimepicker({ value: '2015/04/15 05:03', step: 10 });
+        }
+
+        function removeComponent() {
+            component.innerHTML.remo
+        }
+
+        function onAddItem() {
+
+            var result = confirm("Do you sure to add an item?");
+            if (result == true) {
+                for (var j = 1; j <= i ; j++) {
+                    var index = j;
+                    var itemBandIndex = "item-band" + index.toString();
+                    var itemNameIndex = "item-name" + index.toString();
+                    var itemDescriptionIndex = "item-description" + index.toString();
+                    var itemPictureIndex = "item-picture" + index.toString();
+                    var camtNumberIndex = "camt-number" + index.toString();
+                    var cmuNumberIndex = "cmu-number" + index.toString();
+                    var serialNumberIndex = "serial-number" + index.toString();
+
+                    var itemStatus = "item-status" + index.toString();
+                    var itemBand = document.getElementById(itemBandIndex).value;
+                    var itemName = document.getElementById(itemNameIndex).value;
+                    var itemDescription = document.getElementById(itemDescriptionIndex).value;
+                    var itemPicture = document.getElementById(itemPictureIndex).value;
+                    var camtNumber = document.getElementById(camtNumberIndex).value;
+                    var cmuNumber = document.getElementById(cmuNumberIndex).value;
+                    var serialNumber = document.getElementById(serialNumberIndex).value;
+
+                    // get item status
+                    var itemStatus = document.getElementsByName(itemStatus);
+                    var itemStatusCheck = "";
+                    for (var a = 0; a < itemStatus.length; a++) {
+                        if (itemStatus[a].checked) {
+                            itemStatusCheck = itemStatus[a].value;
+                        }
+                    }
+
+                    if (itemBand == "" || itemName == "" || itemDescription == "" || itemStatusCheck == "" || itemPicture == "") {
+                        alert("Please you fill Item brand, Item name, Item description, Item status, and Item picture information");
+                        return false;
+                    }
+                    else if (camtNumber == "" && cmuNumber == "" && serialNumber == "") {
+                        alert("Please you fill CAMT number, CMU number, or Serial number");
+                        return false;
+                    }
+                }
+
+
+                var hiddenItemComponent = document.createElement("input");
+                hiddenItemComponent.setAttribute("type", "hidden");
+                hiddenItemComponent.setAttribute("name", "count");
+                hiddenItemComponent.setAttribute("value", i);
+                document.getElementById("form").appendChild(hiddenItemComponent);
+            }
+            else {
+                return false;
+            }
+            
+        }
+
+        function onAddOwner() {
+            //get status
+            var itemStatus = document.getElementsByName("item-status1");
+            var itemStatusCheck = "";
+            for (var a = 0; a < itemStatus.length; a++) {
+                if (itemStatus[a].checked) {
+                    itemStatusCheck = itemStatus[a].value;
+                }
+            }
+
+            localStorage.setItem("itemBand", document.getElementById("item-band1").value);
+            localStorage.setItem("itemName", document.getElementById("item-name1").value);
+            localStorage.setItem("itemDescription", document.getElementById("item-description1").value);
+            localStorage.setItem("camtNumber", document.getElementById("camt-number1").value);
+            localStorage.setItem("cmuNumber", document.getElementById("cmu-number1").value);
+            localStorage.setItem("serialNumber", document.getElementById("serial-number1").value);
+            localStorage.setItem("timeEnd", document.getElementById("time-end1").value);
+            localStorage.setItem("itemStatusCheck", itemStatusCheck);
+
+            location.href = '@Url.Action("AddItemOwner", "Home")'
+        }
+
+        $("#time-end1").datetimepicker({
+            dayOfWeekStart: 1,
+            lang: 'en',
+            disabledDates: ['1986/01/08', '1986/01/09', '1986/01/10'],
+            startDate: '2015/01/01'
+        });
+        $('#datetimepicker').datetimepicker({ value: '2015/04/15 05:03', step: 10 });
+
+    </script>
+
+        //---------------------------------------------------------------------------------------
+
+         if (TempData["msg"] != null)
+        {
+            var message = TempData["msg"].ToString();
+
+            <script>
+                var msg = '@message';
+                alert(msg);
+            </script>
+            TempData["msg"] = null;
+        }
+        
+    }
+    else
+    {
+        <script>
+            alert("Please login by Administrator");
+        </script>
+        @Html.Action("Index");
+    }
+}

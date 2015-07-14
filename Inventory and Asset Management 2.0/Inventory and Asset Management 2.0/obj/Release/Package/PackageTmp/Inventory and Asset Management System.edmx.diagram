@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="201a3a960665448d8de145b1a00d6a8d" Name="Diagram1">
+        <EntityTypeShape EntityType="INVENTORY_MANAGEMENT_2Model.CAMTUser" Width="1.5" PointX="0.75" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="INVENTORY_MANAGEMENT_2Model.Item" Width="1.5" PointX="0.75" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="INVENTORY_MANAGEMENT_2Model.ItemOwner" Width="1.5" PointX="3" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="INVENTORY_MANAGEMENT_2Model.Report" Width="1.5" PointX="6" PointY="2.5" IsExpanded="true" />
+        <AssociationConnector Association="INVENTORY_MANAGEMENT_2Model.FK__ItemOwner__user___15502E78" ManuallyRouted="false" />
+        <AssociationConnector Association="INVENTORY_MANAGEMENT_2Model.FK__Report__reporter__1920BF5C" ManuallyRouted="false" />
+        <AssociationConnector Association="INVENTORY_MANAGEMENT_2Model.FK__Report__technici__182C9B23" ManuallyRouted="false" />
+        <AssociationConnector Association="INVENTORY_MANAGEMENT_2Model.FK__ItemOwner__item___145C0A3F" ManuallyRouted="false" />
+        <AssociationConnector Association="INVENTORY_MANAGEMENT_2Model.FK__Report__item_id__1A14E395" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

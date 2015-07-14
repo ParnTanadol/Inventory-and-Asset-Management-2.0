@@ -9,6 +9,7 @@ using System.Data;
 using System.Net.Mail;
 using Inventory_and_Asset_Management_2._0.Models;
 using Inventory_and_Asset_Management_2._0.Repositories;
+using System.Drawing.Imaging;
 
 namespace Inventory_and_Asset_Management_2._0.Controllers
 {
@@ -364,7 +365,7 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
                     {
                         System.Drawing.Image bm = System.Drawing.Image.FromStream(itemPicture.InputStream);
                         bm = ResizeBitmap((Bitmap)bm, 200, 200); /// new width, height
-                        bm.Save(Path.Combine(Server.MapPath("~/Content/ItemPics"), fileName));
+                        bm.Save(Path.Combine(Server.MapPath("~/Content/ItemPics/"), fileName));
                     }
 
                     // update product info
@@ -514,7 +515,7 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
                 {
                     System.Drawing.Image bm = System.Drawing.Image.FromStream(itemPicture.InputStream);
                     bm = ResizeBitmap((Bitmap)bm, 200, 200); /// new width, height
-                    bm.Save(Path.Combine(Server.MapPath("~/Content/ItemPics"), fileName));
+                    bm.Save(Path.Combine(Server.MapPath("~/Content/ItemPics/"), fileName));
                 }
 
                 // update product info
@@ -586,7 +587,7 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
                 }
 
                 // Delete old picturer
-                var fullPath = Server.MapPath("~/Content/ItemPics" + itemPicturerName);
+                var fullPath = Server.MapPath("~/Content/ItemPics/" + itemPicturerName);
                 FileInfo fileInfo = new FileInfo(fullPath);
                 if (fileInfo.Exists)
                 {
@@ -597,9 +598,11 @@ namespace Inventory_and_Asset_Management_2._0.Controllers
                 var fileName = "picItem-" + itemId + fileType;
                 if (itemPicture.ContentLength > 0)
                 {
+
                     System.Drawing.Image bm = System.Drawing.Image.FromStream(itemPicture.InputStream);
                     bm = ResizeBitmap((Bitmap)bm, 200, 200); /// new width, height
-                    bm.Save(Path.Combine(Server.MapPath("~/Content/ItemPics"), fileName));
+                    bm.Save(Path.Combine(Server.MapPath("~/Content/ItemPics/"), fileName));
+                 //   bm.Dispose();
                 }
                 // update item
                 ItemModel itemModel = new ItemModel();
